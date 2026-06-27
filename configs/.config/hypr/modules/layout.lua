@@ -13,6 +13,10 @@
 
 -- See https://wiki.hypr.land/Configuring/Layouts/Dwindle-Layout/ for more
 hl.config({
+    general = {
+        layout = "dwindle",
+    },
+
     dwindle = {
         preserve_split = true,
     },

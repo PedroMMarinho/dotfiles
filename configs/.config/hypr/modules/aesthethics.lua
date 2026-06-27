@@ -30,8 +30,6 @@ hl.config({
 
         -- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
         allow_tearing = false,
-
-        layout = "dwindle",
     },
     -- https://wiki.hypr.land/Configuring/Basics/Variables/#decoration
     decoration = {
