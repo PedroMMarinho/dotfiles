@@ -20,7 +20,7 @@ local v = require("modules.variables")
 --\\\\\\\\\\\\\\\////////////--
 
 -- Launch ROFI for wallpaper selection
-hl.bind(v.mainMod .. " + W", hl.dsp.exec_cmd(v.scriptsDir .. "/WallpaperSelect.sh"))
+-- hl.bind(v.mainMod .. " + W", hl.dsp.exec_cmd(v.scriptsDir .. "/WallpaperSelect.sh")) TODO
 
 -- Launch Default Applications
 hl.bind(v.mainMod .. " + Q", hl.dsp.exec_cmd(v.terminal .. " -e --hold fastfetch"))
@@ -36,17 +36,19 @@ hl.bind(v.mainMod .. " + T", hl.dsp.exec_cmd(v.textEditor))
 
 hl.bind("CTRL + ALT + Delete", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(v.mainMod .. " + C", hl.dsp.window.close())
-hl.bind(v.mainMod .. " + SHIFT + C", hl.dsp.exec_cmd(v.scriptsDir .. "/KillActiveProcess.sh"))
+hl.bind(v.mainMod .. " + SHIFT + C", hl.dsp.window.kill())
 hl.bind(v.mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 hl.bind(v.mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
 hl.bind(v.mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(v.mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(v.mainMod .. " + J", hl.dsp.layout("togglesplit"))
-hl.bind(v.mainMod .. " + L", hl.dsp.exec_cmd(v.scriptsDir .. "/LockScreen.sh"))
-hl.bind(v.mainMod .. " + X", hl.dsp.exec_cmd(v.scriptsDir .. "/Wlogout.sh"))
-hl.bind(v.mainMod .. " + CTRL + B", hl.dsp.exec_cmd(v.scriptsDir .. "/WaybarStyles.sh"))
-hl.bind(v.mainMod .. " + ALT + B", hl.dsp.exec_cmd(v.scriptsDir .. "/WaybarLayout.sh"))
-hl.bind(v.mainMod .. " + ALT + E", hl.dsp.exec_cmd(v.scriptsDir .. "/RofiEmoji.sh"))
+hl.bind(v.mainMod .. " + SPACE", hl.dsp.exec_cmd(v.scriptsDir .. "/Keyboard.sh"))  
+-- TODO
+-- hl.bind(v.mainMod .. " + L", hl.dsp.exec_cmd(v.scriptsDir .. "/LockScreen.sh"))
+-- hl.bind(v.mainMod .. " + X", hl.dsp.exec_cmd(v.scriptsDir .. "/Wlogout.sh"))
+-- hl.bind(v.mainMod .. " + CTRL + B", hl.dsp.exec_cmd(v.scriptsDir .. "/WaybarStyles.sh"))
+-- hl.bind(v.mainMod .. " + ALT + B", hl.dsp.exec_cmd(v.scriptsDir .. "/WaybarLayout.sh"))
+-- hl.bind(v.mainMod .. " + ALT + E", hl.dsp.exec_cmd(v.scriptsDir .. "/RofiEmoji.sh"))
 
 --\\\\\\\\\\\\\\\////////////--
 --        SCREENSHOTS        --
