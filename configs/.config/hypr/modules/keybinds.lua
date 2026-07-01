@@ -27,7 +27,8 @@ hl.bind(v.mainMod .. " + Q", hl.dsp.exec_cmd(v.terminal .. " -e --hold fastfetch
 hl.bind(v.mainMod .. " + E", hl.dsp.exec_cmd(v.fileManager))
 hl.bind(v.mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(v.fileManagert))
 hl.bind(v.mainMod .. " + B", hl.dsp.exec_cmd(v.browser))
-hl.bind(v.mainMod .. " + D", hl.dsp.exec_cmd("pkill rofi || true && " .. v.menu .. " -modi drun,filebrowser,run,window"))
+hl.bind(v.mainMod .. " + D", hl.dsp.exec_cmd(v.menu_v2))
+--hl.bind(v.mainMod .. " + D", hl.dsp.exec_cmd("pkill rofi || true && " .. v.menu .. " -modi drun,filebrowser,run,window"))
 hl.bind(v.mainMod .. " + T", hl.dsp.exec_cmd(v.textEditor))
 
 --\\\\\\\\\\\\\\\////////////--

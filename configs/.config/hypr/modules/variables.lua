@@ -24,7 +24,8 @@ v.mainMod = "SUPER"
 v.terminal = "kitty"                                       -- Terminal application
 v.browser = "google-chrome-stable"                                -- Web browser
 v.fileManager = "dolphin"                                  -- File manager
-v.menu = "rofi -show drun"                                 -- Application launcher
+v.menu = "rofi -show drun" 
+v.menu_v2 = "qs ipc call launcher open"                                -- Application launcher
 v.textEditor = "code"                                      -- Text editor
 -- v.notes = "your_notes_app"                              -- Notes application
 
