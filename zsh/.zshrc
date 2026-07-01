@@ -1,5 +1,9 @@
 # History
 
+if [[ ! -d "${XDG_STATE_HOME:-$HOME/.local/state}/zsh" ]]; then
+  mkdir -p "${XDG_STATE_HOME:-$HOME/.local/state}/zsh"
+fi
+
 HISTFILE="$XDG_STATE_HOME/zsh/history"
 HISTSIZE=100000
 SAVEHIST=100000
