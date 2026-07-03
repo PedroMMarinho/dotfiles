@@ -33,8 +33,8 @@ hl.config({
     },
     -- https://wiki.hypr.land/Configuring/Basics/Variables/#decoration
     decoration = {
-        rounding       = 0,
-        rounding_power = 0,
+        rounding       = 2,
+        rounding_power = 2,
 
         -- Change transparency of focused and unfocused windows
         active_opacity   = 1.0,

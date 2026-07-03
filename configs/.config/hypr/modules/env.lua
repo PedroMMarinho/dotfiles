@@ -17,8 +17,8 @@ hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 
 --- Cursor Theme ---
--- hl.env("XCURSOR_THEME", "macOS")
--- hl.env("HYPRCURSOR_THEME", "macOS_HYPR")
+hl.env("XCURSOR_THEME", "macOS")
+hl.env("HYPRCURSOR_THEME", "macOS_HYPR")
 
 -- Toolkit Backend
 hl.env("GDK_BACKEND", "wayland,x11,*")
