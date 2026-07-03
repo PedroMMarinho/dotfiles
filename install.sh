@@ -17,7 +17,7 @@ echo "Running dotfiles installation from: $DOTFILES_DIR"
 PACKAGES=(    
     # Terminal & Core CLI Utilities
     "kitty" "zsh" "starship" "fastfetch" "zoxide" "eza" "bat" "fzf" "fd" "jq" 
-    "stow" "tree" "wget" "unzip" "zip" "git" "zram-generator" "sassc"
+    "stow" "tree" "wget" "unzip" "zip" "git" "zram-generator" "sassc" "btop"
     
     # Audio & Bluetooth Stack
     "pipewire" "wireplumber" "pipewire-pulse" "pipewire-jack" 
