@@ -18,10 +18,10 @@ hl.config({
         gaps_out = 6,
         gaps_workspaces = 1,
 
-        border_size = 0,
+        border_size = 1,
 
         col = {
-            active_border   = { colors = {"rgba(33ccffee)"},},
+            active_border   = { colors = {"rgba(eaa024ee)"},},
             inactive_border = "rgba(595959aa)",
         },
 

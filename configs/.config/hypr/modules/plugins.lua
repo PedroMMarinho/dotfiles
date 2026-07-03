@@ -20,7 +20,7 @@ hl.config({
             image = "$XDG_CONFIG_HOME/hypr/assets/border.png",
             sizes = "8, 8, 8, 8",
             insets = "0, 0, 0, 0",
-            scale = 1,
+            scale = 0.6,
             smooth = false,
             blur = false
         }
