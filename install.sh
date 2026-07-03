@@ -17,7 +17,7 @@ echo "Running dotfiles installation from: $DOTFILES_DIR"
 PACKAGES=(    
     # Terminal & Core CLI Utilities
     "kitty" "zsh" "starship" "fastfetch" "zoxide" "eza" "bat" "fzf" "fd" "jq" 
-    "stow" "tree" "wget" "unzip" "zip" "git" "zram-generator"
+    "stow" "tree" "wget" "unzip" "zip" "git" "zram-generator" "sassc"
     
     # Audio & Bluetooth Stack
     "pipewire" "wireplumber" "pipewire-pulse" "pipewire-jack" 
@@ -27,7 +27,7 @@ PACKAGES=(
     "networkmanager" "network-manager-applet" "networkmanager-pptp" "pptpclient" "networkmanager-openvpn" "networkmanager-wireguard" "wireguard-tools"
     
     # Desktop Environment & Theming
-    "waybar" "quickshell" "rofi-wayland" "dunst" "nwg-look" "awww" "hyprpolkitagent"
+    "waybar" "quickshell" "rofi-wayland" "dunst" "nwg-look" "awww" "hyprpolkitagent" "papirus-icon-theme" "papirus-folders"
     
     # Input Method (Mandarin)
     "fcitx5" "fcitx5-chinese-addons" "fcitx5-configtool" "fcitx5-gtk" "fcitx5-qt"
@@ -41,7 +41,7 @@ PACKAGES=(
     
     # Fonts
     "adobe-source-han-sans-cn-fonts" "noto-fonts" "noto-fonts-cjk" 
-    "ttf-jetbrains-mono" "ttf-jetbrains-mono-nerd"
+    "ttf-jetbrains-mono" "ttf-jetbrains-mono-nerd" "ttf-rubik-vf"
 )
 
 # System-wide services to enable (requires sudo)
@@ -101,7 +101,7 @@ echo "Setting up Hyprland plugins via hyprpm..."
 
 hyprpm update
 hyprpm add https://codeberg.org/zacoons/imgborders
-hyprpm enable imgborders
+#hyprpm enable imgborders
 
 
 # ==========================================

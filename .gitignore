@@ -1,1 +1,4 @@
-configs/.config/zsh/plugins/
+configs/.config/zsh/plugins/*
+!configs/.config/zsh/plugins/.dummy
+gtk/.themes/*
+!gtk/.themes/.dummy
