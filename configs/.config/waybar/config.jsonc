@@ -1,0 +1,34 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+  "margin": "0 0 0 0",
+
+  "include": [
+    "$XDG_CONFIG_HOME/waybar/modules/workspaces.jsonc",
+    "$XDG_CONFIG_HOME/waybar/modules/hardware.jsonc",
+    "$XDG_CONFIG_HOME/waybar/modules/media.jsonc",
+    "$XDG_CONFIG_HOME/waybar/modules/system.jsonc",
+    "$XDG_CONFIG_HOME/waybar/modules/custom.jsonc",
+    "$XDG_CONFIG_HOME/waybar/modules/groups.jsonc"
+  ],
+
+  "modules-left": [
+    "hyprland/workspaces",
+    "tray",
+    "group/audio"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "backlight",
+    "pulseaudio",
+    "hyprland/language",
+    "temperature",
+    "memory",
+    "battery",
+    "network",
+    "custom/power"
+  ]
+}

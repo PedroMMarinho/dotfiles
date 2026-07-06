@@ -1,0 +1,9 @@
+{
+    "group/audio": {
+    "orientation": "horizontal",
+    "modules": [
+        "custom/cava",
+        "custom/playerinfo"
+    ]
+  }
+}

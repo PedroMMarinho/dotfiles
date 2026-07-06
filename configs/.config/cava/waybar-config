@@ -1,0 +1,28 @@
+[general]
+# Limit framerate to keep CPU usage low while remaining smooth
+framerate = 30
+# Number of bars to display in Waybar
+bars = 12
+# Auto-sleep after 10 seconds of silence to save resources
+sleep_timer = 2
+
+[input]
+# Listen to pulseaudio/pipewire default output
+method = pipewire
+source = auto
+
+[output]
+# Send raw data for the script to parse
+method = raw
+data_format = ascii
+# MUST be 7 to match the 8 states (0-7) in your bash script
+ascii_max_range = 7
+# 59 is ';', 10 is the newline character. The script looks for ';'
+bar_delimiter = 59
+frame_delimiter = 10
+# 'stereo' looks better if you have enough bars, otherwise use 'mono'
+channels = stereo
+
+[smoothing]
+# 1 is very slow/smooth, 0 is fast/noisy. Default is 0.77
+noise_reduction = 0.77

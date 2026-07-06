@@ -17,7 +17,7 @@ echo "Running dotfiles installation from: $DOTFILES_DIR"
 PACKAGES=(    
     # Terminal & Core CLI Utilities
     "kitty" "zsh" "starship" "fastfetch" "zoxide" "eza" "bat" "fzf" "fd" "jq" 
-    "stow" "tree" "wget" "unzip" "zip" "git" "zram-generator" "sassc" "btop"
+    "stow" "tree" "wget" "unzip" "zip" "git" "zram-generator" "sassc" "btop" "inotify-tools" 
     
     # Audio & Bluetooth Stack
     "pipewire" "wireplumber" "pipewire-pulse" "pipewire-jack" 
@@ -40,7 +40,7 @@ PACKAGES=(
     "nautilus" "localsend"
     
     # Fonts
-    "adobe-source-han-sans-cn-fonts" "noto-fonts" "noto-fonts-cjk" 
+    "adobe-source-han-sans-cn-fonts" "noto-fonts" "noto-fonts-cjk"  "noto-fonts-emoji"
     "ttf-jetbrains-mono" "ttf-jetbrains-mono-nerd" "ttf-rubik-vf"
 )
 

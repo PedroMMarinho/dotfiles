@@ -1,0 +1,30 @@
+{
+  "custom/power": {
+    "format": "⏻",
+    "on-click": "nwgbar",
+    "tooltip": false
+  },
+  "custom/pacman": {
+    "format": " {}",
+    "interval": 7200,
+    "exec": "i=$(checkupdates); echo \"$i\" |wc -l; echo \"$i\" |column -t |tr '\n' '\r'",
+    "exec-if": "exit 0",
+    "on-click": "kitty -e sudo pacman -Syu",
+    "signal": 8
+  },
+  "custom/cava": {
+    "exec": "$XDG_CONFIG_HOME/waybar/scripts/cava.sh",
+    "format": "{}",
+    "on-click-middle": "playerctl play-pause",
+    "on-click-right": "playerctl next",
+    "on-click": "playerctl previous"
+  },
+  "custom/playerinfo": {
+    "format": "&lt; {} &gt;",
+    "exec": "$XDG_CONFIG_HOME/waybar/scripts/playerinfo.sh",
+    "escape": true,
+    "return-type": "json",
+    "interval": 1,
+    "tooltip": true
+  }
+}
