@@ -14,7 +14,8 @@
 hl.on("hyprland.start", function ()
   hl.exec_cmd("nm-applet")
   hl.exec_cmd("blueman-applet") 
-  hl.exec_cmd("waybar")
+  --hl.exec_cmd("waybar")
+  --hl.exec_cmd("hyprland-autoname-workspaces")
   hl.exec_cmd("clipse -listen") -- Copy and Paste for Images
   hl.exec_cmd("fcitx5 -d") -- Mandarin Input Method
   hl.exec_cmd("awww-daemon") 
