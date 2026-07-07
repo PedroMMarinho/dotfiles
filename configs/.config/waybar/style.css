@@ -127,7 +127,7 @@ window#waybar {
 #custom-power,
 #custom-pacman,
 #custom-launcher,
-#audio,
+#custom-playerinfo,
 #mpd {
     padding: 5px 8px;
     border-style: solid;
@@ -283,19 +283,17 @@ window#waybar {
     border-radius: 10px;
 }
 
-#audio {
-    margin: 8px 10px;
-    border-radius: 10px;
-}
 
 #custom-cava {
     min-width: 200px;
     color: alpha(@mauve, 0.3);
+    padding: 5px 8px;
+    margin: 8px 0;
 }
 
 #custom-playerinfo {
     min-width: 200px;
-    margin-left: -200px;   /* pulls it directly on top of cava */
+    border-radius: 10px;
 }
 
 #custom-launcher,
@@ -332,6 +330,10 @@ window#waybar {
     /* border-bottom: 2px solid @peach; */
     border-radius: 0 10px 10px 0;
     margin-right: 10px;
+}
+
+.cava_overlay #workspaces,.cava_overlay #tray {
+    opacity: 0;
 }
 
 /* window#waybar {

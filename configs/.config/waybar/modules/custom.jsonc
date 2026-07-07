@@ -15,9 +15,7 @@
   "custom/cava": {
     "exec": "$XDG_CONFIG_HOME/waybar/scripts/cava.sh",
     "format": "{}",
-    "on-click-middle": "playerctl play-pause",
-    "on-click-right": "playerctl next",
-    "on-click": "playerctl previous"
+    "tooltip": false
   },
   "custom/playerinfo": {
     "format": "&lt; {} &gt;",
@@ -25,6 +23,9 @@
     "escape": true,
     "return-type": "json",
     "interval": 1,
-    "tooltip": true
+    "tooltip": true,
+    "on-click-middle": "playerctl play-pause",
+    "on-click-right": "playerctl next",
+    "on-click": "playerctl previous"
   }
 }
