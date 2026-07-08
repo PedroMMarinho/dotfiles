@@ -168,7 +168,7 @@ PanelWindow {
                                                 required property int index
                                                 id: delegate
                                                 
-                                                implicitHeight: 10
+                                                implicitHeight: 12
 
                                                 onClicked: {
                                                         root.controller.historyManager.recordLaunch(modelData.id, search.text);
@@ -188,8 +188,8 @@ PanelWindow {
                                                 Row {
                                                         spacing: 5
                                                         Image {
-                                                                width: 10
-                                                                height: 10
+                                                                width: 12
+                                                                height: 12
                                                                 asynchronous: true
                                                                 smooth: false
                                                                 source: Quickshell.iconPath(delegate.modelData.icon)

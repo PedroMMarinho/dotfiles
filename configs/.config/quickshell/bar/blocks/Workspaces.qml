@@ -42,7 +42,6 @@ RowLayout {
       property HyprlandWorkspace ws: modelData
       property bool isActive: Hyprland.focusedMonitor?.activeWorkspace?.id === ws.id
       property bool isOpen: monitor.activeWorkspace?.id === ws.id
-      property bool hasClients: ws.name.length > 2
 
       dim: true
       underline: false
@@ -75,94 +74,70 @@ RowLayout {
       }
 
       onClicked: function() {
-        Hyprland.dispatch(`workspace ${ws.id}`);
+        Hyprland.dispatch(`hl.dsp.focus({workspace = ${ws.id}})`);
       }
 
       content: RowLayout {
-        spacing: 10
+        spacing: 8
         anchors.centerIn: parent
+
+        Item {
+          Layout.alignment: Qt.AlignVCenter
+          implicitWidth: wsNum.implicitWidth
+          implicitHeight: wsNum.implicitHeight
+          BarText {
+            id: wsNum
+            symbolText: `${ws.id}`
+            dim: !isActive
+          }
+        }
 
         Repeater {
           id: therepeater
           model: ScriptModel {
-            values: getChunks(ws.name)
+            values: getClients(ws.id)
           }
 
           delegate: Item {
-            property bool showText: modelData.type === "text" && modelData.value.length > 0
-            property bool showIcon: modelData.type === "icon"
-            // property int symbolSize: 18
+            required property var modelData
             property int symbolSize: 22
-            property int spacerSize: 3
-
-            implicitWidth:  {
-              if (showText)
-                return thetext.implicitWidth
-              if (showIcon)
-                return symbolSize
-              return spacerSize;
-            }
-            implicitHeight:  {
-              if (showText)
-                return thetext.implicitHeight
-              if (showIcon)
-                return symbolSize
-              return spacerSize;
-            }
+            implicitWidth: symbolSize
+            implicitHeight: symbolSize
             Layout.alignment: Qt.AlignCenter
 
-            Loader {
-              id: thetext
+            IconImage {
+              id: appIcon
               anchors.centerIn: parent
-              active:  modelData.type === "text"
-              sourceComponent: BarText {
-                text: modelData.value
-                dim: !isActive
-
-                // pointSize: 10
-              }
+              source: Quickshell.iconPath(modelData.icon, "application-x-executable")
+              implicitSize: parent.symbolSize
+              opacity: isActive ? 1 : 0.7
+              mipmap: true
             }
-
-            Loader {
-              id: theicon
-              anchors.centerIn: parent
-              active: modelData.type === "icon"
-
-              sourceComponent: Item {
-                implicitWidth:  inside.implicitWidth
-                implicitHeight: inside.implicitHeight
-                IconImage {
-                  id: inside
-                  anchors.centerIn: parent
-                  source: modelData.source
-                  implicitSize: symbolSize
-                  opacity: modelData.active ? 1 : 0.7
-                  mipmap: true
-                }
-                DropShadow {
-                  anchors.fill: parent
-                  verticalOffset: 1
-                  horizontalOffset: 1
-                  radius: 8.0
-                  color: "#000000"
-                  source: inside
-                  opacity: modelData.active ? 1 : 0.7
-                }
-                Rectangle {
-                  visible: modelData.mult > 1
-                  width: 10
-                  height: width
-                  radius: width / 2
-                  color: "black"
-                  opacity: 0.8
-                  BarText {
-                    text: modelData.mult
-                    pointSize: 10
-                    dim: !isActive
-                    style: Text.Outline
-                    styleColor: "black"
-                  }
-                }
+            DropShadow {
+              anchors.fill: parent
+              verticalOffset: 1
+              horizontalOffset: 1
+              radius: 8.0
+              color: "#000000"
+              source: appIcon
+              opacity: isActive ? 1 : 0.7
+            }
+            Rectangle {
+              visible: modelData.mult > 1
+              anchors.top: parent.top
+              anchors.right: parent.right
+              width: 12
+              height: width
+              radius: width / 2
+              color: "black"
+              opacity: 0.8
+              BarText {
+                anchors.centerIn: parent
+                symbolText: `${modelData.mult}`
+                pointSize: 8
+                dim: !isActive
+                style: Text.Outline
+                styleColor: "black"
               }
             }
           }
@@ -171,97 +146,25 @@ RowLayout {
     }
   }
 
-  function getChunks(text) {
-    let chunks = [];
-    let buffer = "";  // Temporary storage for text segments
-
-    let symbolChunkInd = {}
-
-    let nextIsActive = false
-    for (let c of text) {
-      if (c === "󰀦") {
-        nextIsActive = true
+  // Collect the live windows in a workspace, grouped by app class, and resolve
+  // each to an icon-theme name via its desktop entry.  Reading
+  // Hyprland.toplevels here keeps the ScriptModel reactive to window changes.
+  function getClients(wsId) {
+    let groups = {}
+    let order = []
+    for (let t of Hyprland.toplevels.values) {
+      if (!t.workspace || t.workspace.id !== wsId)
         continue
+      let cls = (t.lastIpcObject && t.lastIpcObject.class) || (t.wayland && t.wayland.appId) || ""
+      if (cls === "")
+        continue
+      if (!(cls in groups)) {
+        let entry = DesktopEntries.heuristicLookup(cls)
+        groups[cls] = { icon: entry ? entry.icon : cls, mult: 0 }
+        order.push(cls)
       }
-
-      if (!(c in symbolImgMap)) {
-        buffer += c;
-        nextIsActive = false
-        continue;
-      }
-
-      if (buffer.length > 0 && !/^\s*$/.test(buffer)) {
-        chunks.push({
-            type: "text",
-            value: buffer,
-        });
-        buffer = ""; // Reset text buffer
-      }
-
-      if (!(c in symbolChunkInd)) {
-        if (chunks[chunks.length - 1].type == "icon") {
-          chunks.push({type: "spacer"})
-        }
-        symbolChunkInd[c] = chunks.length
-        chunks.push({
-          type: "icon",
-          active: nextIsActive,
-          source: `image://icon/${symbolImgMap[c]}`,
-          mult: 1, // multiplicity; how many times this symbol was seen
-        });
-      } else {
-        chunks[symbolChunkInd[c]].mult++
-        if (nextIsActive)
-          chunks[symbolChunkInd[c]].active = true;
-      }
-      nextIsActive = false
+      groups[cls].mult++
     }
-
-    if (buffer.length > 0 && !/^\s*$/.test(buffer)) {
-      chunks.push({ type: "text", value: buffer})
-    }
-
-    return chunks;
-  }
-
-  property var symbolImgMap: {
-    "": "extra-scale-vim",
-    "󰇥": "extra-scale-yazi",
-    // "󰇧": "extra-zen",
-    "󰇧": "extra-scale-firefox",
-    "󰒱": "extra-scale-slack",
-    "": "extra-scale-terminal-thin",
-    "": "extra-scale-firefox",
-    "": "extra-scale-element-desktop",
-    "󰊴": "extra-scale-discord-circle-dark",
-    "": "extra-scale-chromium",
-    // "": "chromium",
-    "󰽉": "libreoffice-draw",
-    "󰷈": "libreoffice-writer",
-    "": "libreoffice-calc",
-    "󰈩": "libreoffice-impress",
-    // "󰭹": "signal-desktop",
-    "󰭹": "extra-signal-simple",
-    "": "extra-zathura",
-    "": "extra-spotify",
-    // "": "extra-scale-spotify",
-    "": "extra-steam",
-    "": "extra-scale-bluetooth",
-    "": "extra-anki",
-    "": "extra-scale-gimp",
-    "": "extra-ghidra",
-    // "󰄄": "com.obsproject.Studio",
-    "󰄄": "extra-scale-obs",
-    "": "extra-scale-photos",
-    "": "extra-anki",
-    "": "extra-mpv",
-    "": "extra-virtualbox",
-    "": "extra-scale-emacs",
-    "": "monero",
-    "󰻎": "extra-system-explorer-outline",
-    "󱍼": "extra-scale-vlc",
-    "": "com.usebottles.bottles",
-    "": "Zoom",
-    "󰊻": "teams-for-linux",
+    return order.map(c => groups[c])
   }
 }

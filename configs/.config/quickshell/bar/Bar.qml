@@ -94,6 +94,13 @@ Scope {
           spacing: 0
           Layout.alignment: Qt.AlignRight
           Layout.fillWidth: true
+
+          Blocks.SystemTray {}
+          Blocks.Memory {}
+          Blocks.Sound {}
+          Blocks.Battery {}
+          Blocks.Date {}
+          Blocks.Time {}
         }
       }
     }

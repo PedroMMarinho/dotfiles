@@ -59,3 +59,5 @@ source "$ZDOTFILES/plugins.zsh"
 
 # Prompt theme
 source "$ZDOTFILES/prompt.zsh"
+
+export PATH="$HOME/.local/bin:$PATH"
