@@ -34,12 +34,12 @@ LazyLoader {
   PopupWindow {
     anchor {
       window: root.displayItem.QsWindow.window
-      rect.y: anchor.window.height + 3
+      rect.y: anchor.window.implicitHeight + 3
       rect.x: anchor.window.contentItem.mapFromItem(root.displayItem, root.displayItem.width / 2, 0).x
       edges: Edges.Top
       gravity: Edges.Bottom
     }
-
+    
     visible: true
 
     property alias hovered: body.containsMouse;
@@ -57,8 +57,8 @@ LazyLoader {
     Region { id: emptyRegion }
     mask: root.hoverable ? null : emptyRegion
 
-    width: body.implicitWidth
-    height: body.implicitHeight
+    implicitWidth: body.implicitWidth
+    implicitHeight: body.implicitHeight
 
     MouseArea {
       id: body

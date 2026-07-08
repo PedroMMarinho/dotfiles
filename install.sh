@@ -29,7 +29,7 @@ PACKAGES=(
     
     # Desktop Environment & Theming
     "waybar" "quickshell" "rofi-wayland" "dunst" "nwg-look" "awww" "hyprpolkitagent" "papirus-icon-theme" "papirus-folders" "hyprcursor" "qt6ct"
-    "apple_cursor"
+    "apple_cursor" "kvantum"
     # Input Method (Mandarin)
     "fcitx5" "fcitx5-chinese-addons" "fcitx5-configtool" "fcitx5-gtk" "fcitx5-qt"
     
