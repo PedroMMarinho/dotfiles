@@ -46,7 +46,7 @@ hl.bind(v.mainMod .. " + J", hl.dsp.layout("togglesplit"))
 hl.bind(v.mainMod .. " + SPACE", hl.dsp.exec_cmd(v.scriptsDir .. "/Keyboard.sh"))  
 -- TODO
 -- hl.bind(v.mainMod .. " + L", hl.dsp.exec_cmd(v.scriptsDir .. "/LockScreen.sh"))
--- hl.bind(v.mainMod .. " + X", hl.dsp.exec_cmd(v.scriptsDir .. "/Wlogout.sh"))
+hl.bind(v.mainMod .. " + X", hl.dsp.exec_cmd("qs ipc call power toggle"))
 -- hl.bind(v.mainMod .. " + CTRL + B", hl.dsp.exec_cmd(v.scriptsDir .. "/WaybarStyles.sh"))
 -- hl.bind(v.mainMod .. " + ALT + B", hl.dsp.exec_cmd(v.scriptsDir .. "/WaybarLayout.sh"))
 -- hl.bind(v.mainMod .. " + ALT + E", hl.dsp.exec_cmd(v.scriptsDir .. "/RofiEmoji.sh"))
