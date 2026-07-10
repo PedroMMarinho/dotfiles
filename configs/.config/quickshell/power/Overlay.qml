@@ -11,13 +11,14 @@ PanelWindow {
 
     required property var controller
 
-    // Five actions, left -> right. mnemonic = direct-activate key.
+    // Five actions, left -> right (ordered to match the reference image).
+    // mnemonic = direct-activate key; number keys 1-5 map by position.
     readonly property var actions: [
-        { label: "Lock",     icon: "root:/power/icons/lock.svg",      mnemonic: "l", command: ["loginctl", "lock-session"] },
-        { label: "Logout",   icon: "root:/power/icons/log-out.svg",   mnemonic: "e", command: ["hyprctl", "dispatch", "exit"] },
-        { label: "Suspend",  icon: "root:/power/icons/moon.svg",      mnemonic: "s", command: ["systemctl", "suspend"] },
+        { label: "Shutdown", icon: "root:/power/icons/power.svg",     mnemonic: "p", command: ["systemctl", "poweroff"] },
         { label: "Reboot",   icon: "root:/power/icons/rotate-cw.svg", mnemonic: "r", command: ["systemctl", "reboot"] },
-        { label: "Shutdown", icon: "root:/power/icons/power.svg",     mnemonic: "p", command: ["systemctl", "poweroff"] }
+        { label: "Sleep",    icon: "root:/power/icons/moon.svg",      mnemonic: "s", command: ["systemctl", "suspend"] },
+        { label: "Logout",   icon: "root:/power/icons/log-out.svg",   mnemonic: "e", command: ["hyprctl", "dispatch", "exit"] },
+        { label: "Lock",     icon: "root:/power/icons/lock.svg",      mnemonic: "l", command: ["loginctl", "lock-session"] }
     ]
 
     property int selected: 0
