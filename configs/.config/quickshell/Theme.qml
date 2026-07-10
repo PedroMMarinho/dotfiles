@@ -4,7 +4,7 @@ import QtQuick
 import Quickshell
 
 Singleton {
-  property Item get: black_flat
+  property Item get: whiteSur_dark
 
   Item {
     id: windowsXP
@@ -23,6 +23,9 @@ Singleton {
     property string wlogoutIconColor: "#FFFFFF"
     property string wlogoutIconSelected: "#FFD54F"
     property string wlogoutLabelColor: "#FFFFFF"
+    // Frosted panel (power menu container)
+    property string wlogoutPanelBg: "#CC12244F"
+    property string wlogoutPanelBorder: "#55FFFFFF"
     property Gradient barGradient: black_flat.barGradient
     property Gradient buttonInactiveGradientV: Gradient {
       GradientStop { position: 0.0; color: "#55FFFFFF" }
@@ -57,6 +60,46 @@ Singleton {
     property string wlogoutIconColor: "#DDFFFFFF"
     property string wlogoutIconSelected: "#FF55FF"
     property string wlogoutLabelColor: "#DDFFFFFF"
+    // Frosted panel (power menu container)
+    property string wlogoutPanelBg: "#CC1A1A1A"
+    property string wlogoutPanelBorder: "#33FFFFFF"
+    property Gradient barGradient: Gradient {
+      GradientStop { position: 0.0; color: "transparent" }
+    }
+    property Gradient buttonInactiveGradientV: Gradient {
+      GradientStop { position: 0.0; color: "transparent" }
+    }
+    property Gradient buttonInactiveGradientH: Gradient {
+      orientation: Gradient.Horizontal
+      GradientStop { position: 0.0; color: "transparent" }
+    }
+    property Gradient buttonActiveGradient: Gradient {
+      GradientStop { position: 0.92; color: "#FF000000" }
+      GradientStop { position: 0.93; color: "#FFFFFFFF" }
+      GradientStop { position: 1.0; color: "#FFFFFFFF" }
+    }
+  }
+
+  Item {
+    id: whiteSur_dark
+
+    property string barBgColor: "#CC1C1C1E"
+    property string buttonBorderColor: "#01000000" // near-transparent (same guard as black_flat)
+    property bool buttonBorderShadow: false
+    property bool onTop: true
+    property string iconColor: "#DDFFFFFF"
+    property string iconPressedColor: "#0A84FF"
+    // Wlogout power menu
+    property string wlogoutButtonBg: "#14FFFFFF"
+    property string wlogoutButtonBgHover: "#330A84FF"
+    property string wlogoutBorderColor: "#26FFFFFF"
+    property string wlogoutSelectedBorder: "#0A84FF"
+    property string wlogoutIconColor: "#F5FFFFFF"
+    property string wlogoutIconSelected: "#0A84FF"
+    property string wlogoutLabelColor: "#CCFFFFFF"
+    // Frosted panel (power menu container)
+    property string wlogoutPanelBg: "#CC1C1C1E"
+    property string wlogoutPanelBorder: "#26FFFFFF"
     property Gradient barGradient: Gradient {
       GradientStop { position: 0.0; color: "transparent" }
     }
