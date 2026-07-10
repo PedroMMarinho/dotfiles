@@ -4,8 +4,8 @@
                 "title",
                 {
                         "type": "custom",
-                        "key": "┌{$1} {#32}Softwares",
-                        "outputColor": "90"
+                        "key": "┌{$1} {#33}Softwares",
+                        "outputColor": "33"
                 },
                 {
                         "type": "os",
@@ -33,8 +33,8 @@
                 },
                 {
                         "type": "custom",
-                        "key": "┌{$1} {#32}Hardwares",
-                        "outputColor": "90"
+                        "key": "┌{$1} {#33}Hardwares",
+                        "outputColor": "33"
                 },
                 {
                         "type": "cpu",
@@ -73,8 +73,8 @@
                         "│ "
                 ],
                 "color": {
-                        "keys": "light_green",
-                        "title": "green"
+                        "keys": "white",
+                        "title": "blue"
                 },
                 "percent": {
                         "type": ["num", "bar"]

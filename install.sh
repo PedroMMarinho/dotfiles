@@ -38,14 +38,14 @@ PACKAGES=(
     
     # Applications
     "visual-studio-code-bin" "google-chrome" "spotify" "discord" "vlc" 
-    "nautilus" "localsend" "vlc-plugin-ffmpeg" "vlc-plugin-x264"
+    "nautilus" "localsend" "vlc-plugin-ffmpeg" "vlc-plugin-x264" "obs" "luajit"
     
     # Fonts
     "adobe-source-han-sans-cn-fonts" "noto-fonts" "noto-fonts-cjk"  "noto-fonts-emoji"
     "ttf-jetbrains-mono" "ttf-jetbrains-mono-nerd" "ttf-rubik-vf" "ttf-nerd-fonts-symbols"
-    "ttf-nerd-fonts-symbols-mono" "woff2-font-awesome"
+    "ttf-nerd-fonts-symbols-mono" "woff2-font-awesome" "apple-fonts"
 )
-
+q
 # System-wide services to enable (requires sudo)
 SYSTEM_SERVICES=(
     "NetworkManager"

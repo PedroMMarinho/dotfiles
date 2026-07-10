@@ -6,7 +6,7 @@ format = "$directory$os$git_branch$git_status$nodejs$rust$golang$php $character"
 
 [os]
 disabled = false
-format = "[$symbol](#blue) "
+format = "[$symbol](bold blue) "
 
 [os.symbols]
 Ubuntu  = "󰕈"
@@ -16,13 +16,13 @@ CachyOS = "󰣇"
 Macos   = ""
 
 [directory]
-format            = "[$path](cyan) "
+format            = "[$path](bold white) "
 truncation_length = 4
 truncate_to_repo  = true
 
 [git_branch]
 symbol = ""
-format = "[$symbol $branch](bold purple) "
+format = "[$symbol $branch](bold yellow) "
 
 [git_status]
 format     = "($ahead_behind$staged$modified$untracked$deleted$conflicted)"
@@ -52,6 +52,6 @@ symbol = ""
 format = "[$symbol $version](purple) "
 
 [character]
-success_symbol = "[❯](green)"
-error_symbol   = "[❯](red)"
-vimcmd_symbol  = "[❮](blue)"
+success_symbol = "[❯](bold yellow)"
+error_symbol   = "[❯](bold red)"
+vimcmd_symbol  = "[❮](bold blue)"
