@@ -34,7 +34,7 @@ BarBlock {
     command: [
       "hyprctl", 
       "dispatch", 
-      "hl.dsp.exec_cmd('[float] kitty --hold fastfetch')"
+      "hl.dsp.exec_cmd('kitty --class kitty-float --hold fastfetch')"
     ]
     stdout: SplitParser {
       onRead: data => console.log(`line read: ${data}`)

@@ -87,8 +87,8 @@ Singleton {
     property string buttonBorderColor: "#01000000" // near-transparent (same guard as black_flat)
     property bool buttonBorderShadow: false
     property bool onTop: true
-    property string iconColor: "#DDFFFFFF"
-    property string iconPressedColor: "#0A84FF"
+    property string iconColor: "blue"
+    property string iconPressedColor: "dark_blue"
     // Wlogout power menu
     property string wlogoutButtonBg: "#14FFFFFF"
     property string wlogoutButtonBgHover: "#330A84FF"

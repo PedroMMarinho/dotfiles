@@ -54,6 +54,16 @@ hl.window_rule({
     float = true,
 })
 
+-- Floating kitty launched from the bar icon: fixed size, centered
+hl.window_rule({
+    name  = "float-bar-kitty",
+    match = { class = "kitty-float" },
+
+    float  = true,
+    size   = "(monitor_w*0.56) (monitor_h*0.5)",
+    center = true,
+})
+
 -- Blur the Quickshell power-menu layer so the frosted panel reads as real glass.
 hl.layer_rule({
     name         = "power-menu-blur",
