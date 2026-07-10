@@ -53,3 +53,11 @@ hl.window_rule({
     move  = "20 monitor_h-120",
     float = true,
 })
+
+-- Blur the Quickshell power-menu layer so the frosted panel reads as real glass.
+hl.layer_rule({
+    name         = "power-menu-blur",
+    match        = { namespace = "^shell:power$" },
+    blur         = true,
+    ignore_alpha = 0.2,
+})
