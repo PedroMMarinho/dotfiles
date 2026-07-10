@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import QtQuick.Effects
 import Quickshell
 import Quickshell.Wayland
 import "root:/" // for Theme singleton
@@ -12,11 +13,11 @@ PanelWindow {
 
     // Five actions, left -> right. mnemonic = direct-activate key.
     readonly property var actions: [
-        { label: "Lock",     glyph: "", mnemonic: "l", command: ["loginctl", "lock-session"] },
-        { label: "Logout",   glyph: "", mnemonic: "e", command: ["hyprctl", "dispatch", "exit"] },
-        { label: "Suspend",  glyph: "", mnemonic: "s", command: ["systemctl", "suspend"] },
-        { label: "Reboot",   glyph: "", mnemonic: "r", command: ["systemctl", "reboot"] },
-        { label: "Shutdown", glyph: "", mnemonic: "p", command: ["systemctl", "poweroff"] }
+        { label: "Lock",     icon: "root:/power/icons/lock.svg",      mnemonic: "l", command: ["loginctl", "lock-session"] },
+        { label: "Logout",   icon: "root:/power/icons/log-out.svg",   mnemonic: "e", command: ["hyprctl", "dispatch", "exit"] },
+        { label: "Suspend",  icon: "root:/power/icons/moon.svg",      mnemonic: "s", command: ["systemctl", "suspend"] },
+        { label: "Reboot",   icon: "root:/power/icons/rotate-cw.svg", mnemonic: "r", command: ["systemctl", "reboot"] },
+        { label: "Shutdown", icon: "root:/power/icons/power.svg",     mnemonic: "p", command: ["systemctl", "poweroff"] }
     ]
 
     property int selected: 0
@@ -29,7 +30,7 @@ PanelWindow {
     }
 
     exclusionMode: ExclusionMode.Ignore
-    color: "#35000000"
+    color: "#66000000" // darkened backdrop so focus stays on the panel
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
     WlrLayershell.namespace: "shell:power"
 
@@ -39,7 +40,7 @@ PanelWindow {
         root.controller.isOpen = false;
     }
 
-    // Click on the dim backdrop (outside buttons) closes the menu.
+    // Click on the dim backdrop (outside the panel) closes the menu.
     MouseArea {
         anchors.fill: parent
         onClicked: root.controller.isOpen = false
@@ -76,54 +77,83 @@ PanelWindow {
             }
         }
 
-        Row {
-            id: buttonRow
+        // Frosted macOS-style container holding the action row.
+        Rectangle {
+            id: panel
             anchors.centerIn: parent
-            spacing: 20
+            width: buttonRow.width + 48
+            height: buttonRow.height + 48
+            radius: 22
+            color: Theme.get.wlogoutPanelBg
+            border.width: 1
+            border.color: Theme.get.wlogoutPanelBorder
 
-            Repeater {
-                model: root.actions
+            layer.enabled: true
+            layer.effect: MultiEffect {
+                autoPaddingEnabled: true
+                shadowEnabled: true
+                shadowColor: "#88000000"
+                shadowBlur: 1.0
+                shadowVerticalOffset: 8
+            }
 
-                delegate: Rectangle {
-                    id: button
-                    required property int index
-                    required property var modelData
+            Row {
+                id: buttonRow
+                anchors.centerIn: parent
+                spacing: 16
 
-                    readonly property bool active: root.selected === index
+                Repeater {
+                    model: root.actions
 
-                    width: 110
-                    height: 110
-                    radius: 12
-                    color: active ? Theme.get.wlogoutButtonBgHover : Theme.get.wlogoutButtonBg
-                    border.width: 2
-                    border.color: active ? Theme.get.wlogoutSelectedBorder : Theme.get.wlogoutBorderColor
+                    delegate: Rectangle {
+                        id: button
+                        required property int index
+                        required property var modelData
 
-                    HoverHandler {
-                        id: hover
-                        onHoveredChanged: if (hovered) root.selected = button.index
-                    }
+                        readonly property bool active: root.selected === index
 
-                    TapHandler {
-                        onTapped: root.activate(button.index)
-                    }
+                        width: 104
+                        height: 104
+                        radius: 16
+                        color: active ? Theme.get.wlogoutButtonBgHover : Theme.get.wlogoutButtonBg
+                        border.width: active ? 2 : 1
+                        border.color: active ? Theme.get.wlogoutSelectedBorder : Theme.get.wlogoutBorderColor
 
-                    Column {
-                        anchors.centerIn: parent
-                        spacing: 10
-
-                        Text {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            text: button.modelData.glyph
-                            font.family: "Symbols Nerd Font"
-                            font.pixelSize: 36
-                            color: button.active ? Theme.get.wlogoutIconSelected : Theme.get.wlogoutIconColor
+                        HoverHandler {
+                            onHoveredChanged: if (hovered) root.selected = button.index
                         }
 
-                        Text {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            text: button.modelData.label
-                            font.pixelSize: 14
-                            color: Theme.get.wlogoutLabelColor
+                        TapHandler {
+                            onTapped: root.activate(button.index)
+                        }
+
+                        Column {
+                            anchors.centerIn: parent
+                            spacing: 10
+
+                            Image {
+                                id: iconImg
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                source: button.modelData.icon
+                                sourceSize.width: 40
+                                sourceSize.height: 40
+                                width: 40
+                                height: 40
+                                fillMode: Image.PreserveAspectFit
+                                smooth: true
+                                layer.enabled: true
+                                layer.effect: MultiEffect {
+                                    colorization: 1.0
+                                    colorizationColor: button.active ? Theme.get.wlogoutIconSelected : Theme.get.wlogoutIconColor
+                                }
+                            }
+
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: button.modelData.label
+                                font.pixelSize: 14
+                                color: Theme.get.wlogoutLabelColor
+                            }
                         }
                     }
                 }
