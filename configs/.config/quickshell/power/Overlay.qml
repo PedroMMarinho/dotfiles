@@ -40,7 +40,8 @@ PanelWindow {
         root.controller.isOpen = false;
     }
 
-    // Click on the dim backdrop (outside the panel) closes the menu.
+    // Click on the dim backdrop (outside the panel) closes the menu. The panel itself
+    // absorbs clicks (via its own MouseArea) so clicking the frosted glass does nothing.
     MouseArea {
         anchors.fill: parent
         onClicked: root.controller.isOpen = false
@@ -95,6 +96,13 @@ PanelWindow {
                 shadowColor: "#88000000"
                 shadowBlur: 1.0
                 shadowVerticalOffset: 8
+            }
+
+            // Absorb clicks that land on the panel's padding/border or the gaps
+            // between buttons, so they don't fall through to the backdrop and close
+            // the menu. Buttons are declared after this, so they still receive taps.
+            MouseArea {
+                anchors.fill: parent
             }
 
             Row {
