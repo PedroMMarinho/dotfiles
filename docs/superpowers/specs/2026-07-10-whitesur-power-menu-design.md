@@ -40,7 +40,11 @@ layerrule = blur, shell:power
 layerrule = ignorealpha 0.2, shell:power
 ```
 
-Backdrop dim is lightened (from `#35000000` to ~`#22000000`) so the blur reads through.
+**Backdrop dim (darker, for focus):** per user request, the background outside the panel
+should be clearly darkened so it doesn't distract. The PanelWindow dim is *darkened* from
+`#35000000` to ~`#66000000` (≈40% black). Combined with the compositor blur, the
+background reads as blurred *and* dimmed, pushing focus onto the frosted panel. The panel
+itself stays lighter/frosted, maximizing contrast against the darkened surroundings.
 
 ### 2. The panel container
 
@@ -64,15 +68,17 @@ Rounded-square cells (icon + label), structure preserved from current delegate:
 
 ### 4. Icons (user-supplied, recolored)
 
-- User drops monochrome SVGs into `configs/.config/quickshell/power/icons/`:
-  `lock.svg`, `logout.svg`, `suspend.svg`, `reboot.svg`, `shutdown.svg`
-  (Lucide/Phosphor: `lock`, `log-out`, `moon`, `rotate-cw`, `power`).
-- Each action in the `actions` model gains an `icon` path (e.g.
+- Icons are **supplied and present** (Phosphor set, solid white `fill="#ffffff"`,
+  `viewBox 0 0 256 256`) in `configs/.config/quickshell/power/icons/`. Actual filenames:
+  `lock.svg`, `log-out.svg`, `moon.svg`, `rotate-cw.svg`, `power.svg`.
+- Action → file mapping:
+  Lock→`lock.svg`, Logout→`log-out.svg`, Suspend→`moon.svg`, Reboot→`rotate-cw.svg`,
+  Shutdown→`power.svg`. Each action in the `actions` model gains an `icon` path (e.g.
   `"root:/power/icons/lock.svg"`) replacing the Nerd Font `glyph`.
 - Rendered via `Image` (with `sourceSize` for crisp scaling) → recolored through a
   `MultiEffect` (`colorization: 1.0`, `colorizationColor:` the theme icon color).
-  Lucide/Phosphor `currentColor` renders black in Qt SVG; colorization tints it to
-  `wlogoutIconColor` (idle) / `wlogoutIconSelected` (selected/hover).
+  Source is solid white, so colorization tints the filled shape to `wlogoutIconColor`
+  (idle) / `wlogoutIconSelected` (selected/hover) cleanly, preserving alpha edges.
 - Label text color stays `wlogoutLabelColor`.
 
 ### 5. WhiteSur Dark theme
@@ -123,7 +129,8 @@ a one-line switch so the user can revert.
   flip `get`.
 - `configs/.config/quickshell/power/Overlay.qml` — panel container, `Image`+`MultiEffect`
   icons, `actions` model gains `icon` paths.
-- `configs/.config/quickshell/power/icons/` — new folder, user-supplied SVGs.
+- `configs/.config/quickshell/power/icons/` — SVGs already added by user (no code change,
+  referenced by path).
 - `configs/.config/hypr/modules/window-rules.lua` — blur layer rules.
 
 ## Verification
@@ -135,7 +142,6 @@ a one-line switch so the user can revert.
 - Confirm no double-highlight regression.
 - Fallback check: if an icon file is missing, `Image` renders empty — panel still usable.
 
-## Open dependency
+## Resolved dependency
 
-Icons are user-supplied. Code will reference the 5 filenames; menu is functional (empty
-icon slots) until files are dropped in.
+Icons supplied and verified present (Phosphor set, white fill). No blockers remain.
