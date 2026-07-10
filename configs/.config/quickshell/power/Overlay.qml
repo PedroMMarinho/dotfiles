@@ -89,7 +89,7 @@ PanelWindow {
                     required property int index
                     required property var modelData
 
-                    readonly property bool active: root.selected === index || hover.hovered
+                    readonly property bool active: root.selected === index
 
                     width: 110
                     height: 110
