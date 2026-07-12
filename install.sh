@@ -127,3 +127,16 @@ echo "Updating font cache..."
 fc-cache -fv
 
 echo "Done! System setup complete."
+
+# ==========================================
+# 6. Install WhiteSur Icon Theme
+# ==========================================
+echo "Downloading and installing WhiteSur icon theme..."
+git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git /tmp/WhiteSur-icon-theme
+cd /tmp/WhiteSur-icon-theme
+./install.sh
+cd "$DOTFILES_DIR"
+rm -rf /tmp/WhiteSur-icon-theme
+echo "WhiteSur icon theme installed and temporary folder removed."
+
+echo "Done! System setup complete."

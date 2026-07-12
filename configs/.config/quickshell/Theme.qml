@@ -26,6 +26,22 @@ Singleton {
     // Frosted panel (power menu container)
     property string wlogoutPanelBg: "#CC12244F"
     property string wlogoutPanelBorder: "#55FFFFFF"
+    // Lock screen
+    property string lockAccent: "#FFD54F"
+    property string lockText: "#FFFFFF"
+    property string lockTextDim: "#C8FFFFFF"
+    property string lockTextError: "#FFD0D0"
+    property string lockGlassTint: "#2EFFFFFF"
+    property string lockGlassBorder: "#59FFFFFF"
+    property string lockGlassTintError: "#40FF5555"
+    property string lockGlassBorderError: "#CCFF5555"
+    property string lockAvatarBg: "#33FFFFFF"
+    property string lockAvatarBorder: "#66FFFFFF"
+    property string lockTrayTint: "#26FFFFFF"
+    property string lockTrayBorder: "#3AFFFFFF"
+    property string lockGlassText: "#73FFFFFF"
+    
+
     property Gradient barGradient: black_flat.barGradient
     property Gradient buttonInactiveGradientV: Gradient {
       GradientStop { position: 0.0; color: "#55FFFFFF" }
@@ -63,6 +79,21 @@ Singleton {
     // Frosted panel (power menu container)
     property string wlogoutPanelBg: "#CC1A1A1A"
     property string wlogoutPanelBorder: "#33FFFFFF"
+    // Lock screen
+    property string lockAccent: "#FF55FF"
+    property string lockText: "#FFFFFF"
+    property string lockTextDim: "#C8FFFFFF"
+    property string lockTextError: "#FFD0D0"
+    property string lockGlassTint: "#2EFFFFFF"
+    property string lockGlassBorder: "#59FFFFFF"
+    property string lockGlassTintError: "#40FF5555"
+    property string lockGlassBorderError: "#CCFF5555"
+    property string lockAvatarBg: "#33FFFFFF"
+    property string lockTrayTint: "#26FFFFFF"
+    property string lockTrayBorder: "#3AFFFFFF"
+    property string lockGlassText: "#73FFFFFF"
+    property string lockAvatar: "abyss_watcher"
+    
     property Gradient barGradient: Gradient {
       GradientStop { position: 0.0; color: "transparent" }
     }
@@ -100,6 +131,23 @@ Singleton {
     // Frosted panel (power menu container)
     property string wlogoutPanelBg: "#CC1C1C1E"
     property string wlogoutPanelBorder: "#26FFFFFF"
+    // Lock screen
+    property string lockAccent: "#0A84FF"
+    property string lockText: "#FFFFFF"
+    property string lockTextDim: "#C8FFFFFF"
+    property string lockTextError: "#FFD0D0"
+    property string lockGlassTint: "#2EFFFFFF"
+    property string lockGlassBorder: "#59FFFFFF"
+    property string lockGlassTintError: "#40FF5555"
+    property string lockGlassBorderError: "#CCFF5555"
+    property string lockAvatarBg: "#33FFFFFF"
+    property string lockAvatarBorder: "#66FFFFFF"
+    property string lockTrayTint: "#26FFFFFF"
+    property string lockTrayBorder: "#3AFFFFFF"
+    property string lockGlassText: "#73FFFFFF"
+    property string lockAvatar: "abyss_watcher"
+
+
     property Gradient barGradient: Gradient {
       GradientStop { position: 0.0; color: "transparent" }
     }
