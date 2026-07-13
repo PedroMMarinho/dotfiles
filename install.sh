@@ -18,7 +18,7 @@ PACKAGES=(
     # Terminal & Core CLI Utilities
     "kitty" "zsh" "starship" "fastfetch" "zoxide" "eza" "bat" "fzf" "fd" "jq" 
     "stow" "tree" "wget" "unzip" "zip" "git" "zram-generator" "sassc" "btop" "inotify-tools" 
-    "inkscape" "imagemagick" "hyprland-autoname-workspaces" "xdg-utils" "nodejs" "npm" "bun"
+    "inkscape" "hyprland-autoname-workspaces" "xdg-utils" "nodejs" "npm" "bun"
 
     # Audio & Bluetooth Stack
     "pipewire" "wireplumber" "pipewire-pulse" "pipewire-jack" 
@@ -28,7 +28,7 @@ PACKAGES=(
     "networkmanager" "network-manager-applet" "networkmanager-pptp" "pptpclient" "networkmanager-openvpn" "networkmanager-wireguard" "wireguard-tools"
     
     # Desktop Environment & Theming
-    "waybar" "quickshell" "rofi-wayland" "dunst" "nwg-look" "awww" "hyprpolkitagent" "papirus-icon-theme" "papirus-folders" "hyprcursor" "qt6ct"
+    "waybar" "quickshell" "rofi" "dunst" "nwg-look" "awww" "hyprpolkitagent" "papirus-icon-theme" "papirus-folders" "hyprcursor" "qt6ct"
     "apple_cursor" "kvantum"
     # Input Method (Mandarin)
     "fcitx5" "fcitx5-chinese-addons" "fcitx5-configtool" "fcitx5-gtk" "fcitx5-qt"
@@ -38,14 +38,14 @@ PACKAGES=(
     
     # Applications
     "visual-studio-code-bin" "google-chrome" "spotify" "discord" "vlc" 
-    "nautilus" "localsend" "vlc-plugin-ffmpeg" "vlc-plugin-x264" "obs" "luajit"
+    "nautilus" "localsend" "vlc-plugin-ffmpeg" "vlc-plugin-x264" "obs-studio" "luajit"
     
     # Fonts
     "adobe-source-han-sans-cn-fonts" "noto-fonts" "noto-fonts-cjk"  "noto-fonts-emoji"
     "ttf-jetbrains-mono" "ttf-jetbrains-mono-nerd" "ttf-rubik-vf" "ttf-nerd-fonts-symbols"
     "ttf-nerd-fonts-symbols-mono" "woff2-font-awesome" "apple-fonts"
 )
-q
+
 # System-wide services to enable (requires sudo)
 SYSTEM_SERVICES=(
     "NetworkManager"
