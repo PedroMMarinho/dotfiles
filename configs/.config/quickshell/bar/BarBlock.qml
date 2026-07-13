@@ -14,6 +14,8 @@ Rectangle {
   property bool dim: false
   property bool underline
   property var onClicked: function() {}
+  // Optional: function(steps) called on scroll, steps = wheel notches (+up/-down)
+  property var onScrolled
   property int leftPadding
   property int rightPadding
 
@@ -56,6 +58,13 @@ Rectangle {
     hoverEnabled: true
     acceptedButtons: Qt.LeftButton
     onClicked: root.onClicked()
+
+    onWheel: event => {
+      if (root.onScrolled)
+        root.onScrolled(event.angleDelta.y / 120);
+      else
+        event.accepted = false;
+    }
   }
 
   // While line underneath workspace

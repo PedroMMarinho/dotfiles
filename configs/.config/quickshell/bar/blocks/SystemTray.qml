@@ -11,11 +11,10 @@ RowLayout {
 
   Repeater {
     model: ScriptModel {
-      values: {[...SystemTray.items.values]
-        .filter((item) => {
-          return ( item.id != "chrome_status_icon_1")
-        })
-      }
+      // Note: don't filter on item.id == "chrome_status_icon_1" here — every
+      // Electron app (Discord, WhatsApp, ...) reports that same generic id.
+      // To hide a specific app, filter on item.tooltipTitle instead.
+      values: [...SystemTray.items.values]
     }
 
     MouseArea {

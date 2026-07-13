@@ -97,6 +97,7 @@ Scope {
 
           Blocks.SystemTray {}
           Blocks.Memory {}
+          Blocks.Mic {}
           Blocks.Sound {}
           Blocks.Battery {}
           Blocks.Date {}

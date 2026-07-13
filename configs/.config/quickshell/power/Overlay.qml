@@ -11,17 +11,25 @@ PanelWindow {
 
     required property var controller
 
+    // Set by the Variants in Controller.qml — one overlay per monitor.
+    property var modelData
+    screen: modelData
+
     // Five actions, left -> right (ordered to match the reference image).
     // mnemonic = direct-activate key; number keys 1-5 map by position.
+    // "sleep: true" routes through the controller so the lock screen engages
+    // before suspending. The logout dispatcher must use the Lua-mode spelling
+    // ("hl.dsp.exit()") — plain "exit" is rejected under a Lua Hyprland config.
     readonly property var actions: [
         { label: "Shutdown", icon: "root:/power/icons/power.svg",     mnemonic: "p", command: ["systemctl", "poweroff"] },
         { label: "Reboot",   icon: "root:/power/icons/rotate-cw.svg", mnemonic: "r", command: ["systemctl", "reboot"] },
-        { label: "Sleep",    icon: "root:/power/icons/moon.svg",      mnemonic: "s", command: ["systemctl", "suspend"] },
-        { label: "Logout",   icon: "root:/power/icons/log-out.svg",   mnemonic: "e", command: ["hyprctl", "dispatch", "exit"] },
+        { label: "Sleep",    icon: "root:/power/icons/moon.svg",      mnemonic: "s", sleep: true },
+        { label: "Logout",   icon: "root:/power/icons/log-out.svg",   mnemonic: "e", command: ["sh", "-c", "command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"] },
         //{ label: "Lock",     icon: "root:/power/icons/lock.svg",      mnemonic: "l", command: ["loginctl", "lock-session"] }
     ]
 
-    property int selected: 0
+    // Selection lives on the controller so all monitors mirror it.
+    readonly property int selected: controller.selected
 
     // The overlay is anchored to all screen edges, so width/height == the monitor
     // size. Derive one base "cell" (button) size from the smaller dimension and
@@ -47,8 +55,11 @@ PanelWindow {
 
     function activate(index) {
         const action = root.actions[index];
-        Quickshell.execDetached({ command: action.command });
         root.controller.isOpen = false;
+        if (action.sleep)
+            root.controller.sleepWithLock();
+        else
+            Quickshell.execDetached({ command: action.command });
     }
 
     // Click on the dim backdrop (outside the panel) closes the menu. The panel itself
@@ -67,10 +78,10 @@ PanelWindow {
 
         Keys.onPressed: event => {
             if (event.key === Qt.Key_Left) {
-                root.selected = (root.selected - 1 + root.actions.length) % root.actions.length;
+                root.controller.selected = (root.selected - 1 + root.actions.length) % root.actions.length;
                 event.accepted = true;
             } else if (event.key === Qt.Key_Right) {
-                root.selected = (root.selected + 1) % root.actions.length;
+                root.controller.selected = (root.selected + 1) % root.actions.length;
                 event.accepted = true;
             } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
                 root.activate(root.selected);
@@ -139,7 +150,7 @@ PanelWindow {
                         border.color: active ? Theme.get.wlogoutSelectedBorder : Theme.get.wlogoutBorderColor
 
                         HoverHandler {
-                            onHoveredChanged: if (hovered) root.selected = button.index
+                            onHoveredChanged: if (hovered) root.controller.selected = button.index
                         }
 
                         TapHandler {

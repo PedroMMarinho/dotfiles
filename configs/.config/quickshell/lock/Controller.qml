@@ -52,17 +52,21 @@ Singleton {
     // Emitted on a failed/errored attempt so surfaces can shake + clear.
     signal failedPulse()
 
+    // Public entry point, used by both the IPC handler (MOD+L) and the power
+    // menu's sleep action (lock first, so the session wakes up locked).
+    function lock(): void {
+        if (root.locked || root._armed)
+            return;
+        root._armed = true;             // engage once the fresh wallpaper is ready
+        root._queryDone = false;
+        wallpaperQuery.running = true;  // get the CURRENT wallpaper first
+        armFallback.restart();          // ...but never hang if it can't load
+    }
+
     IpcHandler {
         target: "lock"
 
-        function lock(): void {
-            if (root.locked || root._armed)
-                return;
-            root._armed = true;             // engage once the fresh wallpaper is ready
-            root._queryDone = false;
-            wallpaperQuery.running = true;  // get the CURRENT wallpaper first
-            armFallback.restart();          // ...but never hang if it can't load
-        }
+        function lock(): void { root.lock(); }
         function unlock(): void { root.locked = false; } // TEMPORARY test escape hatch; removed before commit
     }
 
