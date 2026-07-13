@@ -37,8 +37,8 @@ PACKAGES=(
     "grim" "slurp" "wl-clipboard" "swappy" "chafa" "imagemagick"
     
     # Applications
-    "visual-studio-code-bin" "google-chrome" "spotify" "discord" "vlc" 
-    "nautilus" "localsend" "vlc-plugin-ffmpeg" "vlc-plugin-x264" "obs-studio" "luajit"
+    "visual-studio-code-bin" "google-chrome" "spotify-launcher" "discord" "vlc" 
+    "nautilus" "localsend" "vlc-plugin-ffmpeg" "vlc-plugin-x264" "obs-studio" "luajit" "claude-desktop-bin"
     
     # Fonts
     "adobe-source-han-sans-cn-fonts" "noto-fonts" "noto-fonts-cjk"  "noto-fonts-emoji"
@@ -129,14 +129,26 @@ fc-cache -fv
 echo "Done! System setup complete."
 
 # ==========================================
-# 6. Install WhiteSur Icon Theme
+# 6. Install MacTahoe Icon Theme
 # ==========================================
-echo "Downloading and installing WhiteSur icon theme..."
-git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git /tmp/WhiteSur-icon-theme
-cd /tmp/WhiteSur-icon-theme
+
+mkdir -p /tmp/MacTahoe-gtk-theme
+
+echo "Downloading and installing MacTahoe icon theme..."
+git clone https://github.com/vinceliuice/MacTahoe-gtk-theme.git /tmp/MacTahoe-gtk-theme
+cd /tmp/MacTahoe-gtk-theme
 ./install.sh
 cd "$DOTFILES_DIR"
-rm -rf /tmp/WhiteSur-icon-theme
-echo "WhiteSur icon theme installed and temporary folder removed."
+rm -rf /tmp/MacTahoe-gtk-theme
+echo "MacTahoe icon theme installed and temporary folder removed."
+
+
+# ==========================================
+# 7. Install Claude AI CLI
+# ==========================================
+echo "Installing Claude AI CLI..."
+curl -fsSL https://claude.ai/install.sh | bash
+
+
 
 echo "Done! System setup complete."

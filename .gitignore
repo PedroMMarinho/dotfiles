@@ -1,3 +1,5 @@
 configs/.config/zsh/plugins/*
 !configs/.config/zsh/plugins/.dummy
 .claude
+sddm
+grub
