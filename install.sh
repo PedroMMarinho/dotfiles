@@ -142,6 +142,11 @@ cd "$DOTFILES_DIR"
 rm -rf /tmp/MacTahoe-gtk-theme
 echo "MacTahoe icon theme installed and temporary folder removed."
 
+# Need to go to mimes and check if everything is well symlinked
+echo "Go to share/icons/MacTahoe-dark/mimes and if folder svg is black then we need to run this:"
+echo "rm 16 22 scalable"
+echo "cp -r ~/.local/share/icons/MacTahoe/mimes/16 ~/.local/share/icons/MacTahoe/mimes/22 ~/.local/share/icons/MacTahoe/mimes/scalable ."
+echo "gtk-update-icon-cache -f ~/.local/share/icons/MacTahoe-dark"
 
 # ==========================================
 # 7. Install Claude AI CLI

@@ -42,8 +42,8 @@ hl.env("QS_ICON_THEME", "MacTahoe-dark")
 -- Nvidia Specific 
 
 -- Current PC does not have but my previous one did, so I will leave it here for future reference
--- hl.env("LIBVA_DRIVER_NAME", "nvidia") -- For hardware acceleration with Nvidia GPUs 
--- hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia") 
+hl.env("LIBVA_DRIVER_NAME", "nvidia") -- For hardware acceleration with Nvidia GPUs 
+hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia") 
 
 -- Input Method (Fcitx5 for Chinese Pinyin)
 hl.env("XMODIFIERS", "@im=fcitx")

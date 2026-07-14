@@ -130,16 +130,16 @@ stage {
 
 .app-folder-dialog .folder-name-container .folder-name-label,
 .app-folder-dialog .folder-name-container .folder-name-entry {
-  font-size: 18pt;
+  font-size: 16pt;
   font-weight: bold;
 }
 
 .app-folder-dialog .folder-name-container .folder-name-entry {
-  width: 320px !important;
+  width: 240px !important;
 }
 
 .app-folder-dialog .folder-name-container .folder-name-label {
-  padding: 6px;
+  padding: 4px;
   color: rgba(255, 255, 255, 0.85);
 }
 
@@ -167,7 +167,7 @@ stage {
 
 .app-folder-dialog .icon-grid {
   row-spacing: 12px;
-  column-spacing: 18px;
+  column-spacing: 12px;
   page-padding-top: 0;
   page-padding-bottom: 0;
   page-padding-left: 0;
@@ -180,8 +180,8 @@ stage {
 
 .app-folder-dialog-container {
   padding: 6px !important;
-  width: 680px;
-  height: 680px;
+  width: 580px;
+  height: 580px;
 }
 
 .app-well-app-running-dot {
@@ -197,7 +197,7 @@ StWidget.focused .app-well-app-running-dot {
 }
 
 .page-indicator {
-  padding: 6px 12px;
+  padding: 4px 8px;
 }
 
 .page-indicator .page-indicator-icon {
@@ -442,7 +442,7 @@ StWidget.focused .app-well-app-running-dot {
 
 .button {
   min-height: 1.5em;
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: 6px;
   border: none;
 }
@@ -500,7 +500,7 @@ StWidget.focused .app-well-app-running-dot {
 .events-button {
   color: #afafaf;
   background-color: rgba(56, 56, 56, 0.95);
-  border-radius: 15px !important;
+  border-radius: 12px !important;
   border: none;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
   text-shadow: none;
@@ -525,27 +525,27 @@ StWidget.focused .app-well-app-running-dot {
 }
 
 #calendarArea {
-  padding: 4px 0;
+  padding: 3px 0;
 }
 
 .datemenu-popover {
-  border-radius: 30px !important;
+  border-radius: 22px !important;
 }
 
 .datemenu-calendar-column {
-  spacing: 6px;
+  spacing: 4px;
   border: none;
 }
 
 .datemenu-calendar-column:ltr {
   margin-right: 0;
-  padding-left: 6px;
+  padding-left: 4px;
   border-left-width: 0;
 }
 
 .datemenu-calendar-column:rtl {
   margin-left: 0;
-  padding-right: 6px;
+  padding-right: 4px;
   border-right-width: 0;
 }
 
@@ -554,7 +554,7 @@ StWidget.focused .app-well-app-running-dot {
 }
 
 .datemenu-calendar-column .datemenu-displays-box {
-  spacing: 6px;
+  spacing: 4px;
 }
 
 /* today button (the date) */
@@ -562,8 +562,8 @@ StWidget.focused .app-well-app-running-dot {
   border: none;
   box-shadow: none;
   background: none;
-  padding: 6px 12px;
-  margin: 4px 8px;
+  padding: 4px 8px;
+  margin: 3px 6px;
   text-shadow: none;
   color: #afafaf;
   border-radius: 8px;
@@ -588,14 +588,14 @@ StWidget.focused .app-well-app-running-dot {
   border: none;
   box-shadow: none !important;
   background-color: transparent;
-  padding: 6px;
-  margin: 0 6px;
+  padding: 4px;
+  margin: 0 4px;
   text-shadow: none;
 }
 
 .calendar .calendar-month-label {
   margin: 0;
-  padding: 6px 0;
+  padding: 4px 0;
   color: #dedede !important;
   background-color: transparent !important;
   text-align: center;
@@ -618,8 +618,8 @@ StWidget.focused .app-well-app-running-dot {
 }
 
 .calendar .pager-button {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   margin: 2px;
   border-radius: 9999px;
   background-color: transparent;
@@ -751,9 +751,9 @@ StWidget.focused .app-well-app-running-dot {
 }
 
 .calendar .calendar-day-heading {
-  width: 32px !important;
-  height: 26px !important;
-  margin: 4px;
+  width: 28px !important;
+  height: 22px !important;
+  margin: 3px;
   padding: 0 !important;
   background-color: transparent !important;
   color: #999999 !important;
@@ -764,18 +764,18 @@ StWidget.focused .app-well-app-running-dot {
 .world-clocks-button,
 .weather-button,
 .events-button {
-  padding: 18px !important;
-  margin: 6px 10px !important;
+  padding: 12px !important;
+  margin: 4px 7px !important;
 }
 
 .events-button .events-box {
   color: #999999;
-  spacing: 6px;
+  spacing: 4px;
 }
 
 .events-button .events-list {
   color: #999999;
-  spacing: 12px;
+  spacing: 8px;
   text-shadow: none;
 }
 
@@ -831,11 +831,11 @@ StWidget.focused .app-well-app-running-dot {
 }
 
 .weather-button .weather-box {
-  spacing: 6px;
+  spacing: 4px;
 }
 
 .weather-button .weather-header-box {
-  spacing: 6px;
+  spacing: 4px;
 }
 
 .weather-button .weather-header {
@@ -848,20 +848,20 @@ StWidget.focused .app-well-app-running-dot {
 }
 
 .weather-button .weather-grid {
-  spacing-rows: 6px;
-  spacing-columns: 12px;
+  spacing-rows: 4px;
+  spacing-columns: 8px;
 }
 
 .weather-button .weather-forecast-time {
   color: #afafaf;
   font-weight: normal;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 .weather-button .weather-forecast-icon {
   icon-size: 32px;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 
 .weather-button .weather-forecast-temp {
@@ -891,14 +891,14 @@ StWidget.focused .app-well-app-running-dot {
   color: rgba(255, 255, 255, 0.85);
   background-color: rgba(0, 0, 0, 0.75);
   border-radius: 6px;
-  padding: 6px 12px;
-  margin: 6px;
+  padding: 4px 8px;
+  margin: 4px;
   box-shadow: none !important;
   border: none !important;
   text-align: center;
-  -y-offset: 8px;
+  -y-offset: 6px;
   -x-offset: 8px;
-  font-size: 11.25pt;
+  font-size: 9.75pt;
   font-weight: 400;
 }
 
@@ -914,8 +914,8 @@ StWidget.focused .app-well-app-running-dot {
 
 /* Entries */
 StEntry {
-  min-height: 32px;
-  padding: 3px 12px !important;
+  min-height: 28px;
+  padding: 2px 8px !important;
   color: #dedede;
   caret-color: #dedede;
   selection-background-color: -st-accent-color !important;
@@ -954,11 +954,11 @@ StEntry StIcon.capslock-warning {
 
 StEntry StIcon.peek-password {
   icon-size: 16px !important;
-  padding: 0 6px;
+  padding: 0 4px;
 }
 
 StEntry StLabel.hint-text {
-  margin-left: 3px;
+  margin-left: 2px;
   color: #afafaf;
 }
 
@@ -968,7 +968,7 @@ StEntry StLabel.hint-text {
   border: none;
   text-shadow: none;
   icon-shadow: none;
-  padding: 16px;
+  padding: 12px;
   border-style: solid;
   border-width: 0;
   border-left-width: 0;
@@ -1039,10 +1039,10 @@ StEntry StLabel.hint-text {
   color: #999999;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15);
   border: 1px solid rgba(0, 0, 0, 0.75);
-  margin: 4px 12px 17px 12px;
-  padding: 10px;
-  spacing: 8px;
-  border-radius: 16px !important;
+  margin: 3px 12px 17px 12px;
+  padding: 8px;
+  spacing: 6px;
+  border-radius: 14px !important;
 }
 
 .candidate-index {
@@ -1112,7 +1112,7 @@ StEntry StLabel.hint-text {
 }
 
 #keyboard .page-indicator {
-  padding: 6px;
+  padding: 4px;
 }
 
 #keyboard .page-indicator .page-indicator-icon {
@@ -1122,8 +1122,8 @@ StEntry StLabel.hint-text {
 
 .key-container,
 .keyboard-layout {
-  padding: 4px;
-  spacing: 4px;
+  padding: 3px;
+  spacing: 3px;
 }
 
 .keyboard-key {
@@ -1131,7 +1131,7 @@ StEntry StLabel.hint-text {
   font-weight: bold;
   min-height: 1.2em;
   min-width: 1.2em;
-  border-radius: 14px;
+  border-radius: 12px;
   border: none;
   color: #afafaf;
   background-color: #555555;
@@ -1236,23 +1236,23 @@ StEntry StLabel.hint-text {
 
 .unlock-dialog StEntry {
   font-size: 0.909em;
-  padding: 0 12px !important;
+  padding: 0 8px !important;
 }
 
 .unlock-dialog StEntry StIcon.peek-password {
-  padding: 0 6px !important;
+  padding: 0 4px !important;
 }
 
 .unlock-dialog StEntry StLabel.hint-text {
-  margin-left: 3px !important;
+  margin-left: 2px !important;
 }
 
 .unlock-dialog .modal-dialog-button-box {
-  spacing: 4px !important;
+  spacing: 3px !important;
 }
 
 .unlock-dialog .modal-dialog-button {
-  padding: 2px 16px !important;
+  padding: 2px 12px !important;
 }
 
 .unlock-dialog .cancel-button,
@@ -1270,16 +1270,16 @@ StEntry StLabel.hint-text {
 }
 
 .unlock-dialog .login-dialog-logo-bin {
-  padding: 32px 0;
+  padding: 24px 0;
 }
 
 .unlock-dialog .login-dialog-button-box {
-  spacing: 8px;
+  spacing: 6px;
 }
 
 .unlock-dialog .login-dialog-message-hint {
   padding-top: 0;
-  padding-bottom: 24px;
+  padding-bottom: 18px;
 }
 
 .unlock-dialog .login-dialog-user-selection-box {
@@ -1300,7 +1300,7 @@ StEntry StLabel.hint-text {
 }
 
 .unlock-dialog .login-dialog-user-list {
-  spacing: 16px;
+  spacing: 12px;
   padding: .2em;
   width: 23em;
 }
@@ -1310,8 +1310,8 @@ StEntry StLabel.hint-text {
 }
 
 .unlock-dialog .login-dialog-user-list-item {
-  border-radius: 14px;
-  padding: 8px;
+  border-radius: 12px;
+  padding: 6px;
 }
 
 .unlock-dialog .login-dialog-user-list-item:ltr .user-widget {
@@ -1324,34 +1324,34 @@ StEntry StLabel.hint-text {
 
 .unlock-dialog .login-dialog-user-list-item .login-dialog-timed-login-indicator {
   height: 2px;
-  margin: 8px 0 0 0;
+  margin: 6px 0 0 0;
   background-color: rgba(255, 255, 255, 0.12) !important;
 }
 
 .unlock-dialog .user-widget.horizontal .user-widget-label {
   font-size: 1.182em;
-  padding-left: 16px;
+  padding-left: 12px;
 }
 
 .unlock-dialog .user-widget.horizontal .user-widget-label:ltr {
-  padding-left: 16px;
+  padding-left: 12px;
   text-align: left;
 }
 
 .unlock-dialog .user-widget.horizontal .user-widget-label:rtl {
-  padding-right: 16px;
+  padding-right: 12px;
   text-align: right;
 }
 
 .unlock-dialog .user-widget.vertical .user-widget-label {
   font-size: 1.455em;
-  padding-top: 24px;
+  padding-top: 18px;
 }
 
 .unlock-dialog .login-dialog-prompt-layout {
-  padding-top: 32px;
-  padding-bottom: 16px;
-  spacing: 12px;
+  padding-top: 24px;
+  padding-bottom: 12px;
+  spacing: 8px;
   width: 23em;
 }
 
@@ -1371,11 +1371,11 @@ StEntry StLabel.hint-text {
 }
 
 .login-dialog .modal-dialog-button-box {
-  spacing: 4px;
+  spacing: 3px;
 }
 
 .login-dialog .modal-dialog-button {
-  padding: 2px 16px;
+  padding: 2px 12px;
 }
 
 .login-dialog .cancel-button,
@@ -1392,16 +1392,16 @@ StEntry StLabel.hint-text {
 }
 
 .login-dialog .login-dialog-logo-bin {
-  padding: 32px 0;
+  padding: 24px 0;
 }
 
 .login-dialog .login-dialog-button-box {
-  spacing: 8px;
+  spacing: 6px;
 }
 
 .login-dialog .login-dialog-message-hint {
   padding-top: 0;
-  padding-bottom: 24px;
+  padding-bottom: 18px;
 }
 
 .login-dialog .login-dialog-user-selection-box {
@@ -1422,7 +1422,7 @@ StEntry StLabel.hint-text {
 }
 
 .login-dialog .login-dialog-user-list {
-  spacing: 16px;
+  spacing: 12px;
   padding: .2em;
   width: 23em;
 }
@@ -1432,8 +1432,8 @@ StEntry StLabel.hint-text {
 }
 
 .login-dialog .login-dialog-user-list-item {
-  border-radius: 14px;
-  padding: 8px;
+  border-radius: 12px;
+  padding: 6px;
 }
 
 .login-dialog .login-dialog-user-list-item:ltr .user-widget {
@@ -1446,34 +1446,34 @@ StEntry StLabel.hint-text {
 
 .login-dialog .login-dialog-user-list-item .login-dialog-timed-login-indicator {
   height: 2px;
-  margin: 8px 0 0 0;
+  margin: 6px 0 0 0;
 }
 
 .login-dialog .user-widget.horizontal .user-widget-label {
   font-size: 1.182em;
-  padding-left: 16px;
+  padding-left: 12px;
 }
 
 .login-dialog .user-widget.horizontal .user-widget-label:ltr {
-  padding-left: 16px;
+  padding-left: 12px;
   text-align: left;
 }
 
 .login-dialog .user-widget.horizontal .user-widget-label:rtl {
-  padding-right: 16px;
+  padding-right: 12px;
   text-align: right;
 }
 
 .login-dialog .user-widget.vertical .user-widget-label {
   font-size: 1.455em;
-  padding-top: 15px;
-  padding-bottom: 21px;
+  padding-top: 10px;
+  padding-bottom: 14px;
 }
 
 .login-dialog .login-dialog-prompt-layout {
-  padding-top: 32px;
-  padding-bottom: 16px;
-  spacing: 12px;
+  padding-top: 24px;
+  padding-bottom: 12px;
+  spacing: 8px;
   width: 23em;
 }
 
@@ -1730,8 +1730,8 @@ StEntry StLabel.hint-text {
 /* Looking Glass */
 #LookingGlassDialog {
   background-color: #2a2a2a;
-  spacing: 6px;
-  margin: 6px;
+  spacing: 4px;
+  margin: 4px;
   padding: 0;
   border: 1px solid black;
   border-radius: 12px;
@@ -1740,8 +1740,8 @@ StEntry StLabel.hint-text {
 }
 
 #LookingGlassDialog > #Toolbar {
-  padding: 0 12px;
-  spacing: 6px;
+  padding: 0 8px;
+  spacing: 4px;
   border: none;
   border-radius: 0;
   background-color: rgba(36, 36, 36, 0.01);
@@ -1749,9 +1749,9 @@ StEntry StLabel.hint-text {
 }
 
 #LookingGlassDialog > #Toolbar .lg-toolbar-button {
-  padding: 6px 12px;
+  padding: 4px 8px;
   border-radius: 6px;
-  margin: 3px;
+  margin: 2px;
 }
 
 #LookingGlassDialog > #Toolbar .lg-toolbar-button > StIcon {
@@ -1759,17 +1759,17 @@ StEntry StLabel.hint-text {
 }
 
 #LookingGlassDialog .labels {
-  spacing: 6px;
+  spacing: 4px;
   color: #d3d7df;
 }
 
 #LookingGlassDialog .notebook-tab {
-  -natural-hpadding: 12px;
-  -minimum-hpadding: 12px;
+  -natural-hpadding: 8px;
+  -minimum-hpadding: 8px;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.5);
   padding: 0 16px;
-  min-height: 36px;
+  min-height: 32px;
   border-radius: 0;
   transition-duration: 100ms;
   border: L none;
@@ -1794,8 +1794,8 @@ StEntry StLabel.hint-text {
 
 #LookingGlassDialog StBoxLayout#EvalBox,
 #LookingGlassDialog StBoxLayout#ResultsArea {
-  padding: 6px;
-  spacing: 6px;
+  padding: 4px;
+  spacing: 4px;
 }
 
 .lg-dialog StEntry {
@@ -1841,14 +1841,14 @@ StEntry StLabel.hint-text {
 }
 
 .lg-obj-inspector-title {
-  spacing: 6px;
+  spacing: 4px;
 }
 
 .lg-obj-inspector-button {
   padding: 0 16px;
   border: none;
   border-radius: 6px;
-  font-size: 11.25pt;
+  font-size: 9.75pt;
   font-weight: 500;
 }
 
@@ -1857,19 +1857,19 @@ StEntry StLabel.hint-text {
 }
 
 #lookingGlassExtensions {
-  padding: 6px;
+  padding: 4px;
 }
 
 .lg-extensions-list {
-  padding: 6px;
-  spacing: 6px;
+  padding: 4px;
+  spacing: 4px;
 }
 
 .lg-extension {
   border: none;
   border-radius: 6px;
-  padding: 12px;
-  spacing: 6px;
+  padding: 8px;
+  spacing: 4px;
   background-color: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.85);
   box-shadow: none;
@@ -1881,25 +1881,25 @@ StEntry StLabel.hint-text {
 }
 
 .lg-extension-meta {
-  spacing: 6px;
+  spacing: 4px;
 }
 
 #LookingGlassPropertyInspector {
   background: #373737;
   border: 1px solid black;
   border-radius: 12px;
-  padding: 12px;
+  padding: 8px;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
   color: #d3d7df;
 }
 
 .lg-debug-flag-button {
   color: #ffffff;
-  spacing: 6px;
+  spacing: 4px;
 }
 
 .lg-debug-flag-button StLabel {
-  padding: 12px;
+  padding: 8px;
 }
 
 .lg-debug-flag-button:hover {
@@ -1912,8 +1912,8 @@ StEntry StLabel.hint-text {
 
 .lg-debug-flags-header {
   color: rgba(255, 255, 255, 0.45);
-  padding-top: 12px;
-  padding: 6px;
+  padding-top: 8px;
+  padding: 4px;
 }
 
 .select-area-rubberband {
@@ -1937,7 +1937,7 @@ StEntry StLabel.hint-text {
 .user-icon StIcon {
   background-color: rgba(255, 255, 255, 0.16);
   border-radius: 9999px;
-  padding: 12px;
+  padding: 8px;
   width: 40px;
   height: 40px;
   color: #ffffff;
@@ -1962,9 +1962,9 @@ StEntry StLabel.hint-text {
 }
 
 .user-widget.vertical .user-icon StIcon {
-  padding: 20px;
-  padding-top: 18px;
-  padding-bottom: 22px;
+  padding: 14px;
+  padding-top: 12px;
+  padding-bottom: 16px;
   width: 88px;
   height: 88px;
 }
@@ -2043,7 +2043,7 @@ StEntry StLabel.hint-text {
 .nm-dialog-item {
   font-size: 1em;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 12px;
+  padding: 8px;
   spacing: 0px;
 }
 
@@ -2065,7 +2065,7 @@ StEntry StLabel.hint-text {
 }
 
 .nm-dialog-icons {
-  spacing: 12px;
+  spacing: 8px;
 }
 
 .no-networks-label {
@@ -2073,7 +2073,7 @@ StEntry StLabel.hint-text {
 }
 
 .no-networks-box {
-  spacing: 6px;
+  spacing: 4px;
 }
 
 /* OSD */
@@ -2084,7 +2084,7 @@ StEntry StLabel.hint-text {
   border: solid rgba(0, 0, 0, 0.75);
   border-width: 1px;
   box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.25);
-  padding: 12px;
+  padding: 8px;
 }
 
 .osd-window {
@@ -2154,13 +2154,13 @@ StEntry StLabel.hint-text {
 
 /* Top Bar */
 #panel .panel-button#panelActivities {
-  -natural-hpadding: 18px;
+  -natural-hpadding: 12px;
   color: white;
 }
 
 #panel .panel-button#panelActivities StBoxLayout {
   padding: 0 0.2045em;
-  spacing: 8px;
+  spacing: 6px;
 }
 
 #panel .panel-button#panelActivities .workspace-dot {
@@ -2179,7 +2179,7 @@ StEntry StLabel.hint-text {
   font-weight: 500;
   color: white;
   transition-duration: 250ms;
-  height: 32px !important;
+  height: 28px !important;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.05);
 }
 
@@ -2280,7 +2280,7 @@ StEntry StLabel.hint-text {
   border-radius: 6px;
   background-color: transparent;
   box-shadow: none;
-  padding: 0 18px !important;
+  padding: 0 16px !important;
   margin: 0 !important;
 }
 
@@ -2303,16 +2303,16 @@ StEntry StLabel.hint-text {
 
 #panel .panel-button .system-status-icon {
   icon-size: 16px;
-  padding: 6px;
+  padding: 4px;
   margin: 0;
 }
 
 #panel .panel-button .panel-status-menu-box StLabel {
-  padding: 0 0 0 3px;
+  padding: 0 0 0 2px;
 }
 
 #panel .panel-button .appindicator-trayicons-box {
-  margin: 0 6px;
+  margin: 0 4px;
 }
 
 #panel .panel-button .app-menu-icon {
@@ -2364,7 +2364,7 @@ StEntry StLabel.hint-text {
 #panel Gjs_AggregateMenu.panel-button .system-status-icon,
 #panel Gjs_ui_panel_AggregateMenu.panel-button .system-status-icon,
 #panel Gjs_ui_panel_QuickSettings.panel-button .system-status-icon {
-  margin: 0 3px !important;
+  margin: 0 2px !important;
 }
 
 #panel Gjs_ui_panel_AppMenuButton.panel-button,
@@ -2375,8 +2375,8 @@ StEntry StLabel.hint-text {
 #panel Gjs_status_keyboard_InputSourceIndicator.panel-button,
 #panel Gjs_appindicatorsupport_rgcjonas_gmail_com_indicatorStatusIcon_IndicatorStatusIcon.panel-button,
 #panel Gjs_appindicatorsupport_rgcjonas_gmail_com_indicatorStatusIcon_AppIndicatorsIndicatorStatusIcon.panel-button {
-  -natural-hpadding: 18px !important;
-  -minimum-hpadding: 18px !important;
+  -natural-hpadding: 16px !important;
+  -minimum-hpadding: 16px !important;
 }
 
 #panel:overview, #panel.unlock-screen, #panel.login-screen, #panel.lock-screen {
@@ -2443,7 +2443,7 @@ StEntry StLabel.hint-text {
 
 /* Popovers/Menus */
 .popup-menu-boxpointer {
-  -arrow-border-radius: 16px;
+  -arrow-border-radius: 14px;
   -arrow-background-color: transparent;
   -arrow-border-width: 0;
   -arrow-border-color: transparent;
@@ -2462,7 +2462,7 @@ StEntry StLabel.hint-text {
 }
 
 .popup-menu.panel-menu {
-  -boxpointer-gap: 4px;
+  -boxpointer-gap: 3px;
   margin-bottom: 1.75em;
 }
 
@@ -2479,18 +2479,18 @@ StEntry StLabel.hint-text {
 }
 
 .popup-menu-content {
-  padding: 6px;
+  padding: 4px;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.18);
   margin: 4px 12px 17px 12px;
   background-color: #242424;
-  border-radius: 16px;
+  border-radius: 14px;
   border: solid rgba(0, 0, 0, 0.75);
   border-width: 1px;
 }
 
 .popup-menu-item {
-  spacing: 6px;
-  padding: 9px 12px;
+  spacing: 4px;
+  padding: 6px 8px;
   color: #afafaf;
   text-shadow: none !important;
   icon-shadow: none !important;
@@ -2540,11 +2540,11 @@ StEntry StLabel.hint-text {
 }
 
 .popup-menu-item .toggle-switch:ltr {
-  margin-left: 4px;
+  margin-left: 3px;
 }
 
 .popup-menu-item .toggle-switch:rtl {
-  margin-right: 4px;
+  margin-right: 3px;
 }
 
 .popup-sub-menu {
@@ -2571,11 +2571,11 @@ StEntry StLabel.hint-text {
 }
 
 .popup-ornamented-menu-item:ltr {
-  padding-left: 6px;
+  padding-left: 4px;
 }
 
 .popup-ornamented-menu-item:rtl {
-  padding-right: 6px;
+  padding-right: 4px;
 }
 
 .popup-inactive-menu-item {
@@ -2598,7 +2598,7 @@ StEntry StLabel.hint-text {
 }
 
 .background-menu {
-  -boxpointer-gap: 4px;
+  -boxpointer-gap: 3px;
   -arrow-rise: 0px;
 }
 
@@ -2612,11 +2612,11 @@ StEntry StLabel.hint-text {
 }
 
 .aggregate-menu .popup-menu-icon:ltr {
-  margin-right: 8px !important;
+  margin-right: 6px !important;
 }
 
 .aggregate-menu .popup-menu-icon:rtl {
-  margin-left: 8px !important;
+  margin-left: 6px !important;
 }
 
 .app-menu,
@@ -2625,11 +2625,11 @@ StEntry StLabel.hint-text {
 }
 
 .rename-folder-popup .rename-folder-popup-item {
-  spacing: 6px;
+  spacing: 4px;
 }
 
 .rename-folder-popup .rename-folder-popup-item:ltr, .rename-folder-popup .rename-folder-popup-item:rtl {
-  padding: 0 12px;
+  padding: 0 8px;
 }
 
 /* Screen Shield */
@@ -2753,7 +2753,7 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 
 .app-folder-dialog .folder-name-container .folder-name-entry, #overview .search-entry {
   width: 320px;
-  min-height: 32px;
+  min-height: 28px;
   padding: 0 10px !important;
   background-clip: padding-box;
   color: rgba(255, 255, 255, 0.5);
@@ -2804,7 +2804,7 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 /* Search */
 .list-search-result, .search-provider-icon {
   border-radius: 6px;
-  padding: 12px;
+  padding: 8px;
   transition-duration: 0;
   text-align: center;
   background-color: transparent;
@@ -2822,11 +2822,11 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 
 #searchResultsContent {
   max-width: 1024px;
-  spacing: 8px;
+  spacing: 6px;
 }
 
 .search-section {
-  spacing: 8px;
+  spacing: 6px;
 }
 
 .search-section .search-section-separator {
@@ -2835,9 +2835,9 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 }
 
 .search-section-content {
-  spacing: 8px;
+  spacing: 6px;
   border-radius: 16px;
-  padding: 18px;
+  padding: 12px;
   border: none;
   box-shadow: none;
   background: rgba(255, 255, 255, 0.1);
@@ -2852,11 +2852,11 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 }
 
 .grid-search-results {
-  spacing: 36px;
+  spacing: 24px;
 }
 
 .search-provider-icon .list-search-provider-content {
-  spacing: 12px;
+  spacing: 8px;
 }
 
 .search-provider-icon .list-search-provider-content .list-search-provider-details {
@@ -2866,15 +2866,15 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 }
 
 .list-search-results {
-  spacing: 6px;
+  spacing: 4px;
 }
 
 .list-search-result .list-search-result-content {
-  spacing: 6px;
+  spacing: 4px;
 }
 
 .list-search-result .list-search-result-title {
-  spacing: 12px;
+  spacing: 8px;
 }
 
 .list-search-result .list-search-result-description {
@@ -2884,11 +2884,11 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 /* App Switcher */
 .switcher-popup {
   padding: 8px;
-  spacing: 24px;
+  spacing: 16px;
 }
 
 .switcher-list {
-  border-radius: 24px;
+  border-radius: 20px;
 }
 
 .switcher-list .item-box {
@@ -2911,7 +2911,7 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 
 .switcher-list .thumbnail-box {
   padding: 2px;
-  spacing: 6px;
+  spacing: 4px;
 }
 
 .switcher-list .thumbnail {
@@ -2924,7 +2924,7 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 }
 
 .switcher-list .switcher-list-item-container {
-  spacing: 12px;
+  spacing: 8px;
 }
 
 .switcher-arrow {
@@ -2966,7 +2966,7 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 
 /* Workspace Switcher */
 .workspace-switcher-group {
-  padding: 12px;
+  padding: 8px;
 }
 
 .workspace-switcher {
@@ -2974,7 +2974,7 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
   border: none;
   border-radius: 0;
   padding: 0;
-  spacing: 12px;
+  spacing: 8px;
 }
 
 .ws-switcher-box {
@@ -3014,7 +3014,7 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
   background-color: transparent;
   border-radius: 18px;
   padding: 12px;
-  spacing: 6px;
+  spacing: 4px;
   text-align: center;
   transition-duration: 100ms;
 }
@@ -3086,7 +3086,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .app-folder-dialog-container {
-  padding-top: 32px;
+  padding-top: 28px;
 }
 
 .app-folder-dialog {
@@ -3095,7 +3095,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .app-folder-dialog .page-indicators {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .app-folder-dialog .icon-button, .app-folder-dialog .message .message-header .message-expand-button, .message .message-header .app-folder-dialog .message-expand-button,
@@ -3132,7 +3132,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .page-navigation-hint {
-  width: 300px;
+  width: 220px;
 }
 
 .page-navigation-hint.dnd {
@@ -3154,8 +3154,8 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .page-navigation-arrow {
-  margin: 6px;
-  padding: 18px;
+  margin: 4px;
+  padding: 12px;
   width: 24px;
   height: 24px;
   border-radius: 9999px;
@@ -3231,17 +3231,17 @@ StWidget.focused .app-grid-running-dot {
 
 /* Dash */
 #dash {
-  padding-left: 6px;
-  padding-right: 6px;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 #dash .dash-background {
   background-color: rgba(255, 255, 255, 0.12);
-  border-radius: 32px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-left: 10px;
-  padding-right: 10px;
+  border-radius: 28px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 6.5px;
+  padding-right: 6.5px;
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
@@ -3264,15 +3264,15 @@ StWidget.focused .app-grid-running-dot {
   border: none;
   border-radius: 0;
   padding: 0;
-  margin: 0 2px;
-  padding-bottom: 12px;
+  margin: 0 1.5px;
+  padding-bottom: 9px;
 }
 
 #dash .dash-item-container .show-apps .overview-icon,
 #dash .dash-item-container .overview-tile .overview-icon {
   border-radius: 20px;
-  padding: 6px;
-  spacing: 6px;
+  padding: 4px;
+  spacing: 4px;
   text-align: center;
   transition-duration: 100ms;
   background: none;
@@ -3311,24 +3311,24 @@ StWidget.focused .app-grid-running-dot {
 
 #dash .dash-separator {
   width: 1px;
-  margin-left: 4px;
-  margin-right: 4px;
+  margin-left: 3px;
+  margin-right: 3px;
   background-color: rgba(255, 255, 255, 0.15);
 }
 
 #dash .dash-separator,
 #dash .dash-background {
-  margin-bottom: 12px;
+  margin-bottom: 9px;
 }
 
 .dash-label {
-  -y-offset: 8px;
+  -y-offset: 6px;
 }
 
 /* Modal Dialogs */
 .modal-dialog, .candidate-popup-content {
   background-color: #242424;
-  border-radius: 22px;
+  border-radius: 20px;
   border: solid rgba(0, 0, 0, 0.75);
   border-width: 1px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.35);
@@ -3364,18 +3364,18 @@ StWidget.focused .app-grid-running-dot {
 
 .modal-dialog {
   color: #dedede;
-  padding: 18px;
+  padding: 12px;
 }
 
 .modal-dialog .modal-dialog-content-box {
   padding: 16px 32px 6px;
-  spacing: 18px;
+  spacing: 12px;
   max-width: 28em;
 }
 
 .modal-dialog .modal-dialog-button-box {
-  padding-top: 6px;
-  spacing: 6px;
+  padding-top: 4px;
+  spacing: 4px;
 }
 
 .modal-dialog .modal-dialog-button,
@@ -3384,7 +3384,7 @@ StWidget.focused .app-grid-running-dot {
   padding: 0 16px;
   margin: 0;
   border: none !important;
-  border-radius: 4px;
+  border-radius: 8px;
   font-weight: bold;
   color: #dedede;
   background-color: #313131;
@@ -3491,7 +3491,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .run-dialog .run-dialog-entry {
-  padding: 12px 9px;
+  padding: 8px 6px;
 }
 
 .run-dialog .run-dialog-description {
@@ -3526,7 +3526,7 @@ StWidget.focused .app-grid-running-dot {
 
 .prompt-dialog-password-entry {
   width: 20em;
-  padding: 12px 9px;
+  padding: 8px 6px;
 }
 
 .prompt-dialog-error-label,
@@ -3578,8 +3578,8 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .audio-selection-device-box {
-  padding: 12px;
-  spacing: 12px;
+  padding: 8px;
+  spacing: 8px;
 }
 
 .audio-selection-device-icon {
@@ -3603,20 +3603,20 @@ StWidget.focused .app-grid-running-dot {
   width: 29em;
   text-shadow: none;
   border: none;
-  padding: 0 4px;
+  padding: 0 3px;
 }
 
 .message-list:ltr {
   margin-left: 0;
   margin-right: 0;
-  padding-right: 6px;
+  padding-right: 4px;
   border-right-width: 0;
 }
 
 .message-list:rtl {
   margin-right: 0;
   margin-left: 0;
-  padding-left: 6px;
+  padding-left: 4px;
   border-left-width: 0;
 }
 
@@ -3626,7 +3626,7 @@ StWidget.focused .app-grid-running-dot {
 
 .message-list .message-list-placeholder > StIcon {
   icon-size: 96px;
-  margin-bottom: 12px;
+  margin-bottom: 9px;
   -st-icon-style: symbolic;
 }
 
@@ -3635,21 +3635,21 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .message-view:ltr {
-  margin-right: 20px;
+  margin-right: 15px;
 }
 
 .message-view:rtl {
-  margin-left: 20px;
+  margin-left: 15px;
 }
 
 .message-view .message {
-  margin-bottom: 12px !important;
+  margin-bottom: 8px !important;
 }
 
 .message-list-controls {
-  padding: 12px;
-  padding-bottom: 6px;
-  spacing: 6px;
+  padding: 8px;
+  padding-bottom: 4px;
+  spacing: 4px;
 }
 
 .message-list-controls .dnd-button {
@@ -3664,15 +3664,15 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .message-notification-group {
-  spacing: 12px;
+  spacing: 8px;
 }
 
 .message-notification-group .message-group-header {
-  padding: 6px;
+  padding: 4px;
 }
 
 .message-notification-group .message-group-header .message-group-title {
-  margin: 0 4px;
+  margin: 0 3px;
 }
 
 .message-notification-group .message-collapse-button {
@@ -3691,9 +3691,9 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .popup-menu .message {
-  border-radius: 15px;
-  padding: 6px;
-  margin: 4px;
+  border-radius: 12px;
+  padding: 4px;
+  margin: 3px;
   background-color: #3e3e3e;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
   color: #afafaf;
@@ -3733,8 +3733,8 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .message .message-header {
-  padding: 0 6px;
-  spacing: 6px;
+  padding: 0 4px;
+  spacing: 4px;
   color: rgba(222, 222, 222, 0.35);
 }
 
@@ -3752,9 +3752,9 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .message .message-header .message-header-content {
-  spacing: 6px;
+  spacing: 4px;
   min-height: 1.637em;
-  padding-bottom: 6px;
+  padding-bottom: 4px;
 }
 
 .message .message-header .message-header-content .message-source-title {
@@ -3803,18 +3803,18 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .message .message-header .message-expand-button:ltr {
-  margin-right: 6px;
+  margin-right: 4px;
 }
 
 .message .message-header .message-expand-button:rtl {
-  margin-left: 6px;
+  margin-left: 4px;
 }
 
 .message .message-box {
-  padding: 6px;
-  margin: 6px;
+  padding: 4px;
+  margin: 4px;
   margin-top: 0;
-  spacing: 6px;
+  spacing: 4px;
 }
 
 .message .message-box .message-icon {
@@ -3822,11 +3822,11 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .message .message-box .message-icon:ltr {
-  margin-right: 6px;
+  margin-right: 4px;
 }
 
 .message .message-box .message-icon:rtl {
-  margin-left: 6px;
+  margin-left: 4px;
 }
 
 .message .message-box .message-icon.message-themed-icon {
@@ -3839,11 +3839,11 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .message .message-box:first-child {
-  margin-top: 12px;
+  margin-top: 8px;
 }
 
 .message .message-box .message-content {
-  spacing: 4px;
+  spacing: 3px;
 }
 
 .message .message-box .message-content .message-title {
@@ -3851,12 +3851,12 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .message .message-action-bin {
-  padding: 4px;
-  spacing: 6px;
+  padding: 3px;
+  spacing: 4px;
 }
 
 .message .message-action-bin * {
-  margin: 0 4px;
+  margin: 0 3px;
 }
 
 .message .message-action-bin *:first-child:ltr {
@@ -3917,8 +3917,8 @@ StWidget.focused .app-grid-running-dot {
   min-height: 64px;
   width: 34em;
   border-radius: 12px;
-  margin: 12px;
-  padding: 6px;
+  margin: 8px;
+  padding: 4px;
   color: #dedede;
   background-color: #242424;
   border: 1px solid rgba(0, 0, 0, 0.75);
@@ -3932,8 +3932,8 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .notification-button {
-  min-height: 36px;
-  padding: 0 12px;
+  min-height: 32px;
+  padding: 0 8px;
   background-color: rgba(255, 255, 255, 0.05);
   color: #afafaf;
   font-weight: 500;
@@ -3964,7 +3964,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .controls-manager, .secondary-monitor-workspaces {
-  spacing: 12px;
+  spacing: 8px;
 }
 
 #overviewGroup {
@@ -3972,8 +3972,8 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .osd-window {
-  spacing: 12px;
-  padding: 12px 18px;
+  spacing: 8px;
+  padding: 8px 12px;
   margin-bottom: 4em;
 }
 
@@ -4003,15 +4003,15 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .osd-window .level:ltr {
-  margin-right: 6px;
+  margin-right: 4px;
 }
 
 .osd-window .level:rtl {
-  margin-left: 6px;
+  margin-left: 4px;
 }
 
 #appMenu {
-  spacing: 6px;
+  spacing: 4px;
 }
 
 #appMenu .label-shadow {
@@ -4019,18 +4019,18 @@ StWidget.focused .app-grid-running-dot {
 }
 
 #appMenu .panel-status-menu-box {
-  padding: 0 6px;
-  spacing: 6px;
+  padding: 0 4px;
+  spacing: 4px;
 }
 
 .popup-menu-item:ltr {
-  padding-right: 12px;
-  padding-left: 12px;
+  padding-right: 8px;
+  padding-left: 8px;
 }
 
 .popup-menu-item:rtl {
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .popup-separator-menu-item {
@@ -4038,11 +4038,11 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .popup-separator-menu-item:ltr {
-  margin-right: 6px;
+  margin-right: 4px;
 }
 
 .popup-separator-menu-item:rtl {
-  margin-left: 6px;
+  margin-left: 4px;
 }
 
 .popup-separator-menu-item .popup-separator-menu-item-separator {
@@ -4091,23 +4091,23 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .app-menu .popup-inactive-menu-item:first-child > StLabel:ltr {
-  margin-right: 8px;
+  margin-right: 6px;
 }
 
 .app-menu .popup-inactive-menu-item:first-child > StLabel:rtl {
-  margin-left: 8px;
+  margin-left: 6px;
 }
 
 .quick-settings {
-  padding: 18px !important;
-  border-radius: 39px !important;
-  margin-top: 12px !important;
+  padding: 12px !important;
+  border-radius: 33px !important;
+  margin-top: 8px !important;
 }
 
 .quick-settings .icon-button, .quick-settings .message-notification-group .message-collapse-button, .message-notification-group .quick-settings .message-collapse-button, .quick-settings .message .message-header .message-expand-button, .message .message-header .quick-settings .message-expand-button,
 .quick-settings .message .message-header .message-close-button,
 .message .message-header .quick-settings .message-close-button, .quick-settings .button {
-  padding: 10.5px;
+  padding: 7px;
 }
 
 .quick-settings .icon-button StIcon, .quick-settings .message-notification-group .message-collapse-button StIcon, .message-notification-group .quick-settings .message-collapse-button StIcon, .quick-settings .message .message-header .message-expand-button StIcon, .message .message-header .quick-settings .message-expand-button StIcon,
@@ -4117,8 +4117,8 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .quick-settings-grid {
-  spacing-rows: 16px;
-  spacing-columns: 16px;
+  spacing-rows: 12px;
+  spacing-columns: 12px;
 }
 
 .quick-toggle, .quick-toggle-has-menu {
@@ -4159,7 +4159,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .quick-toggle > StBoxLayout {
-  spacing: 9px;
+  spacing: 6px;
 }
 
 .quick-toggle.button {
@@ -4167,15 +4167,15 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .quick-toggle > StBoxLayout {
-  padding: 0 12px;
+  padding: 0 8px;
 }
 
 .quick-toggle:ltr > StBoxLayout {
-  padding-left: 24px;
+  padding-left: 16px;
 }
 
 .quick-toggle:rtl > StBoxLayout {
-  padding-right: 24px;
+  padding-right: 16px;
 }
 
 .quick-toggle .quick-toggle-subtitle {
@@ -4196,7 +4196,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .quick-toggle-has-menu .quick-toggle:ltr > StBoxLayout {
-  padding-right: 12px;
+  padding-right: 8px;
 }
 
 .quick-toggle-has-menu .quick-toggle:rtl {
@@ -4204,7 +4204,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .quick-toggle-has-menu .quick-toggle:rtr > StBoxLayout {
-  padding-left: 12px;
+  padding-left: 8px;
 }
 
 .quick-toggle-has-menu .quick-toggle:ltr:last-child {
@@ -4259,7 +4259,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .quick-slider > StBoxLayout {
-  spacing: 6px;
+  spacing: 4px;
 }
 
 .quick-slider .icon-button, .quick-slider .message-notification-group .message-collapse-button, .message-notification-group .quick-slider .message-collapse-button, .quick-slider .message .message-header .message-expand-button, .message .message-header .quick-slider .message-expand-button,
@@ -4270,7 +4270,7 @@ StWidget.focused .app-grid-running-dot {
 
 .quick-slider .slider-bin {
   min-height: 16px;
-  padding: 6px;
+  padding: 4px;
   border-radius: 9999px;
 }
 
@@ -4285,9 +4285,9 @@ StWidget.focused .app-grid-running-dot {
   background-color: #333333 !important;
   color: #dadada !important;
   border-radius: 24px;
-  padding: 18px;
+  padding: 12px;
   border: none !important;
-  margin: 12px 0 0;
+  margin: 8px 0 0;
 }
 
 .quick-toggle-menu .popup-menu-item {
@@ -4304,15 +4304,15 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .quick-toggle-menu .header {
-  spacing-rows: 3px;
-  spacing-columns: 12px;
-  padding-bottom: 12px;
+  spacing-rows: 2px;
+  spacing-columns: 8px;
+  padding-bottom: 8px;
 }
 
 .quick-toggle-menu .header .icon {
   icon-size: 24px;
   border-radius: 9999px;
-  padding: 9px;
+  padding: 6px;
   background-color: rgba(222, 222, 222, 0.2);
 }
 
@@ -4322,7 +4322,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .quick-settings-system-item > StBoxLayout {
-  spacing: 12px;
+  spacing: 8px;
 }
 
 .quick-settings-system-item .icon-button, .quick-settings-system-item .message-notification-group .message-collapse-button, .message-notification-group .quick-settings-system-item .message-collapse-button, .quick-settings-system-item .message .message-header .message-expand-button, .message .message-header .quick-settings-system-item .message-expand-button,
@@ -4331,8 +4331,8 @@ StWidget.focused .app-grid-running-dot {
   background-color: rgba(255, 255, 255, 0.05);
   color: #dadada;
   border-radius: 9999px;
-  min-height: 32px !important;
-  min-width: 32px !important;
+  min-height: 28px !important;
+  min-width: 28px !important;
 }
 
 .quick-settings-system-item .icon-button:hover, .quick-settings-system-item .message-notification-group .message-collapse-button:hover, .message-notification-group .quick-settings-system-item .message-collapse-button:hover, .quick-settings-system-item .message .message-header .message-expand-button:hover, .message .message-header .quick-settings-system-item .message-expand-button:hover,
@@ -4397,7 +4397,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .keyboard-brightness-level {
-  spacing: 6px;
+  spacing: 4px;
 }
 
 .background-apps-quick-toggle {
@@ -4417,11 +4417,11 @@ StWidget.focused .app-grid-running-dot {
 .background-app-item .icon-button, .background-app-item .message-notification-group .message-collapse-button, .message-notification-group .background-app-item .message-collapse-button, .background-app-item .message .message-header .message-expand-button, .message .message-header .background-app-item .message-expand-button,
 .background-app-item .message .message-header .message-close-button,
 .message .message-header .background-app-item .message-close-button {
-  padding: 6px;
+  padding: 4px;
 }
 
 .background-app-item .spinner {
-  padding: 6px;
+  padding: 4px;
 }
 
 .background-app-item.popup-inactive-menu-item {
@@ -4441,7 +4441,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .icon-label-button-container {
-  spacing: 6px;
+  spacing: 4px;
   font-size: 9pt;
   font-weight: 400;
 }
@@ -4451,10 +4451,10 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .screenshot-ui-panel {
-  border-radius: 42px;
-  padding: 18px;
+  border-radius: 28px;
+  padding: 12px;
   margin-bottom: 4em;
-  spacing: 16px;
+  spacing: 12px;
   color: #d3d7df;
   background-color: #2a2a2a;
   border: 1px solid rgba(0, 0, 0, 0.75);
@@ -4462,21 +4462,21 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .screenshot-ui-close-button {
-  padding: 6px !important;
+  padding: 4px !important;
 }
 
 .screenshot-ui-close-button.left {
-  margin-left: 8px;
+  margin-left: 6px;
 }
 
 .screenshot-ui-close-button.right {
-  margin-right: 8px;
+  margin-right: 6px;
 }
 
 .screenshot-ui-type-button {
   min-width: 48px;
-  padding: 18px 24px !important;
-  border-radius: 24px;
+  padding: 12px 16px !important;
+  border-radius: 16px;
 }
 
 .screenshot-ui-capture-button {
@@ -4484,7 +4484,7 @@ StWidget.focused .app-grid-running-dot {
   height: 36px;
   border-radius: 9999px;
   border: 4px white;
-  padding: 6px;
+  padding: 4px;
 }
 
 .screenshot-ui-capture-button .screenshot-ui-capture-button-circle {
@@ -4520,8 +4520,8 @@ StWidget.focused .app-grid-running-dot {
 .screenshot-ui-shot-cast-container {
   background-color: rgba(255, 255, 255, 0.06);
   border-radius: 6px;
-  padding: 3px;
-  spacing: 3px;
+  padding: 2px;
+  spacing: 2px;
 }
 
 .screenshot-ui-shot-cast-container:ltr {
@@ -4533,9 +4533,9 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .screenshot-ui-shot-cast-button {
-  padding: 6px 12px;
+  padding: 4px 8px;
   background-color: transparent;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 .screenshot-ui-shot-cast-button:hover, .screenshot-ui-shot-cast-button:focus {
@@ -4557,7 +4557,7 @@ StWidget.focused .app-grid-running-dot {
 
 .screenshot-ui-show-pointer-button {
   border-radius: 9999px;
-  padding: 20px !important;
+  padding: 15px !important;
 }
 
 .screenshot-ui-show-pointer-button StIcon {
@@ -4646,14 +4646,14 @@ StWidget.focused .app-grid-running-dot {
   color: #d3d7df;
   background-color: #2a2a2a;
   border-radius: 9999px;
-  padding: 6px 12px;
+  padding: 4px 8px;
   text-align: center;
   -y-offset: 24px;
 }
 
 .search-entry {
-  margin-top: 24px;
-  margin-bottom: 6px;
+  margin-top: 16px;
+  margin-bottom: 4px;
 }
 
 /* Slider */
@@ -4723,14 +4723,14 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .window-picker {
-  spacing: 6px;
+  spacing: 4px;
 }
 
 .window-caption {
   color: rgba(255, 255, 255, 0.85);
   background-color: rgba(0, 0, 0, 0.75);
   border-radius: 9999px;
-  padding: 6px 12px;
+  padding: 4px 8px;
 }
 
 .window-close, .screenshot-ui-close-button {
@@ -4769,8 +4769,8 @@ StWidget.focused .app-grid-running-dot {
 /* Workspace pager */
 .workspace-thumbnails {
   visible-width: 32px;
-  spacing: 6px;
-  padding: 6px;
+  spacing: 4px;
+  padding: 4px;
 }
 
 .workspace-thumbnails .workspace-thumbnail {
@@ -4879,20 +4879,20 @@ StWidget.focused .app-grid-running-dot {
 
 #dashtodockContainer.left #dash, #dashtodockContainer.right #dash {
   margin-top: 0 !important;
-  padding: 12px !important;
+  padding: 8px !important;
 }
 
 #dashtodockContainer.left #dash #dashtodockDashContainer, #dashtodockContainer.right #dash #dashtodockDashContainer {
-  padding: 12px 0 !important;
+  padding: 8px 0 !important;
 }
 
 #dashtodockContainer.left #dash .dash-background, #dashtodockContainer.right #dash .dash-background {
   margin-bottom: 0 !important;
-  padding: 12px !important;
+  padding: 8px !important;
 }
 
 #dashtodockContainer.left #dash .overview-tile, #dashtodockContainer.left #dash .show-apps, #dashtodockContainer.right #dash .overview-tile, #dashtodockContainer.right #dash .show-apps {
-  padding: 2px 6px !important;
+  padding: 1.5px 4px !important;
 }
 
 #dashtodockContainer.left.extended #dash #dashtodockDashContainer, #dashtodockContainer.right.extended #dash #dashtodockDashContainer {
@@ -4908,15 +4908,15 @@ StWidget.focused .app-grid-running-dot {
 }
 
 #dashtodockContainer.left.extended #dash #dashtodockDashContainer > :first-child .show-apps, #dashtodockContainer.right.extended #dash #dashtodockDashContainer > :first-child .show-apps {
-  padding-bottom: 8px !important;
+  padding-bottom: 6px !important;
 }
 
 #dashtodockContainer.left.extended #dash #dashtodockDashContainer > :last-child .show-apps, #dashtodockContainer.right.extended #dash #dashtodockDashContainer > :last-child .show-apps {
-  padding-bottom: 20px !important;
+  padding-bottom: 14px !important;
 }
 
 #dashtodockContainer.top.extended #dash .overview-tile, #dashtodockContainer.top.extended #dash .show-apps, #dashtodockContainer.bottom.extended #dash .overview-tile, #dashtodockContainer.bottom.extended #dash .show-apps {
-  padding: 6px 2px !important;
+  padding: 4px 1.5px !important;
 }
 
 #dashtodockContainer.top.extended #dash #dashtodockDashContainer, #dashtodockContainer.bottom.extended #dash #dashtodockDashContainer {
@@ -4932,11 +4932,11 @@ StWidget.focused .app-grid-running-dot {
 }
 
 #dashtodockContainer.top.extended #dash #dashtodockDashContainer > :first-child .show-apps, #dashtodockContainer.bottom.extended #dash #dashtodockDashContainer > :first-child .show-apps {
-  padding-left: 8px !important;
+  padding-left: 6px !important;
 }
 
 #dashtodockContainer.top.extended #dash #dashtodockDashContainer > :last-child .show-apps, #dashtodockContainer.bottom.extended #dash #dashtodockDashContainer > :last-child .show-apps {
-  padding-right: 20px !important;
+  padding-right: 14px !important;
 }
 
 #dashtodockContainer #dash {
@@ -5144,13 +5144,13 @@ StWidget.focused .app-grid-running-dot {
 .gsconnect-device-menu {
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 6px;
-  margin: 0 4px;
+  margin: 0 3px;
   padding: 6px 0;
   box-shadow: none;
 }
 
 .gsconnect-device-menu .popup-menu-item {
-  margin: 0 4px !important;
+  margin: 0 3px !important;
   height: 16px !important;
   border-radius: 6px !important;
 }
@@ -5202,21 +5202,21 @@ StWidget.focused .app-grid-running-dot {
 
 .place-menu-item:ltr {
   padding-left: 0 !important;
-  padding-right: 30px !important;
+  padding-right: 20px !important;
 }
 
 .place-menu-item:rtl {
   padding-right: 0 !important;
-  padding-left: 30px !important;
+  padding-left: 20px !important;
 }
 
 .place-menu-item StLabel {
-  margin-left: 3px;
+  margin-left: 2px;
 }
 
 .place-menu-item .button {
   border-radius: 9999px;
-  padding: 3px;
+  padding: 2px;
 }
 
 .place-menu-item .button:ltr {
@@ -5228,7 +5228,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .popup-menu-container {
-  padding: 12px !important;
+  padding: 8px !important;
   min-width: 20em !important;
 }
 
