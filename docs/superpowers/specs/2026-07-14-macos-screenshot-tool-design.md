@@ -22,30 +22,31 @@ In scope:
 
 Out of scope:
 - Screen recording (Cmd+Shift+5 panel).
-- A persistent daemon; everything is launched per-capture.
 - Removing the old `Screenshot.sh` script file (bindings stop referencing it;
   deletion can happen separately).
 
 ## Folder layout
 
-New stow package at the dotfiles root (deployed by the existing `stow -R -t "$HOME"`
-loop in `install.sh`):
+New feature folder inside the existing Quickshell config (part of the `configs`
+stow package), following the same pattern as `lock/`, `power/`, and `launcher/`:
 
 ```
-screenshot/
-└── .config/screenshot/
-    ├── screenshot.sh          # entry point: screenshot.sh full | area
-    ├── shutter.oga            # shutter sound asset (bundled copy of the
-    │                          # freedesktop camera-shutter sound)
-    └── preview/
-        └── shell.qml          # Quickshell thumbnail popup
+configs/.config/quickshell/screenshot/
+├── screenshot.sh          # entry point: screenshot.sh full | area
+├── shutter.oga            # shutter sound asset (bundled copy of the
+│                          # freedesktop camera-shutter sound)
+├── Controller.qml         # singleton: IpcHandler + LazyLoader, init()
+└── Thumbnail.qml          # bottom-right PanelWindow popup
 ```
+
+`shell.qml` gains `import "screenshot" as Screenshot` and a
+`Screenshot.Controller.init()` call, matching the other features.
 
 ## Behavior
 
 ### Capture flow
 
-1. Keybind runs `~/.config/screenshot/screenshot.sh <mode>`.
+1. Keybind runs `~/.config/quickshell/screenshot/screenshot.sh <mode>`.
 2. Geometry is resolved per mode:
    - `full` — no geometry; `grim` captures the whole output.
    - `area` — visible windows on the current workspace are read from
@@ -57,14 +58,16 @@ screenshot/
    (directory auto-created).
 4. The image is copied to the clipboard via `wl-copy`.
 5. The shutter sound plays (paplay, falling back to pw-play).
-6. The thumbnail preview launches.
+6. The script triggers the thumbnail in the running shell:
+   `qs ipc call screenshot show <file>`.
 
 ### Thumbnail preview (Quickshell)
 
-- Launched as `qs -p ~/.config/screenshot/preview/shell.qml` with the image path
-  handed over via an environment variable.
-- Single instance: the script kills any previous preview instance before
-  launching, so a rapid second capture replaces the old thumbnail.
+- `Controller.qml` is a singleton (same shape as `power/Controller.qml`):
+  an `IpcHandler` with target `screenshot` exposing `show(path)`, and a
+  `LazyLoader` that activates the `Thumbnail` window while a preview is open.
+- Single instance for free: a second `show()` call replaces the current image
+  and restarts the dismiss timer.
 - Layer-shell window anchored bottom-right with a margin, macOS-like styling:
   rounded corners, border, drop shadow, slide-in animation from the right.
 - Click → dismisses the popup and opens `swappy -f <file>` (annotate + save).
@@ -76,22 +79,24 @@ screenshot/
 In `configs/.config/hypr/modules/keybinds.lua`, the three existing screenshot
 binds (`SUPER+SHIFT+S/O/W` → `Screenshot.sh`) are replaced with:
 
-- `SUPER+SHIFT+3` → `~/.config/screenshot/screenshot.sh full`
-- `SUPER+SHIFT+4` → `~/.config/screenshot/screenshot.sh area`
+- `SUPER+SHIFT+3` → `~/.config/quickshell/screenshot/screenshot.sh full`
+- `SUPER+SHIFT+4` → `~/.config/quickshell/screenshot/screenshot.sh area`
 
 ## Error handling
 
 - Slurp cancelled (non-zero exit / empty selection): exit 0, no side effects.
 - Screenshots directory missing: created with `mkdir -p`.
-- Sound player or Quickshell missing: capture still saves and copies; the
-  extras are best-effort (`command -v` guards).
+- Sound player missing or the Quickshell instance not running (`qs ipc` fails):
+  capture still saves and copies; sound and thumbnail are best-effort.
 - grim failure: no sound, no thumbnail, non-zero exit.
 
 ## Dependencies
 
 All already installed: grim, slurp, wl-copy, swappy, quickshell, jq, hyprctl.
-`install.sh`'s package list should include `grim slurp swappy quickshell wl-clipboard`
-if any are missing from it, so fresh installs work.
+`install.sh`'s package list should include `grim slurp swappy wl-clipboard`
+if any are missing from it, so fresh installs work (quickshell is already part
+of the setup). No new stow package — everything lives in the existing `configs`
+package.
 
 ## Testing
 
