@@ -13,7 +13,9 @@ preview in the bottom-right corner that opens an annotation editor when clicked.
 ## Scope
 
 In scope:
-- Full-screen capture (`SUPER+SHIFT+3`) and area capture with window snap (`SUPER+SHIFT+4`).
+- Full-screen capture (`SUPER+ALT+3`) and area capture with window snap
+  (`SUPER+ALT+4`). ALT instead of SHIFT because `SUPER+SHIFT+[0-9]` is already
+  "move window to workspace N" in `keybinds.lua`.
 - Floating thumbnail preview (Quickshell/QML): slides in bottom-right, ~5 s
   auto-dismiss, click opens swappy on the file.
 - Shutter sound on successful capture.
@@ -79,8 +81,8 @@ configs/.config/quickshell/screenshot/
 In `configs/.config/hypr/modules/keybinds.lua`, the three existing screenshot
 binds (`SUPER+SHIFT+S/O/W` → `Screenshot.sh`) are replaced with:
 
-- `SUPER+SHIFT+3` → `~/.config/quickshell/screenshot/screenshot.sh full`
-- `SUPER+SHIFT+4` → `~/.config/quickshell/screenshot/screenshot.sh area`
+- `SUPER+ALT+3` → `~/.config/quickshell/screenshot/screenshot.sh full`
+- `SUPER+ALT+4` → `~/.config/quickshell/screenshot/screenshot.sh area`
 
 ## Error handling
 
