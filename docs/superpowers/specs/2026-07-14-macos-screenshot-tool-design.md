@@ -61,7 +61,9 @@ configs/.config/quickshell/screenshot/
 4. The image is copied to the clipboard via `wl-copy`.
 5. The shutter sound plays (paplay, falling back to pw-play).
 6. The script triggers the thumbnail in the running shell:
-   `qs ipc call screenshot show <file>`.
+   `qs ipc call screenshot -- show <file>` (the `--` separator is required:
+   Quickshell 0.3.0's CLI collides the function name `show` with the
+   `qs ipc show` subcommand, silently rejecting the path argument otherwise).
 
 ### Thumbnail preview (Quickshell)
 

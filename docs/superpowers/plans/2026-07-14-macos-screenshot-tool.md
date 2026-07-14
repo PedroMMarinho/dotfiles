@@ -4,7 +4,7 @@
 
 **Goal:** Replace the old grim/slurp `Screenshot.sh` bindings with a macOS-style capture tool: full-screen and area capture (with window hover-snap), shutter sound, clipboard copy, and a Quickshell floating thumbnail that opens swappy when clicked.
 
-**Architecture:** A shell script (`screenshot.sh`) does the capture with grim/slurp, then fires `qs ipc call screenshot show <file>` at the already-running Quickshell instance. A new `screenshot/` Quickshell module (singleton `Controller.qml` + `Thumbnail.qml` window) renders the macOS-style thumbnail, following the exact pattern of the existing `power/` module. Two Hyprland keybinds invoke the script.
+**Architecture:** A shell script (`screenshot.sh`) does the capture with grim/slurp, then fires `qs ipc call screenshot -- show <file>` at the already-running Quickshell instance. A new `screenshot/` Quickshell module (singleton `Controller.qml` + `Thumbnail.qml` window) renders the macOS-style thumbnail, following the exact pattern of the existing `power/` module. Two Hyprland keybinds invoke the script.
 
 **Tech Stack:** bash, grim, slurp, jq, hyprctl, wl-copy, paplay/pw-play, Quickshell 0.3.0 (QML / QtQuick.Effects), swappy, hyprlua keybinds.
 
@@ -14,7 +14,7 @@
 - Everything lives in `configs/.config/quickshell/screenshot/` (existing `configs` stow package — `~/.config/quickshell` is already a symlink into the repo, so files go live on save). Do NOT create a new top-level folder.
 - Screenshot files: `~/Pictures/Screenshots/Screenshot YYYY-MM-DD at HH.MM.SS.png` (macOS naming, with spaces — quote every path).
 - Keybinds: `SUPER+ALT+3` = full, `SUPER+ALT+4` = area. NOT `SUPER+SHIFT` — those numbers are taken by "move window to workspace N".
-- IPC contract: `qs ipc call screenshot show <absolute-file-path>`.
+- IPC contract: `qs ipc call screenshot -- show <absolute-file-path>` (the `--` separator is required: Quickshell 0.3.0's CLI collides the function name `show` with the `qs ipc show` subcommand, silently rejecting the path argument otherwise).
 - Capture must still succeed (file + clipboard) if sound playback or the Quickshell IPC call fails — those are best-effort.
 - QML singletons here use `pragma Singleton` with plain directory imports and NO qmldir files — match the existing `power/Controller.qml` pattern exactly.
 - Quickshell hot-reloads on file save. If it doesn't pick something up, restart with: `qs kill; (setsid qs >/dev/null 2>&1 &)`.
@@ -32,7 +32,7 @@
 
 **Interfaces:**
 - Consumes: nothing from other tasks.
-- Produces: `screenshot.sh full|area` — saves PNG to `~/Pictures/Screenshots/`, copies image to clipboard, plays shutter sound, then calls `qs ipc call screenshot show "<file>"` (best-effort; Task 2 implements the receiver). Exit 0 on success or user-cancel, 1 on bad usage/capture failure.
+- Produces: `screenshot.sh full|area` — saves PNG to `~/Pictures/Screenshots/`, copies image to clipboard, plays shutter sound, then calls `qs ipc call screenshot -- show "<file>"` (best-effort; Task 2 implements the receiver). Exit 0 on success or user-cancel, 1 on bad usage/capture failure.
 
 - [ ] **Step 1: Create the module folder and bundle the shutter sound**
 
@@ -92,7 +92,7 @@ elif command -v pw-play >/dev/null 2>&1; then
     pw-play "$self_dir/shutter.oga" &
 fi
 
-qs ipc call screenshot show "$file" >/dev/null 2>&1 || true
+qs ipc call screenshot -- show "$file" >/dev/null 2>&1 || true
 ```
 
 Then make it executable:
@@ -140,7 +140,7 @@ Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
 - Modify: `configs/.config/quickshell/shell.qml` (add import + init call)
 
 **Interfaces:**
-- Consumes: `qs ipc call screenshot show <path>` from Task 1's script (also callable by hand for testing).
+- Consumes: `qs ipc call screenshot -- show <path>` from Task 1's script (also callable by hand for testing).
 - Produces: IpcHandler target `screenshot` with `function show(path: string)`. Controller singleton API used by Thumbnail: `file` (string), `revealed` (bool), `hold()`, `release()`, `openEditor()`, `dismiss()`.
 
 - [ ] **Step 1: Write the controller singleton**
@@ -371,7 +371,7 @@ If it's missing, restart: `qs kill; (setsid qs >/dev/null 2>&1 &)` and re-check.
 
 ```bash
 f="$(ls -t ~/Pictures/Screenshots/*.png | head -1)"
-qs ipc call screenshot show "$f"
+qs ipc call screenshot -- show "$f"
 ```
 
 Expected: thumbnail slides in at the bottom-right showing that capture, with white frame, rounded corners, and drop shadow; after ~5 s it slides out and disappears.
@@ -380,7 +380,7 @@ Then fire it twice in a row with two different files:
 
 ```bash
 files=($(ls -t ~/Pictures/Screenshots/*.png | head -2))
-qs ipc call screenshot show "${files[1]}" && sleep 2 && qs ipc call screenshot show "${files[0]}"
+qs ipc call screenshot -- show "${files[1]}" && sleep 2 && qs ipc call screenshot -- show "${files[0]}"
 ```
 
 Expected: the image swaps to the second file in place and the 5 s countdown restarts (no duplicate window).

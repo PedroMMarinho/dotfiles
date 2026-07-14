@@ -43,4 +43,4 @@ elif command -v pw-play >/dev/null 2>&1; then
     pw-play "$self_dir/shutter.oga" &
 fi
 
-qs ipc call screenshot show "$file" >/dev/null 2>&1 || true
+qs ipc call screenshot -- show "$file" >/dev/null 2>&1 || true
