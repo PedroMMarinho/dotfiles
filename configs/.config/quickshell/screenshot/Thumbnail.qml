@@ -114,7 +114,10 @@ PanelWindow {
                 property bool dragging: false
 
                 onEntered: root.controller.hold()
-                onExited: root.controller.release()
+                onExited: {
+                    if (!pressed)
+                        root.controller.release();
+                }
 
                 onPressed: (event) => {
                     pressX = event.x;
