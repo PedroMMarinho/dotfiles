@@ -112,5 +112,5 @@ Manual verification on the live Hyprland session:
 4. `screenshot.sh area` + Escape — no file created, silent exit.
 5. Click thumbnail — swappy opens on the captured file.
 6. Two captures back-to-back — second thumbnail replaces the first.
-7. Keybinds `SUPER+SHIFT+3` / `SUPER+SHIFT+4` trigger the right modes after
+7. Keybinds `SUPER+ALT+3` / `SUPER+ALT+4` trigger the right modes after
    `hyprctl reload`.
