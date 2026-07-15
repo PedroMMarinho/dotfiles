@@ -43,7 +43,7 @@ hl.bind(v.mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "maximized", acti
 hl.bind(v.mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(v.mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(v.mainMod .. " + J", hl.dsp.layout("togglesplit"))
-hl.bind(v.mainMod .. " + SPACE", hl.dsp.exec_cmd(v.scriptsDir .. "/Keyboard.sh"))  
+hl.bind(v.mainMod .. " + SPACE", hl.dsp.exec_cmd(v.scriptsDir .. "/Keyboard.sh"))
 hl.bind(v.mainMod .. " + L", hl.dsp.exec_cmd("qs ipc call lock lock"))
 hl.bind(v.mainMod .. " + X", hl.dsp.exec_cmd("qs ipc call power toggle"))
 -- hl.bind(v.mainMod .. " + CTRL + B", hl.dsp.exec_cmd(v.scriptsDir .. "/WaybarStyles.sh"))
@@ -56,8 +56,9 @@ hl.bind(v.mainMod .. " + X", hl.dsp.exec_cmd("qs ipc call power toggle"))
 
 -- macOS-style: SUPER+ALT because SUPER+SHIFT+[0-9] moves windows to workspaces
 hl.bind(v.mainMod .. " + ALT + 3", hl.dsp.exec_cmd(v.screenshotScript .. " full"))
-hl.bind(v.mainMod .. " + ALT + 4", hl.dsp.exec_cmd(v.screenshotScript .. " area"))
-    
+hl.bind(v.mainMod .. " + ALT + 4", hl.dsp.exec_cmd(v.screenshotScript .. " window"))
+hl.bind(v.mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(v.screenshotScript .. " crop"))
+
 --\\\\\\\\\\\\\\\////////////--
 --        WINDOW FOCUS       --
 --\\\\\\\\\\\\\\\////////////--
