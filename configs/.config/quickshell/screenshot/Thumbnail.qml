@@ -18,9 +18,11 @@ PanelWindow {
         right: true
         bottom: true
     }
+    // Position comes from the controller so dragging survives image swaps
+    // and show() can reset it to the corner.
     margins {
-        right: 12
-        bottom: 12
+        right: root.controller.posRight
+        bottom: root.controller.posBottom
     }
 
     implicitWidth: thumbWidth + shadowPad * 2
@@ -53,8 +55,8 @@ PanelWindow {
                 ? Math.min(Math.round(width * img.sourceSize.height / img.sourceSize.width), 220) + 8
                 : 130
             radius: 10
-            color: "#F2FFFFFF"          // white macOS-style frame
-            border.color: "#33000000"
+            color: "#F22A2A2A"          // macOS dark charcoal frame
+            border.color: "#40FFFFFF"   // subtle light hairline
             border.width: 1
 
             layer.enabled: true
@@ -97,12 +99,50 @@ PanelWindow {
             }
 
             MouseArea {
+                id: mouse
+
                 anchors.fill: parent
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
+
+                // Press-and-move beyond the threshold drags the popup by
+                // adjusting the layer margins (Hyprland never moves the
+                // surface itself, so there is nothing to jitter). A release
+                // below the threshold is a click and opens the editor.
+                property real pressX: 0
+                property real pressY: 0
+                property bool dragging: false
+
                 onEntered: root.controller.hold()
                 onExited: root.controller.release()
-                onClicked: root.controller.openEditor()
+
+                onPressed: (event) => {
+                    pressX = event.x;
+                    pressY = event.y;
+                    dragging = false;
+                    root.controller.hold();
+                }
+
+                onPositionChanged: (event) => {
+                    if (!pressed)
+                        return;
+                    const dx = event.x - pressX;
+                    const dy = event.y - pressY;
+                    if (!dragging && Math.abs(dx) < 6 && Math.abs(dy) < 6)
+                        return;
+                    dragging = true;
+                    const maxRight = root.screen.width - root.implicitWidth;
+                    const maxBottom = root.screen.height - root.implicitHeight;
+                    root.controller.posRight = Math.max(0, Math.min(root.controller.posRight - dx, maxRight));
+                    root.controller.posBottom = Math.max(0, Math.min(root.controller.posBottom - dy, maxBottom));
+                }
+
+                onReleased: {
+                    if (!dragging)
+                        root.controller.openEditor();
+                    else if (!containsMouse)
+                        root.controller.release();
+                }
             }
         }
     }

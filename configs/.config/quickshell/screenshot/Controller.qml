@@ -15,6 +15,10 @@ Singleton {
     // before the window unloads.
     property bool isOpen: false
     property bool revealed: false
+    // Popup position, expressed as layer-surface margins. Dragging in
+    // Thumbnail.qml writes these; every new capture resets to bottom-right.
+    property int posRight: 12
+    property int posBottom: 12
 
     IpcHandler {
         target: "screenshot"
@@ -22,9 +26,20 @@ Singleton {
         function show(path: string): void {
             unloadTimer.stop();
             root.file = path;
+            root.posRight = 12;
+            root.posBottom = 12;
             root.isOpen = true;
             root.revealed = true;
             dismissTimer.restart();
+        }
+
+        // Instant hide, no slide-out: screenshot.sh calls this right before
+        // capturing so a previous thumbnail is never in the new screenshot.
+        function hide(): void {
+            dismissTimer.stop();
+            unloadTimer.stop();
+            root.revealed = false;
+            root.isOpen = false;
         }
     }
 
