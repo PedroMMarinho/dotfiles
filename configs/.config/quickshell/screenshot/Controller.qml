@@ -32,6 +32,9 @@ Singleton {
     readonly property string soundPath:
         Qt.resolvedUrl("shutter.oga").toString().replace("file://", "")
     property string pendingFile: ""
+    // Monotonic session id: a Process exit belonging to a replaced session
+    // must be ignored, never treated as the live session's result.
+    property int session: 0
 
     IpcHandler {
         target: "screenshot"
@@ -50,6 +53,8 @@ Singleton {
         }
         if (root.mode !== "")
             cancelSession();              // a new invocation replaces a stuck one
+        root.session++;
+        root.pendingFile = "";
         hideThumb();                      // a previous thumbnail must never be captured
         optsProc.running = true;          // border/rounding for the window picker
         root.frozen = false;
@@ -70,16 +75,29 @@ Singleton {
             } else {
                 grimProc.command = ["grim", root.masterPath];
             }
+            grimProc.session = root.session;
             grimProc.running = true;
         }
     }
 
     Process {
         id: grimProc
+
+        property int session: -1
+
         onExited: (exitCode, exitStatus) => {
+            if (session !== root.session) {
+                // A newer session replaced this grab. Its master will be
+                // overwritten by the new grim; only clean up if idle.
+                if (root.mode === "")
+                    Quickshell.execDetached(["rm", "-f", root.masterPath]);
+                return;
+            }
             if (root.mode === "") {
                 // Cancelled while grim was running: discard whatever it wrote.
-                Quickshell.execDetached(["rm", "-f", root.masterPath, root.pendingFile]);
+                Quickshell.execDetached(root.pendingFile !== ""
+                    ? ["rm", "-f", root.masterPath, root.pendingFile]
+                    : ["rm", "-f", root.masterPath]);
                 return;
             }
             if (exitCode !== 0) {
@@ -150,7 +168,9 @@ Singleton {
         Quickshell.execDetached(["sh", "-c",
             'command -v paplay >/dev/null && exec paplay "$0"; command -v pw-play >/dev/null && exec pw-play "$0"',
             root.soundPath]);
-        showThumb(f);
+        // Never pop the thumbnail into a session that is currently capturing.
+        if (root.mode === "")
+            showThumb(f);
     }
 
     function targetFile() {
