@@ -18,11 +18,9 @@ PanelWindow {
         right: true
         bottom: true
     }
-    // Position comes from the controller so dragging survives image swaps
-    // and show() can reset it to the corner.
     margins {
-        right: root.controller.posRight
-        bottom: root.controller.posBottom
+        right: 12
+        bottom: 12
     }
 
     implicitWidth: thumbWidth + shadowPad * 2
@@ -105,47 +103,12 @@ PanelWindow {
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
 
-                // Press-and-move beyond the threshold drags the popup by
-                // adjusting the layer margins (Hyprland never moves the
-                // surface itself, so there is nothing to jitter). A release
-                // below the threshold is a click and opens the editor.
-                property real pressX: 0
-                property real pressY: 0
-                property bool dragging: false
-
                 onEntered: root.controller.hold()
                 onExited: {
                     if (!pressed)
                         root.controller.release();
                 }
-
-                onPressed: (event) => {
-                    pressX = event.x;
-                    pressY = event.y;
-                    dragging = false;
-                    root.controller.hold();
-                }
-
-                onPositionChanged: (event) => {
-                    if (!pressed)
-                        return;
-                    const dx = event.x - pressX;
-                    const dy = event.y - pressY;
-                    if (!dragging && Math.abs(dx) < 6 && Math.abs(dy) < 6)
-                        return;
-                    dragging = true;
-                    const maxRight = root.screen.width - root.implicitWidth;
-                    const maxBottom = root.screen.height - root.implicitHeight;
-                    root.controller.posRight = Math.max(0, Math.min(root.controller.posRight - dx, maxRight));
-                    root.controller.posBottom = Math.max(0, Math.min(root.controller.posBottom - dy, maxBottom));
-                }
-
-                onReleased: {
-                    if (!dragging)
-                        root.controller.openEditor();
-                    else if (!containsMouse)
-                        root.controller.release();
-                }
+                onClicked: root.controller.openEditor()
             }
         }
     }

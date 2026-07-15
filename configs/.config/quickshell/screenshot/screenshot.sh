@@ -22,13 +22,11 @@ qs ipc call screenshot -- hide >/dev/null 2>&1 || true
 # restore the previous value on ANY exit (including slurp Escape).
 hw_prev="$(hyprctl getoption cursor:no_hardware_cursors -j 2>/dev/null | jq -r '.int' 2>/dev/null || true)"
 [ "$hw_prev" = "null" ] && hw_prev=""
-cursor_swapped=0
+tmp_file=""
 restore() {
+    [ -n "$tmp_file" ] && rm -f "$tmp_file"
     if [ -n "$hw_prev" ]; then
         hyprctl keyword cursor:no_hardware_cursors "$hw_prev" >/dev/null 2>&1
-    fi
-    if [ "$cursor_swapped" = 1 ]; then
-        hyprctl setcursor "${XCURSOR_THEME:-macOS}" "${XCURSOR_SIZE:-24}" >/dev/null 2>&1
     fi
 }
 trap restore EXIT
@@ -61,16 +59,23 @@ case "$mode" in
         grim "$file" || exit 1
         ;;
     window)
-        # Camera pointer while picking; restore handled by the EXIT trap.
-        if hyprctl setcursor screenshot-camera "${XCURSOR_SIZE:-24}" >/dev/null 2>&1; then
-            cursor_swapped=1
-        fi
-        geometry="$(window_boxes | slurp -r -b '#00000066' -c '#FFFFFFFF' -w 2 -s '#FFFFFF22')" || exit 0
-        grim -g "$geometry" "$file" || exit 1
+        # Freeze-then-crop: capture the whole layout BEFORE slurp draws, then
+        # cut the picked region out of that frame. Nothing slurp renders (dim,
+        # selection border, pointer) can leak into the shot, and the content
+        # cannot change mid-pick. Assumes monitor scale 1 — slurp's logical
+        # coordinates must match grim's pixels.
+        tmp_file="$(mktemp --suffix=.png)"
+        grim "$tmp_file" || exit 1
+        # slurp renders its own pointer from XCURSOR_THEME; hyprctl setcursor
+        # does not reach it, so the camera cursor is passed via env.
+        geometry="$(window_boxes | env XCURSOR_THEME="screenshot-camera" XCURSOR_SIZE="${XCURSOR_SIZE:-24}" slurp -r -b '#00000066' -c '#FFFFFFFF' -w 2 -s '#FFFFFF22' -f '%wx%h+%x+%y')" || exit 0
+        magick "$tmp_file" -crop "$geometry" +repage "$file" || exit 1
         ;;
     crop)
-        geometry="$(slurp -b '#00000066' -c '#FFFFFFFF' -w 2)" || exit 0   # Escape cancels silently
-        grim -g "$geometry" "$file" || exit 1
+        tmp_file="$(mktemp --suffix=.png)"
+        grim "$tmp_file" || exit 1
+        geometry="$(slurp -b '#00000066' -c '#FFFFFFFF' -w 2 -f '%wx%h+%x+%y')" || exit 0   # Escape cancels silently
+        magick "$tmp_file" -crop "$geometry" +repage "$file" || exit 1
         ;;
     *)
         echo "usage: ${0##*/} full|window|crop" >&2

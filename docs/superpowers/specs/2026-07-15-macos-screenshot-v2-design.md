@@ -83,29 +83,33 @@ boxes. Windows underneath are excluded.
   white fill on the hovered box. Indicative flags:
   `slurp -r -b '#00000066' -c '#FFFFFFFF' -w 2 -s '#FFFFFF22'` (exact values
   are the plan's to pin down on the live session).
+- **Freeze-then-crop (window/crop modes):** the full layout is captured to a
+  temp file BEFORE slurp launches; the picked region is cropped from that
+  frame (`slurp -f '%wx%h+%x+%y'` + `magick -crop +repage`). Nothing slurp
+  renders (dim, selection border, pointer) can appear in the shot, and there
+  is no slurp→grim race to sleep around. Assumes monitor scale 1 (slurp's
+  logical coordinates must match grim's pixels). The temp file is removed by
+  the EXIT trap on every path, including Escape.
 - **Camera cursor:** a generated Xcursor theme, stored in the repo under the
   screenshot module (stow-managed), containing a macOS-style glyph — **dark
   camera on a white rounded square** — used for the pointer shapes slurp can
   trigger (at minimum `crosshair`, `cross`, `left_ptr`, `default`). The theme
   inherits the user's normal theme for everything else.
-  During `window` mode only, the script swaps the global cursor with
-  `hyprctl setcursor <camera-theme> <size>` before slurp and restores the
-  previous theme/size after (trap-protected, so Escape also restores). The
-  previous theme/size are read from the environment (`XCURSOR_THEME`,
-  `XCURSOR_SIZE`) with sane fallbacks.
+  During `window` mode only, the script hands the camera theme to slurp via
+  its environment (`env XCURSOR_THEME=<camera-theme> XCURSOR_SIZE=… slurp …`).
+  slurp renders its own pointer from `XCURSOR_THEME` — `hyprctl setcursor`
+  does not reach it — and the env change is scoped to the slurp process, so
+  the global cursor is never touched and nothing needs restoring.
 - Cursor-theme swap failing must not block the capture (best-effort, like
   sound).
 
 ## Thumbnail popup v2
 
-- **Drag to reposition:** pressing and moving the popup beyond a small
-  threshold (~6px) drags it anywhere on screen. Implementation: the popup
-  keeps `right`/`bottom` anchors and adjusts its layer-surface **margins**
-  during the drag — Hyprland never moves or resizes the surface, so the v1
-  MOD+drag jitter cannot occur. A plain click (below the threshold) still
-  opens swappy. Auto-dismiss is paused while pressed or hovered and resumes
-  on release/exit. Each new capture resets the popup to bottom-right
-  (margins 12/12).
+- **Fixed position:** the popup sits at the bottom-right (margins 12/12).
+  Drag-to-reposition shipped in an early v2 iteration and was removed after
+  live testing — the popup is hover/click only. A click opens swappy.
+  Auto-dismiss is paused while pressed or hovered and resumes on
+  release/exit.
 - **macOS dark frame:** frame color goes from white (`#F2FFFFFF`) to macOS
   dark charcoal (`#F22A2A2A`) with a subtle light hairline
   (`border.color: #40FFFFFF`). Values may be nudged during live verification
@@ -126,7 +130,8 @@ boxes. Windows underneath are excluded.
 ## Error handling
 
 - Escape in slurp cancels silently (`exit 0`), no side effects left behind:
-  hardware-cursor setting and cursor theme are restored by the EXIT trap.
+  the hardware-cursor setting is restored and the temp frame deleted by the
+  EXIT trap.
 - Capture (file + clipboard) must never depend on sound, popup, or cursor
   cosmetics — all best-effort, as in v1.
 - All IPC calls use the `qs ipc call screenshot -- <fn> ...` form (`--`
@@ -138,14 +143,14 @@ boxes. Windows underneath are excluded.
    (sample edge pixels), no cursor, no popup remnant.
 2. `SUPER+ALT+4` with one window fullscreen and others beneath: only the
    fullscreen window is offered.
-3. `SUPER+ALT+4`: pointer becomes the camera cursor during selection; normal
-   cursor restored after capture AND after Escape. White highlight visible.
+3. `SUPER+ALT+4`: pointer becomes the camera cursor during selection (slurp
+   env — the global cursor is never touched). White highlight visible.
 4. `SUPER+ALT+4`: dragging does nothing (window pick only, `slurp -r`).
 5. `SUPER+SHIFT+S`: freehand rectangle works, no window snapping, Escape
    cancels silently.
 6. `SUPER+ALT+3`: full capture, no cursor, no popup remnant.
-7. Popup: plain drag repositions smoothly (no resize jitter); click opens
-   swappy; hover >5s keeps it alive; new capture resets position bottom-right.
+7. Popup: click opens swappy; hover >5s keeps it alive; fixed bottom-right
+   position.
 8. Popup frame is dark charcoal with light hairline.
 9. `hyprctl getoption cursor:no_hardware_cursors` returns the pre-capture
    value after every mode, including a cancelled one.
