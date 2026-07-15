@@ -54,9 +54,9 @@ hl.bind(v.mainMod .. " + X", hl.dsp.exec_cmd("qs ipc call power toggle"))
 --        SCREENSHOTS        --
 --\\\\\\\\\\\\\\\////////////--
 
-hl.bind(v.mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(v.scriptsDir .. "/Screenshot.sh --area"))
-hl.bind(v.mainMod .. " + SHIFT + O", hl.dsp.exec_cmd(v.scriptsDir .. "/Screenshot.sh --now"))
-hl.bind(v.mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(v.scriptsDir .. "/Screenshot.sh --active"))
+-- macOS-style: SUPER+ALT because SUPER+SHIFT+[0-9] moves windows to workspaces
+hl.bind(v.mainMod .. " + ALT + 3", hl.dsp.exec_cmd(v.screenshotScript .. " full"))
+hl.bind(v.mainMod .. " + ALT + 4", hl.dsp.exec_cmd(v.screenshotScript .. " area"))
     
 --\\\\\\\\\\\\\\\////////////--
 --        WINDOW FOCUS       --
