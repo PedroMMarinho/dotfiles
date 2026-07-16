@@ -55,9 +55,9 @@ hl.bind(v.mainMod .. " + X", hl.dsp.exec_cmd("qs ipc call power toggle"))
 --\\\\\\\\\\\\\\\////////////--
 
 -- macOS-style: SUPER+ALT because SUPER+SHIFT+[0-9] moves windows to workspaces
-hl.bind(v.mainMod .. " + ALT + 3", hl.dsp.exec_cmd(v.screenshotScript .. " full"))
-hl.bind(v.mainMod .. " + ALT + 4", hl.dsp.exec_cmd(v.screenshotScript .. " window"))
-hl.bind(v.mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(v.screenshotScript .. " crop"))
+hl.bind(v.mainMod .. " + ALT + 3", hl.dsp.exec_cmd("qs ipc call screenshot -- shoot full"))
+hl.bind(v.mainMod .. " + ALT + 4", hl.dsp.exec_cmd("qs ipc call screenshot -- shoot window"))
+hl.bind(v.mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("qs ipc call screenshot -- shoot crop"))
 
 --\\\\\\\\\\\\\\\////////////--
 --        WINDOW FOCUS       --

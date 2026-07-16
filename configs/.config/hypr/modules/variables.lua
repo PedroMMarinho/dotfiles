@@ -39,6 +39,5 @@ v.fileManagert = v.terminal .. " yazi"                       -- File manager ter
 local home = os.getenv("HOME")
 v.wallpapersDir = home .. "/.config/hypr/images/wallpapers"
 v.scriptsDir = home .. "/.config/hypr/scripts"
-v.screenshotScript = home .. "/.config/quickshell/screenshot/screenshot.sh"
 
 return v
