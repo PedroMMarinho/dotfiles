@@ -20,6 +20,12 @@ hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("XCURSOR_THEME", "macOS")
 hl.env("HYPRCURSOR_THEME", "macOS_HYPR")
 
+hl.config({
+    cursor = {
+        no_hardware_cursors = 0,
+    }
+})
+
 -- Toolkit Backend
 hl.env("GDK_BACKEND", "wayland,x11,*")
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")

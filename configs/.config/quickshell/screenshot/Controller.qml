@@ -55,19 +55,38 @@ Singleton {
             cancelSession();              // a new invocation replaces a stuck one
         root.session++;
         root.pendingFile = "";
+        root.pointerAcquired = false;
+        root.nudgeTries = 0;
+        root.grabbed = false;
         hideThumb();                      // a previous thumbnail must never be captured
         optsProc.running = true;          // border/rounding for the window picker
         root.frozen = false;
         root.mode = m;                    // maps the overlays (transparent, blank cursor)
-        settleTimer.restart();
+        grabFallback.restart();
     }
 
-    // The blank cursor and the hidden thumbnail need a moment to actually
-    // leave the compositor's frame before grim samples it.
+    // Hyprland software-renders the pointer, so grim bakes whatever cursor
+    // is on screen into its output. The frame must not be sampled until an
+    // overlay holds the pointer (= the cursor is blanked) and the
+    // compositor has repainted without it.
+    property bool grabbed: false
+
+    onPointerAcquiredChanged: {
+        if (pointerAcquired && selecting && !grabbed) {
+            grabFallback.stop();
+            grabTimer.restart();
+        }
+    }
+
+    // A couple of frames for the blanked-cursor repaint to land, plus the
+    // hidden thumbnail leaving the frame.
     Timer {
-        id: settleTimer
-        interval: 80
+        id: grabTimer
+        interval: 0
         onTriggered: {
+            if (root.mode === "" || root.grabbed)
+                return;
+            root.grabbed = true;
             if (root.mode === "full") {
                 root.pendingFile = root.targetFile();
                 grimProc.command = ["sh", "-c", 'mkdir -p "$0" && grim "$1"',
@@ -78,6 +97,44 @@ Singleton {
             grimProc.session = root.session;
             grimProc.running = true;
         }
+    }
+
+    // If no overlay ever reports the pointer (nudge failure), grab anyway:
+    // a screenshot with a cursor in it beats a session that never fires.
+    Timer {
+        id: grabFallback
+        interval: 600
+        //onTriggered: grabTimer.restart()
+    }
+
+    // Hyprland hands pointer focus to a new surface only on motion, so a
+    // mapped overlay can't blank a stationary cursor: the arrow lingers
+    // until the user moves the mouse. Warping one pixel away and back
+    // synthesizes that motion (a warp onto the cursor's exact position is
+    // dropped as a no-op). Overlay map time varies per monitor, so keep
+    // nudging until one of them reports the pointer.
+    property bool pointerAcquired: false
+    property int nudgeTries: 0
+
+    Timer {
+        id: nudgeTimer
+        interval: 100
+        repeat: true
+        triggeredOnStart: true
+        running: root.selecting && !root.pointerAcquired && root.nudgeTries < 3
+        onTriggered: {
+            root.nudgeTries++;
+            nudgeProc.running = true;
+        }
+    }
+
+    Process {
+        id: nudgeProc
+        command: ["sh", "-c",
+            'pos=$(hyprctl cursorpos); x=${pos%%,*}; y=${pos##*, }; '
+            + 'hyprctl dispatch "hl.dsp.cursor.move({x=$x, y=$((y > 0 ? y - 1 : y + 1))})"; '
+            + 'sleep 0.02; '
+            + 'hyprctl dispatch "hl.dsp.cursor.move({x=$x, y=$y})"']
     }
 
     Process {

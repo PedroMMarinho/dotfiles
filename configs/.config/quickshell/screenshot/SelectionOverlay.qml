@@ -17,6 +17,17 @@ Scope {
 
     readonly property var origin: controller.layoutOrigin()
 
+    // Quickshell's Hyprland objects cache their IPC data and only update it
+    // on request; without this refresh, most toplevels carry stale or empty
+    // lastIpcObject fields and the snapshot filters everything out. The
+    // session's settle+grab (~200ms) gives the async replies ample time to
+    // land before the frozen snapshot reads them.
+    Component.onCompleted: {
+        Hyprland.refreshToplevels();
+        Hyprland.refreshWorkspaces();
+        Hyprland.refreshMonitors();
+    }
+
     // Global pointer position in layout coordinates, shared across monitors
     // so highlights and fake cursors render on whichever screen they touch.
     property real pointerX: -1
@@ -114,11 +125,13 @@ Scope {
     }
 
     function updateHover() {
-        root.selection = root.pointerX >= 0
+        const hit = root.pointerX >= 0
             ? root.windowAt(root.pointerX, root.pointerY) : null;
+        root.selection = hit;
     }
 
     function pointerMoved(gx, gy) {
+        root.controller.pointerAcquired = true;   // stops the cursor nudger
         root.pointerX = gx;
         root.pointerY = gy;
         if (root.controller.mode === "window" && root.controller.frozen)
@@ -287,7 +300,9 @@ Scope {
                 // Camera glyph in window mode (macOS-style).
                 Image {
                     visible: root.controller.mode === "window"
-                    source: "camera.png"
+                    source: "camera.svg"
+                    // 2x the SVG's 22x17 intrinsic size, rasterized sharp.
+                    sourceSize.width: 24
                     x: root.pointerX - overlay.modelData.x - width / 2
                     y: root.pointerY - overlay.modelData.y - height / 2
                 }
