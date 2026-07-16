@@ -22,7 +22,7 @@ hl.env("HYPRCURSOR_THEME", "macOS_HYPR")
 
 hl.config({
     cursor = {
-        no_hardware_cursors = 0,
+        no_hardware_cursors = true,
     }
 })
 

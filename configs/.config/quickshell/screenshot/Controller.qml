@@ -108,7 +108,7 @@ Singleton {
     // so once the tick lands the capture is cursor-free by construction.
     Timer {
         id: grabTimer
-        interval: 200
+        interval: 100
         onTriggered: {
             if (root.mode === "")
                 return;
