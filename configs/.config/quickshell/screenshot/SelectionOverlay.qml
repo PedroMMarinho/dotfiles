@@ -32,6 +32,13 @@ Scope {
     // layout coordinates, {x, y, w, h, radius}, or null.
     property var selection: null
 
+    // Crop-mode drag, in global layout coordinates. A Wayland pointer grab
+    // keeps delivering events to the pressed surface even past its edge, so
+    // a drag can span monitors.
+    property bool dragging: false
+    property real dragX: 0
+    property real dragY: 0
+
     Connections {
         target: root.controller
 
@@ -116,6 +123,8 @@ Scope {
         root.pointerY = gy;
         if (root.controller.mode === "window" && root.controller.frozen)
             root.updateHover();
+        else if (root.dragging)
+            root.updateDrag(gx, gy);
     }
 
     function confirm() {
@@ -127,6 +136,33 @@ Scope {
             Math.round(s.w) + "x" + Math.round(s.h)
             + "+" + Math.round(s.x - root.origin.x)
             + "+" + Math.round(s.y - root.origin.y));
+    }
+
+    function beginDrag(gx, gy) {
+        root.dragging = true;
+        root.dragX = gx;
+        root.dragY = gy;
+        root.selection = null;
+    }
+
+    function updateDrag(gx, gy) {
+        root.selection = {
+            x: Math.min(root.dragX, gx),
+            y: Math.min(root.dragY, gy),
+            w: Math.abs(gx - root.dragX),
+            h: Math.abs(gy - root.dragY),
+            radius: 0
+        };
+    }
+
+    function endDrag() {
+        root.dragging = false;
+        const s = root.selection;
+        // A sub-4px drag is a stray click: clear it and stay open.
+        if (s && s.w >= 4 && s.h >= 4)
+            root.confirm();
+        else
+            root.selection = null;
     }
 
     Variants {
@@ -211,11 +247,13 @@ Scope {
                         color: "black"
                         opacity: overlay.localBox ? 1 : 0
 
-                        Behavior on x { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
-                        Behavior on y { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
-                        Behavior on width { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
-                        Behavior on height { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
-                        Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
+                        // Disabled while dragging: the crop rubber band must
+                        // track the pointer exactly, not lag 160ms behind it.
+                        Behavior on x { enabled: !root.dragging; NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
+                        Behavior on y { enabled: !root.dragging; NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
+                        Behavior on width { enabled: !root.dragging; NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
+                        Behavior on height { enabled: !root.dragging; NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
+                        Behavior on radius { enabled: !root.dragging; NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
                         Behavior on opacity { NumberAnimation { duration: 120 } }
                     }
                 }
@@ -253,6 +291,47 @@ Scope {
                     x: root.pointerX - overlay.modelData.x - width / 2
                     y: root.pointerY - overlay.modelData.y - height / 2
                 }
+
+                // Crosshair fake cursor for crop mode: full-span hairlines.
+                Rectangle {
+                    visible: root.controller.mode === "crop"
+                    x: root.pointerX - overlay.modelData.x
+                    y: 0
+                    width: 1
+                    height: parent.height
+                    color: "#CCFFFFFF"
+                }
+                Rectangle {
+                    visible: root.controller.mode === "crop"
+                    x: 0
+                    y: root.pointerY - overlay.modelData.y
+                    width: parent.width
+                    height: 1
+                    color: "#CCFFFFFF"
+                }
+
+                // WxH readout riding the selection's bottom-right corner.
+                Rectangle {
+                    visible: root.controller.mode === "crop" && overlay.localBox !== null
+                    x: hole.x + hole.width + 8
+                    y: hole.y + hole.height + 8
+                    width: sizeText.implicitWidth + 12
+                    height: sizeText.implicitHeight + 6
+                    radius: 4
+                    color: "#CC1A1A1A"
+
+                    Text {
+                        id: sizeText
+
+                        anchors.centerIn: parent
+                        color: "#FFFFFF"
+                        font.pixelSize: 12
+                        font.family: "monospace"
+                        text: root.selection
+                            ? Math.round(root.selection.w) + " x " + Math.round(root.selection.h)
+                            : ""
+                    }
+                }
             }
 
             MouseArea {
@@ -266,6 +345,16 @@ Scope {
                     overlay.modelData.x + mouseX, overlay.modelData.y + mouseY)
                 onPositionChanged: mouse => root.pointerMoved(
                     overlay.modelData.x + mouse.x, overlay.modelData.y + mouse.y)
+                onPressed: mouse => {
+                    if (mouse.button === Qt.LeftButton
+                        && root.controller.mode === "crop" && root.controller.frozen)
+                        root.beginDrag(overlay.modelData.x + mouse.x,
+                                       overlay.modelData.y + mouse.y);
+                }
+                onReleased: mouse => {
+                    if (mouse.button === Qt.LeftButton && root.dragging)
+                        root.endDrag();
+                }
                 onClicked: mouse => {
                     if (mouse.button === Qt.RightButton)
                         root.controller.cancelSession();
