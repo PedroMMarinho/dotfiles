@@ -18,9 +18,6 @@ Singleton {
     // ---- capture session state ----
     // A session walks: idle (mode === "") -> freezing -> frozen -> done/cancelled.
     property string mode: ""                  // "" | "full" | "window" | "crop"
-    // Overlays are mapped for every mode: even "full" needs them, because a
-    // mapped surface with a blank cursor is what keeps the pointer out of
-    // the compositor's frame during the grab.
     readonly property bool selecting: mode !== ""
     // True once the master (or the full-mode file) has been written.
     property bool frozen: false
@@ -52,41 +49,69 @@ Singleton {
             return;
         }
         if (root.mode !== "")
-            cancelSession();              // a new invocation replaces a stuck one
+            cancelSession(true);          // a new invocation replaces a stuck one
         root.session++;
         root.pendingFile = "";
-        root.pointerAcquired = false;
-        root.nudgeTries = 0;
-        root.grabbed = false;
+        root.seedX = -1;
+        root.seedY = -1;
+        seedProc.running = true;          // cursor position for the fake cursor
         hideThumb();                      // a previous thumbnail must never be captured
         optsProc.running = true;          // border/rounding for the window picker
         root.frozen = false;
-        root.mode = m;                    // maps the overlays (transparent, blank cursor)
-        grabFallback.restart();
+        root.mode = m;                    // maps the overlays
+        hideCursorProc.running = true;    // chain: cursor hidden -> settle -> grab
     }
 
-    // Hyprland software-renders the pointer, so grim bakes whatever cursor
-    // is on screen into its output. The frame must not be sampled until an
-    // overlay holds the pointer (= the cursor is blanked) and the
-    // compositor has repainted without it.
-    property bool grabbed: false
-
-    onPointerAcquiredChanged: {
-        if (pointerAcquired && selecting && !grabbed) {
-            grabFallback.stop();
-            grabTimer.restart();
+    // Not every output has a hardware cursor plane (HDMI-A-1 doesn't), and
+    // where it's missing Hyprland composites the pointer into the frames
+    // grim samples. cursor:invisible hides it on every output for the whole
+    // session — the overlays draw their own fake cursors — and is restored
+    // on every session exit path. (This config is Lua-parsed, so the toggle
+    // goes through `hyprctl eval`, not `hyprctl keyword`.)
+    Process {
+        id: hideCursorProc
+        command: ["hyprctl", "eval", "hl.config({cursor = {invisible = true}})"]
+        // Grab even if the eval failed: a capture with a cursor in it
+        // beats a session that never fires.
+        onExited: (exitCode, exitStatus) => {
+            if (root.selecting)
+                grabTimer.restart();
         }
     }
 
-    // A couple of frames for the blanked-cursor repaint to land, plus the
-    // hidden thumbnail leaving the frame.
+    function restoreCursor() {
+        Quickshell.execDetached(["hyprctl", "eval",
+            "hl.config({cursor = {invisible = false}})"]);
+    }
+
+    // Where the fake cursor first renders, so it doesn't pop in at the
+    // pointer's previous position only once the user moves.
+    property real seedX: -1
+    property real seedY: -1
+
+    Process {
+        id: seedProc
+        command: ["hyprctl", "cursorpos"]
+        stdout: StdioCollector {
+            onStreamFinished: {
+                const p = text.split(",");
+                root.seedX = parseFloat(p[0]);
+                root.seedY = parseFloat(p[1]);
+            }
+        }
+    }
+
+    // cursor:invisible is applied by Hyprland's renderer on a 500ms ticker
+    // (cursorTicker -> ensureCursorRenderingMode in Renderer.cpp), not at
+    // eval time, so a grab must wait out one full tick or it races the
+    // hide. Screencopy damages the monitor and re-renders (Screencopy.cpp),
+    // so once the tick lands the capture is cursor-free by construction.
     Timer {
         id: grabTimer
-        interval: 0
+        interval: 200
         onTriggered: {
-            if (root.mode === "" || root.grabbed)
+            if (root.mode === "")
                 return;
-            root.grabbed = true;
             if (root.mode === "full") {
                 root.pendingFile = root.targetFile();
                 grimProc.command = ["sh", "-c", 'mkdir -p "$0" && grim "$1"',
@@ -97,44 +122,6 @@ Singleton {
             grimProc.session = root.session;
             grimProc.running = true;
         }
-    }
-
-    // If no overlay ever reports the pointer (nudge failure), grab anyway:
-    // a screenshot with a cursor in it beats a session that never fires.
-    Timer {
-        id: grabFallback
-        interval: 600
-        //onTriggered: grabTimer.restart()
-    }
-
-    // Hyprland hands pointer focus to a new surface only on motion, so a
-    // mapped overlay can't blank a stationary cursor: the arrow lingers
-    // until the user moves the mouse. Warping one pixel away and back
-    // synthesizes that motion (a warp onto the cursor's exact position is
-    // dropped as a no-op). Overlay map time varies per monitor, so keep
-    // nudging until one of them reports the pointer.
-    property bool pointerAcquired: false
-    property int nudgeTries: 0
-
-    Timer {
-        id: nudgeTimer
-        interval: 100
-        repeat: true
-        triggeredOnStart: true
-        running: root.selecting && !root.pointerAcquired && root.nudgeTries < 3
-        onTriggered: {
-            root.nudgeTries++;
-            nudgeProc.running = true;
-        }
-    }
-
-    Process {
-        id: nudgeProc
-        command: ["sh", "-c",
-            'pos=$(hyprctl cursorpos); x=${pos%%,*}; y=${pos##*, }; '
-            + 'hyprctl dispatch "hl.dsp.cursor.move({x=$x, y=$((y > 0 ? y - 1 : y + 1))})"; '
-            + 'sleep 0.02; '
-            + 'hyprctl dispatch "hl.dsp.cursor.move({x=$x, y=$y})"']
     }
 
     Process {
@@ -163,6 +150,7 @@ Singleton {
             }
             if (root.mode === "full") {
                 root.mode = "";           // unmap overlays
+                root.restoreCursor();
                 root.postProcess(root.pendingFile);
             } else {
                 root.frozen = true;       // overlays show the frozen frame + UI
@@ -176,6 +164,7 @@ Singleton {
             return;
         root.mode = "";                   // unmap immediately; the pixels are on disk
         root.frozen = false;
+        root.restoreCursor();
         root.pendingFile = root.targetFile();
         magickProc.command = ["sh", "-c",
             'mkdir -p "$3" && magick "$0" -crop "$1" +repage "$2"; s=$?; rm -f "$0"; exit $s',
@@ -183,11 +172,15 @@ Singleton {
         magickProc.running = true;
     }
 
-    function cancelSession() {
+    // rehiding: a replacing session re-hides the cursor right away, and the
+    // detached restore could land after that hide and undo it — skip it.
+    function cancelSession(rehiding) {
         if (root.mode === "")
             return;
         root.mode = "";
         root.frozen = false;
+        if (!rehiding)
+            restoreCursor();
         Quickshell.execDetached(["rm", "-f", root.masterPath]);
     }
 

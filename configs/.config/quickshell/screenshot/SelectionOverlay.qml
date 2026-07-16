@@ -6,10 +6,10 @@ import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Wayland
 
-// Freeze-first selection overlay: one window per monitor. While mapped it
-// blanks the system cursor — no pointer, hardware or software, gets
-// composited into grim's frame. Once controller.frozen flips, it displays
-// this monitor's slice of the frozen master and the mode's selection UI.
+// Freeze-first selection overlay: one window per monitor. The controller
+// hides the real cursor (cursor:invisible) for the whole session, so these
+// overlays draw the fake cursors. Once controller.frozen flips, each one
+// displays its monitor's slice of the frozen master and the selection UI.
 Scope {
     id: root
 
@@ -54,7 +54,15 @@ Scope {
         target: root.controller
 
         function onFrozenChanged() {
-            if (root.controller.frozen && root.controller.mode === "window")
+            if (!root.controller.frozen)
+                return;
+            // The real cursor is hidden for the whole session; start the
+            // fake one where the pointer actually is instead of offscreen.
+            if (root.pointerX < 0 && root.controller.seedX >= 0) {
+                root.pointerX = root.controller.seedX;
+                root.pointerY = root.controller.seedY;
+            }
+            if (root.controller.mode === "window")
                 root.snapshotWindows();
         }
     }
@@ -131,7 +139,6 @@ Scope {
     }
 
     function pointerMoved(gx, gy) {
-        root.controller.pointerAcquired = true;   // stops the cursor nudger
         root.pointerX = gx;
         root.pointerY = gy;
         if (root.controller.mode === "window" && root.controller.frozen)
