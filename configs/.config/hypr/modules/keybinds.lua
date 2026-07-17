@@ -19,8 +19,8 @@ local v = require("modules.variables")
 --           APPS            --
 --\\\\\\\\\\\\\\\////////////--
 
--- Launch ROFI for wallpaper selection
--- hl.bind(v.mainMod .. " + W", hl.dsp.exec_cmd(v.scriptsDir .. "/WallpaperSelect.sh")) TODO
+-- Wallpaper picker (quickshell overlay)
+hl.bind(v.mainMod .. " + W", hl.dsp.exec_cmd("qs ipc call wallpaper toggle"))
 
 -- Launch Default Applications
 hl.bind(v.mainMod .. " + Q", hl.dsp.exec_cmd(v.terminal .. " -e --hold fastfetch"))

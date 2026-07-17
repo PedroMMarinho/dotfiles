@@ -7,6 +7,7 @@ import "bar" as Bar
 import "power" as Power
 import "lock" as Lock
 import "screenshot" as Screenshot
+import "wallpaper" as Wallpaper
 
 ShellRoot {
         Bar.Bar {}
@@ -15,5 +16,6 @@ ShellRoot {
                 Power.Controller.init();
                 Lock.Controller.init();
                 Screenshot.Controller.init();
+                Wallpaper.Controller.init();
         }
 }
