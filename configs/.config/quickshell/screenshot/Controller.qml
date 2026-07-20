@@ -14,6 +14,7 @@ Singleton {
     // isOpen keeps the window loaded; revealed drives the slide animation.
     property bool isOpen: false
     property bool revealed: false
+    property bool usingSound: false
 
     // ---- capture session state ----
     // A session walks: idle (mode === "") -> freezing -> frozen -> done/cancelled.
@@ -215,9 +216,13 @@ Singleton {
 
     function postProcess(f) {
         Quickshell.execDetached(["sh", "-c", 'wl-copy < "$0"', f]);
-        Quickshell.execDetached(["sh", "-c",
-            'command -v paplay >/dev/null && exec paplay "$0"; command -v pw-play >/dev/null && exec pw-play "$0"',
-            root.soundPath]);
+        if (root.usingSound)
+            Quickshell.execDetached(["sh", "-c",
+                'command -v paplay >/dev/null && exec paplay "$0"; command -v pw-play >/dev/null && exec pw-play "$0"',
+                root.soundPath]);
+        else 
+             Quickshell.execDetached(["sh", "-c",
+                'command -v paplay >/dev/null && exec paplay "$0];']);    
         // Never pop the thumbnail into a session that is currently capturing.
         if (root.mode === "")
             showThumb(f);
