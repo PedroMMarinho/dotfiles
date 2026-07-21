@@ -14,7 +14,15 @@ RowLayout {
       // Note: don't filter on item.id == "chrome_status_icon_1" here — every
       // Electron app (Discord, WhatsApp, ...) reports that same generic id.
       // To hide a specific app, filter on item.tooltipTitle instead.
+      //
+      // nm-applet and blueman are the exception: both report unique, stable ids
+      // (verified over DBus), so filtering them by id is safe. They are hidden
+      // rather than killed — blueman-applet still supplies the BlueZ pairing
+      // agent that renders passkey prompts, which Quickshell's Bluetooth API
+      // does not provide.
+      readonly property var hiddenIds: ["nm-applet", "blueman"]
       values: [...SystemTray.items.values]
+        .filter(i => hiddenIds.indexOf(i.id) === -1)
     }
 
     MouseArea {
