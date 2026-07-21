@@ -1,6 +1,7 @@
 import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
+import Quickshell.Wayland
 import QtQuick
 import QtQuick.Layouts
 import "blocks" as Blocks
@@ -17,6 +18,14 @@ Scope {
       screen: modelData
 
       color: Theme.get.barBgColor
+
+      // A popup with a text field cannot receive keystrokes unless the parent
+      // layershell surface accepts keyboard focus. OnDemand only grants focus on
+      // click, so escalate to Exclusive while a popup is open and drop straight
+      // back afterwards — the bar must never hold the keyboard during normal use.
+      WlrLayershell.keyboardFocus: Globals.anyPopupOpen
+        ? WlrKeyboardFocus.Exclusive
+        : WlrKeyboardFocus.OnDemand
 
       Rectangle {
         id: highlight
