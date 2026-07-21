@@ -31,7 +31,7 @@ BarBlock {
     color: "white"
     // Colour emoji sit high on the line; nudge down so flags align with the
     // neighbouring text blocks.
-    font.pointSize: 11
+    font.pointSize: 12
     y: 1
   }
 
@@ -55,7 +55,7 @@ BarBlock {
   }
 
   Timer {
-    interval: 400
+    interval: 100
     running: true
     repeat: true
     onTriggered: pollProc.running = true

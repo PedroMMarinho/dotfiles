@@ -101,20 +101,18 @@ Scope {
         // Right side
         RowLayout {
           id: rightBlocks
-          spacing: 0
+          spacing: 2
           Layout.alignment: Qt.AlignRight
           Layout.fillWidth: true
 
+          Blocks.SystemTray {}
           Blocks.Sound {}
           Blocks.Mic {}
-          Blocks.SystemTray {}
           Blocks.Keyboard {}
+          Blocks.Battery {}
           Blocks.Wifi {}
           Blocks.Bluetooth {}
-          Blocks.Battery {}
-          Blocks.Clock {
-            Layout.rightMargin: 8
-          }
+          Blocks.Clock {}
         }
       }
     }
