@@ -25,7 +25,7 @@ BarBlock {
   }
 
   content: Row {
-    spacing: 4
+    spacing: 8
 
     Item {
       anchors.verticalCenter: parent.verticalCenter
@@ -38,7 +38,7 @@ BarBlock {
         text: root.capacity >= 0 ? root.capacity + "%" : ""
         color: "white"
         font.family: "JetBrainsMono"
-        font.pointSize: 12
+        font.pointSize: 11
       }
 
       DropShadow {
