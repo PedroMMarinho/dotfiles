@@ -290,7 +290,7 @@ Scope {
                     }
                 }
 
-                // Selection wash and ring, riding on the hole's animated geometry.
+                // Selection wash, riding on the hole's animated geometry.
                 Rectangle {
                     x: hole.x
                     y: hole.y
@@ -299,8 +299,24 @@ Scope {
                     radius: hole.radius
                     opacity: hole.opacity
                     color: "#22FFFFFF"
+                }
+
+                // Ring around the selection. QML strokes borders inward, so
+                // outset the box by the stroke on every side: the ring then
+                // starts at the selection edge and grows outward, leaving the
+                // pixels that actually get captured uncovered.
+                Rectangle {
+                    readonly property int stroke: root.controller.mode === "window" ? 2 : 1
+
+                    x: hole.x - stroke
+                    y: hole.y - stroke
+                    width: hole.width + 2 * stroke
+                    height: hole.height + 2 * stroke
+                    radius: hole.radius > 0 ? hole.radius + stroke : 0
+                    opacity: hole.opacity
+                    color: "transparent"
                     border.color: "#FFFFFF"
-                    border.width: 2
+                    border.width: stroke
                 }
 
                 // Fake cursor: the real one is blanked, we draw our own.

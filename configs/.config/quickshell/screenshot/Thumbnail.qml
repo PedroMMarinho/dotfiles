@@ -54,8 +54,8 @@ PanelWindow {
                 : 130
             radius: 10
             color: "#F22A2A2A"          // macOS dark charcoal frame
-            border.color: "#40FFFFFF"   // subtle light hairline
-            border.width: 1
+            border.color: "white"   // subtle light hairline
+            border.width: 1.5
 
             layer.enabled: true
             layer.effect: MultiEffect {
