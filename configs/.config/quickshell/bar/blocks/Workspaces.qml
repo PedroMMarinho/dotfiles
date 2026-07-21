@@ -44,7 +44,6 @@ RowLayout {
       property bool isOpen: monitor.activeWorkspace?.id === ws.id
 
       dim: true
-      underline: false
       border.color: Theme.get.buttonBorderColor
       radius: 5
       contentZ: 1
@@ -108,7 +107,6 @@ RowLayout {
         }
 
         Repeater {
-          id: therepeater
           model: ScriptModel {
             values: getClients(ws.id)
           }

@@ -28,7 +28,7 @@ BarBlock {
   onScrolled: function(steps) {
     if (!root.sink?.audio)
       return;
-    root.sink.audio.volume = Math.max(0, Math.min(1, root.sink.audio.volume + steps * 0.05));
+    root.sink.audio.volume = Math.max(0, Math.min(1.2, root.sink.audio.volume + steps * 0.05));
   }
 
   PwObjectTracker { objects: [ sink ] }

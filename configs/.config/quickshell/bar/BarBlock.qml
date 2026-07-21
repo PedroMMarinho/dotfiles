@@ -12,12 +12,9 @@ Rectangle {
 
   property string text
   property bool dim: false
-  property bool underline
   property var onClicked: function() {}
   // Optional: function(steps) called on scroll, steps = wheel notches (+up/-down)
   property var onScrolled
-  property int leftPadding
-  property int rightPadding
   property int contentZ: 0
 
   property string hoveredBgColor: "#666666"
@@ -29,15 +26,6 @@ Rectangle {
       return hoveredBgColor;
     return "transparent";
   }
-
-  states: [
-    State {
-      when: hovered
-      PropertyChanges {
-        target: root
-      }
-    }
-  ]
 
   Behavior on color {
     ColorAnimation {
@@ -80,17 +68,4 @@ Rectangle {
     }
   }
 
-  // While line underneath workspace
-  Rectangle {
-    id: wsLine
-    width: parent.width
-    height: 2
-
-    color: {
-      if (parent.underline)
-        return "white";
-      return "transparent";
-    }
-    anchors.bottom: parent.bottom
-  }
 }
