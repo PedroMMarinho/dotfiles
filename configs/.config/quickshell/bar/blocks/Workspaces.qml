@@ -160,6 +160,13 @@ RowLayout {
         continue
       if (!(cls in groups)) {
         let entry = DesktopEntries.heuristicLookup(cls)
+        if (!entry) {
+          // Windows launched with a custom class (`kitty --class kitty-float`)
+          // have no desktop entry of their own; retry on the base app name.
+          let base = cls.replace(/-(float|floating|scratchpad)$/, "")
+          if (base !== cls)
+            entry = DesktopEntries.heuristicLookup(base)
+        }
         groups[cls] = { icon: entry ? entry.icon : cls, mult: 0 }
         order.push(cls)
       }
