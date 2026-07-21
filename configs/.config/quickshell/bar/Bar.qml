@@ -95,9 +95,9 @@ Scope {
           Layout.alignment: Qt.AlignRight
           Layout.fillWidth: true
 
-          Blocks.SystemTray {}
-          Blocks.Mic {}
           Blocks.Sound {}
+          Blocks.Mic {}
+          Blocks.SystemTray {}
           Blocks.Battery {}
           Blocks.Clock {
             Layout.rightMargin: 8

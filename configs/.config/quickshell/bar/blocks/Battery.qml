@@ -37,8 +37,7 @@ BarBlock {
         anchors.centerIn: parent
         text: root.capacity >= 0 ? root.capacity + "%" : ""
         color: "white"
-        font.family: "JetBrainsMono"
-        font.pointSize: 11
+        font.pointSize: 10
       }
 
       DropShadow {

@@ -18,7 +18,7 @@ PACKAGES=(
     # Terminal & Core CLI Utilities
     "kitty" "zsh" "starship" "fastfetch" "zoxide" "eza" "bat" "fzf" "fd" "jq" 
     "stow" "tree" "wget" "unzip" "zip" "git" "zram-generator" "sassc" "btop" "inotify-tools" 
-    "inkscape" "hyprland-autoname-workspaces" "xdg-utils" "nodejs" "npm" "bun"
+    "inkscape" "hyprland-autoname-workspaces" "xdg-utils" "nodejs" "npm" "bun" "ripgrep" "p7zip"
 
     # Audio & Bluetooth Stack
     "pipewire" "wireplumber" "pipewire-pulse" "pipewire-jack" 
@@ -43,7 +43,7 @@ PACKAGES=(
     # Fonts
     "adobe-source-han-sans-cn-fonts" "noto-fonts" "noto-fonts-cjk"  "noto-fonts-emoji"
     "ttf-jetbrains-mono" "ttf-jetbrains-mono-nerd" "ttf-rubik-vf" "ttf-nerd-fonts-symbols"
-    "ttf-nerd-fonts-symbols-mono" "woff2-font-awesome" "apple-fonts"
+    "ttf-nerd-fonts-symbols-mono" "woff2-font-awesome"
 )
 
 # System-wide services to enable (requires sudo)
@@ -154,6 +154,42 @@ echo "gtk-update-icon-cache -f ~/.local/share/icons/MacTahoe-dark"
 echo "Installing Claude AI CLI..."
 curl -fsSL https://claude.ai/install.sh | bash
 
+# ==========================================
+# 8. Install SF Pro Fonts from DMG
+# ==========================================
+echo "Setting up SF Pro Fonts..."
+TEMP_FNT_DIR=$(mktemp -d)
+cd "$TEMP_FNT_DIR"
 
+if [ -f "$HOME/Downloads/SF-Pro.dmg" ]; then
+    echo "Found SF-Pro.dmg in Downloads. Copying..."
+    cp "$HOME/Downloads/SF-Pro.dmg" .
+else
+    echo "SF-Pro.dmg not found. Downloading from Apple..."
+    wget -q --show-progress "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg"
+fi
+
+echo "Extracting DMG and Package chain..."
+# Unpack DMG
+7z x SF-Pro.dmg > /dev/null 2>&1
+cd SFProFonts
+
+# Unpack PKG
+7z x "SF Pro Fonts.pkg" > /dev/null 2>&1
+
+# Unpack Payload to get the actual font files
+cd SFProFonts.pkg
+bsdtar -xf Payload
+
+echo "Installing fonts to ~/.local/share/fonts/SF-Pro..."
+mkdir -p ~/.local/share/fonts/SF-Pro
+mv Library/Fonts/* ~/.local/share/fonts/SF-Pro/
+
+# Rebuild font cache just for the new additions
+fc-cache -f
+
+cd "$DOTFILES_DIR"
+rm -rf "$TEMP_FNT_DIR"
+echo "SF Pro fonts installed successfully."
 
 echo "Done! System setup complete."
