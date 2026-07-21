@@ -10,7 +10,7 @@ RowLayout {
   id: root
   spacing: 2
 
-  // Single source of truth: drives both the clip width and the arrow glyphs.
+  // Single source of truth: drives both the clip width and the arrow rotation.
   property bool expanded: false
 
   // Hide the whole block (arrow included) when there are no tray items, so we
@@ -39,15 +39,6 @@ RowLayout {
       Repeater {
         id: trayRepeater
         model: ScriptModel {
-          // Note: don't filter on item.id == "chrome_status_icon_1" here — every
-          // Electron app (Discord, WhatsApp, ...) reports that same generic id.
-          // To hide a specific app, filter on item.tooltipTitle instead.
-          //
-          // nm-applet and blueman are the exception: both report unique, stable ids
-          // (verified over DBus), so filtering them by id is safe. They are hidden
-          // rather than killed — blueman-applet still supplies the BlueZ pairing
-          // agent that renders passkey prompts, which Quickshell's Bluetooth API
-          // does not provide.
           readonly property var hiddenIds: ["nm-applet", "blueman", "Fcitx"]
           values: [...SystemTray.items.values]
             .filter(i => hiddenIds.indexOf(i.id) === -1)
@@ -120,28 +111,23 @@ RowLayout {
     onClicked: function() { root.expanded = !root.expanded; }
 
     content: Item {
-      implicitWidth: 14
-      implicitHeight: 14
+      implicitWidth: 16
+      implicitHeight: 16
 
-      // Two overlapping glyphs cross-fade. ︎ forces text presentation so
-      // the triangles render as crisp glyphs instead of color emoji.
-      Text {
+      IconImage {
+        id: arrowIcon
         anchors.centerIn: parent
-        text: "▶︎"   // ▶ collapsed (points right)
-        color: "white"
-        font.family: "JetBrainsMono"
-        font.pointSize: 10
-        opacity: root.expanded ? 0 : 1
-        Behavior on opacity { NumberAnimation { duration: 200 } }
-      }
-      Text {
-        anchors.centerIn: parent
-        text: "◀︎"   // ◀ expanded (points left)
-        color: "white"
-        font.family: "JetBrainsMono"
-        font.pointSize: 10
-        opacity: root.expanded ? 1 : 0
-        Behavior on opacity { NumberAnimation { duration: 200 } }
+        implicitSize: 16
+        source: Quickshell.iconPath("arrow-down-tiny-symbolic")
+
+        rotation: root.expanded ? 90 : 0
+
+        Behavior on rotation {
+          NumberAnimation { 
+            duration: 200 
+            easing.type: Easing.OutCubic
+          }
+        }
       }
     }
   }
