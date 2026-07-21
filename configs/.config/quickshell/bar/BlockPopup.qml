@@ -37,11 +37,16 @@ Item {
     implicitWidth: root.implicitContentWidth
     implicitHeight: bodyLoader.implicitHeight + 16
 
+    // These bindings evaluate before the anchor item is parented into a window,
+    // so `anchor.window` is null on first pass. Guard both — an unguarded read
+    // throws a TypeError every re-evaluation and the popup mispositions.
     anchor {
       window: root.anchorItem.QsWindow.window
-      rect.y: anchor.window.implicitHeight + 3
-      rect.x: anchor.window.contentItem
-        .mapFromItem(root.anchorItem, root.anchorItem.width / 2, 0).x
+      rect.y: anchor.window ? anchor.window.implicitHeight + 3 : 0
+      rect.x: anchor.window
+        ? anchor.window.contentItem
+            .mapFromItem(root.anchorItem, root.anchorItem.width / 2, 0).x
+        : 0
       edges: Edges.Top
       gravity: Edges.Bottom
     }
@@ -73,10 +78,15 @@ Item {
       border.width: 1
       border.color: Theme.get.wlogoutPanelBorder
 
+      // Do NOT anchors.fill here: the window's implicitHeight is derived from
+      // this Loader, so filling the window makes height depend on itself and
+      // the popup collapses to nothing. Width is driven from the fixed window
+      // width; height flows up from the content.
       Loader {
         id: bodyLoader
-        anchors.fill: parent
-        anchors.margins: 8
+        x: 8
+        y: 8
+        width: parent.width - 16
         sourceComponent: root.contentComponent
         active: root.popupOpen
       }
