@@ -20,7 +20,7 @@ RowLayout {
       // rather than killed — blueman-applet still supplies the BlueZ pairing
       // agent that renders passkey prompts, which Quickshell's Bluetooth API
       // does not provide.
-      readonly property var hiddenIds: ["nm-applet", "blueman"]
+      readonly property var hiddenIds: ["nm-applet", "blueman", "Fcitx"]
       values: [...SystemTray.items.values]
         .filter(i => hiddenIds.indexOf(i.id) === -1)
     }
