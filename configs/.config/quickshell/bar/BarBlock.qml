@@ -18,19 +18,21 @@ Rectangle {
   property var onScrolled
   property int leftPadding
   property int rightPadding
+  property int contentZ: 0
 
   property string hoveredBgColor: "#666666"
+  property bool hovered: hoverHandler.hovered
 
   // Background color
   color: {
-    if (mouseArea.containsMouse)
+    if (hovered)
       return hoveredBgColor;
     return "transparent";
   }
 
   states: [
     State {
-      when: mouseArea.containsMouse
+      when: hovered
       PropertyChanges {
         target: root
       }
@@ -50,6 +52,17 @@ Rectangle {
     implicitHeight: content.implicitHeight
     anchors.centerIn: parent
     children: content
+    // Opt-in: raise content above decorations declared at the use site (hover
+    // overlays) that would otherwise paint over it.  Defaults to the original
+    // stacking so existing blocks are unaffected.
+    z: root.contentZ
+  }
+
+  // BarText renders RichText, and a Text item doing so accepts hover events
+  // itself, so MouseArea.containsMouse never turns true over any text in the
+  // block.  A HoverHandler still sees the event regardless of the children.
+  HoverHandler {
+    id: hoverHandler
   }
 
   MouseArea {

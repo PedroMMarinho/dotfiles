@@ -47,6 +47,7 @@ RowLayout {
       underline: false
       border.color: Theme.get.buttonBorderColor
       radius: 5
+      contentZ: 1
       gradient: isActive || isOpen ? Theme.get.buttonActiveGradient : Theme.get.buttonInactiveGradientV
       Layout.preferredWidth: content.width + 20
 
@@ -71,6 +72,20 @@ RowLayout {
         x: 1
         y: 1
         z: -1
+      }
+
+      // BarBlock's built-in hover colour is overridden by the gradient above,
+      // so the hover state needs its own overlay on top of it.  The open
+      // workspace already reads as highlighted, so it stays untouched.
+      Rectangle {
+        anchors.fill: parent
+        radius: parent.radius
+        color: "white"
+        opacity: hovered && !isActive && !isOpen ? 0.15 : 0
+
+        Behavior on opacity {
+          NumberAnimation { duration: 150; easing.type: Easing.OutCubic }
+        }
       }
 
       onClicked: function() {
@@ -101,26 +116,32 @@ RowLayout {
           delegate: Item {
             required property var modelData
             property int symbolSize: 22
+            property bool focused: !!modelData && !!modelData.focused && isActive
+            property real fade: focused ? 1 : 0.65
             implicitWidth: symbolSize
             implicitHeight: symbolSize
             Layout.alignment: Qt.AlignCenter
+
+            Behavior on fade {
+              NumberAnimation { duration: 150; easing.type: Easing.OutCubic }
+            }
 
             IconImage {
               id: appIcon
               anchors.centerIn: parent
               source: Quickshell.iconPath(modelData.icon, "application-x-executable")
               implicitSize: parent.symbolSize
-              opacity: isActive ? 1 : 0.7
+              opacity: parent.fade
               mipmap: true
             }
             DropShadow {
-              anchors.fill: parent
+              anchors.fill: appIcon
               verticalOffset: 1
               horizontalOffset: 1
               radius: 8.0
               color: "#000000"
               source: appIcon
-              opacity: isActive ? 1 : 0.7
+              opacity: parent.fade
             }
             Rectangle {
               visible: modelData.mult > 1
@@ -135,7 +156,7 @@ RowLayout {
                 anchors.centerIn: parent
                 symbolText: `${modelData.mult}`
                 pointSize: 8
-                dim: !isActive
+                dim: !focused
                 style: Text.Outline
                 styleColor: "black"
               }
@@ -148,10 +169,12 @@ RowLayout {
 
   // Collect the live windows in a workspace, grouped by app class, and resolve
   // each to an icon-theme name via its desktop entry.  Reading
-  // Hyprland.toplevels here keeps the ScriptModel reactive to window changes.
+  // Hyprland.toplevels here keeps the ScriptModel reactive to window changes;
+  // reading activeToplevel likewise re-runs this on every focus change.
   function getClients(wsId) {
     let groups = {}
     let order = []
+    const active = Hyprland.activeToplevel
     for (let t of Hyprland.toplevels.values) {
       if (!t.workspace || t.workspace.id !== wsId)
         continue
@@ -167,10 +190,14 @@ RowLayout {
           if (base !== cls)
             entry = DesktopEntries.heuristicLookup(base)
         }
-        groups[cls] = { icon: entry ? entry.icon : cls, mult: 0 }
+        groups[cls] = { icon: entry ? entry.icon : cls, mult: 0, focused: false }
         order.push(cls)
       }
       groups[cls].mult++
+      // Windows of one class collapse into a single icon, so the group counts
+      // as focused if any of its windows is.
+      if (t === active)
+        groups[cls].focused = true
     }
     return order.map(c => groups[c])
   }
