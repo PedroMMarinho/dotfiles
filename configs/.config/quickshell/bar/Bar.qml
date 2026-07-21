@@ -109,6 +109,7 @@ Scope {
           Blocks.Mic {}
           Blocks.SystemTray {}
           Blocks.Keyboard {}
+          Blocks.Wifi {}
           Blocks.Battery {}
           Blocks.Clock {
             Layout.rightMargin: 8
