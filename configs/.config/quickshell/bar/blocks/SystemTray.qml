@@ -7,79 +7,141 @@ import Quickshell.Services.SystemTray
 import "root:/bar"
 
 RowLayout {
-  spacing: 5
+  id: root
+  spacing: 2
 
-  Repeater {
-    model: ScriptModel {
-      // Note: don't filter on item.id == "chrome_status_icon_1" here — every
-      // Electron app (Discord, WhatsApp, ...) reports that same generic id.
-      // To hide a specific app, filter on item.tooltipTitle instead.
-      //
-      // nm-applet and blueman are the exception: both report unique, stable ids
-      // (verified over DBus), so filtering them by id is safe. They are hidden
-      // rather than killed — blueman-applet still supplies the BlueZ pairing
-      // agent that renders passkey prompts, which Quickshell's Bluetooth API
-      // does not provide.
-      readonly property var hiddenIds: ["nm-applet", "blueman", "Fcitx"]
-      values: [...SystemTray.items.values]
-        .filter(i => hiddenIds.indexOf(i.id) === -1)
+  // Single source of truth: drives both the clip width and the arrow glyphs.
+  property bool expanded: false
+
+  // Hide the whole block (arrow included) when there are no tray items, so we
+  // never present a dead toggle for an empty tray.
+  visible: trayRepeater.count > 0
+
+  // Clip container — width animates 0 <-> full. The icon row inside is anchored
+  // to the RIGHT edge so icons retract toward the arrow as it collapses.
+  Item {
+    id: trayClip
+    clip: true
+    Layout.fillHeight: true
+    Layout.preferredWidth: root.expanded ? iconRow.implicitWidth : 0
+
+    Behavior on Layout.preferredWidth {
+      NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
     }
 
-    MouseArea {
-      id: delegate
-      required property SystemTrayItem modelData
-      property alias item: delegate.modelData
+    RowLayout {
+      id: iconRow
+      spacing: 5
+      height: parent.height
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
 
-      Layout.fillHeight: true
-      implicitWidth: icon.implicitWidth + 5
+      Repeater {
+        id: trayRepeater
+        model: ScriptModel {
+          // Note: don't filter on item.id == "chrome_status_icon_1" here — every
+          // Electron app (Discord, WhatsApp, ...) reports that same generic id.
+          // To hide a specific app, filter on item.tooltipTitle instead.
+          //
+          // nm-applet and blueman are the exception: both report unique, stable ids
+          // (verified over DBus), so filtering them by id is safe. They are hidden
+          // rather than killed — blueman-applet still supplies the BlueZ pairing
+          // agent that renders passkey prompts, which Quickshell's Bluetooth API
+          // does not provide.
+          readonly property var hiddenIds: ["nm-applet", "blueman", "Fcitx"]
+          values: [...SystemTray.items.values]
+            .filter(i => hiddenIds.indexOf(i.id) === -1)
+        }
 
-      acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-      hoverEnabled: true
+        MouseArea {
+          id: delegate
+          required property SystemTrayItem modelData
+          property alias item: delegate.modelData
 
-      onClicked: event => {
-        if (event.button == Qt.LeftButton) {
-          item.activate();
-        } else if (event.button == Qt.MiddleButton) {
-          item.secondaryActivate();
-        } else if (event.button == Qt.RightButton) {
-          menuAnchor.open();
+          Layout.fillHeight: true
+          implicitWidth: icon.implicitWidth + 5
+
+          acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+          hoverEnabled: true
+
+          onClicked: event => {
+            if (event.button == Qt.LeftButton) {
+              item.activate();
+            } else if (event.button == Qt.MiddleButton) {
+              item.secondaryActivate();
+            } else if (event.button == Qt.RightButton) {
+              menuAnchor.open();
+            }
+          }
+
+          onWheel: event => {
+            event.accepted = true;
+            const points = event.angleDelta.y / 120
+            item.scroll(points, false);
+          }
+
+          IconImage {
+            id: icon
+            anchors.centerIn: parent
+            source: item.icon
+            implicitSize: 16
+          }
+
+          QsMenuAnchor {
+            id: menuAnchor
+            menu: item.menu
+
+            anchor.window: delegate.QsWindow.window
+            anchor.adjustment: PopupAdjustment.Flip
+
+            anchor.onAnchoring: {
+              const window = delegate.QsWindow.window;
+              const widgetRect = window.contentItem.mapFromItem(delegate, 0, delegate.height, delegate.width, delegate.height);
+
+              menuAnchor.anchor.rect = widgetRect;
+            }
+          }
+
+          Tooltip {
+            relativeItem: delegate.containsMouse ? delegate : null
+
+            Label {
+              text: delegate.item.tooltipTitle || delegate.item.id
+            }
+          }
         }
       }
+    }
+  }
 
-      onWheel: event => {
-        event.accepted = true;
-        const points = event.angleDelta.y / 120
-        item.scroll(points, false);
-      }
+  // Arrow toggle — reuses BarBlock for hover highlight + click + sizing.
+  BarBlock {
+    id: arrowBlock
+    onClicked: function() { root.expanded = !root.expanded; }
 
-      IconImage {
-        id: icon
+    content: Item {
+      implicitWidth: 14
+      implicitHeight: 14
+
+      // Two overlapping glyphs cross-fade. ︎ forces text presentation so
+      // the triangles render as crisp glyphs instead of color emoji.
+      Text {
         anchors.centerIn: parent
-        source: item.icon
-        implicitSize: 16
+        text: "▶︎"   // ▶ collapsed (points right)
+        color: "white"
+        font.family: "JetBrainsMono"
+        font.pointSize: 10
+        opacity: root.expanded ? 0 : 1
+        Behavior on opacity { NumberAnimation { duration: 200 } }
       }
-
-      QsMenuAnchor {
-        id: menuAnchor
-        menu: item.menu
-
-        anchor.window: delegate.QsWindow.window
-        anchor.adjustment: PopupAdjustment.Flip
-
-        anchor.onAnchoring: {
-          const window = delegate.QsWindow.window;
-          const widgetRect = window.contentItem.mapFromItem(delegate, 0, delegate.height, delegate.width, delegate.height);
-
-          menuAnchor.anchor.rect = widgetRect;
-        }
-      }
-
-      Tooltip {
-        relativeItem: delegate.containsMouse ? delegate : null
-
-        Label {
-          text: delegate.item.tooltipTitle || delegate.item.id
-        }
+      Text {
+        anchors.centerIn: parent
+        text: "◀︎"   // ◀ expanded (points left)
+        color: "white"
+        font.family: "JetBrainsMono"
+        font.pointSize: 10
+        opacity: root.expanded ? 1 : 0
+        Behavior on opacity { NumberAnimation { duration: 200 } }
       }
     }
   }
