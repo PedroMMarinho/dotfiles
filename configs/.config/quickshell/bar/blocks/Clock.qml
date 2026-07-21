@@ -4,7 +4,7 @@ import "../"
 BarBlock {
   id: root
   content: BarText {
-    pointSize: 11
+    pointSize: 10
     symbolText: `${Datetime.date} ${Datetime.time}`
   }
 }

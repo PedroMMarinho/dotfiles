@@ -31,12 +31,13 @@ BarBlock {
     if (!root.radioOn)
       return "network-wireless-disabled-symbolic";
     if (!root.activeNetwork)
-      return "network-wireless-signal-none-symbolic";
+      return "network-wireless-signal-offline-symbolic";
     const s = root.activeNetwork.signalStrength;
-    if (s < 0.25) return "network-wireless-signal-weak-symbolic";
-    if (s < 0.50) return "network-wireless-signal-ok-symbolic";
-    if (s < 0.75) return "network-wireless-signal-good-symbolic";
-    return "network-wireless-signal-excellent-symbolic";
+    if (s == 0.0) return "network-wireless-connected-00";
+    if (s < 0.25) return "network-wireless-connected-25";
+    if (s < 0.50) return "network-wireless-connected-50";
+    if (s < 0.75) return "network-wireless-connected-75";
+    return "network-wireless-connected-100";
   }
 
   content: Row {
