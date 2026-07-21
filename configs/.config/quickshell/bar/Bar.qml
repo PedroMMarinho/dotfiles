@@ -64,6 +64,7 @@ Scope {
           id: activeWorkspace
           Layout.leftMargin: 10
           anchors.centerIn: undefined
+          font.pointSize: 10
 
           chopLength: {
             var space = Math.floor(bar.width - (rightBlocks.implicitWidth + leftBlocks.implicitWidth))
@@ -98,6 +99,7 @@ Scope {
           Blocks.Sound {}
           Blocks.Mic {}
           Blocks.SystemTray {}
+          Blocks.Keyboard {}
           Blocks.Battery {}
           Blocks.Clock {
             Layout.rightMargin: 8
