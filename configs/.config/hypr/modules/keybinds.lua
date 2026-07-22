@@ -21,6 +21,8 @@ local v = require("modules.variables")
 
 -- Wallpaper picker (quickshell overlay)
 hl.bind(v.mainMod .. " + W", hl.dsp.exec_cmd("qs ipc call wallpaper toggle"))
+-- Color picker (hyprpicker)
+hl.bind(v.mainMod .. " + H", hl.dsp.exec_cmd("hyprpicker -a"))
 
 -- Launch Default Applications
 hl.bind(v.mainMod .. " + Q", hl.dsp.exec_cmd(v.terminal .. " -e --hold fastfetch"))
