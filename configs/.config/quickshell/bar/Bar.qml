@@ -67,6 +67,8 @@ Scope {
 
           Blocks.Icon {}
           Blocks.Workspaces {}
+
+          Blocks.Music { Layout.leftMargin: -2 }
         }
         
         Blocks.ActiveWorkspace {

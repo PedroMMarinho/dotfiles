@@ -34,9 +34,9 @@ BarBlock {
 
   function wifiIcon() {
     if (!root.radioOn)
-      return "network-wireless-disabled-symbolic";
-    if (!root.activeNetwork)
       return "network-wireless-offline-symbolic";
+    if (!root.activeNetwork)
+      return "network-wireless-disabled-symbolic";
     const s = root.activeNetwork.signalStrength;
     if (s == 0.0) return "network-wireless-connected-00";
     if (s < 0.25) return "network-wireless-connected-25";
