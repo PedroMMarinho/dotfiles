@@ -107,19 +107,39 @@ PanelWindow {
                                                         if (startMatch != -1) {
                                                                 matches.push({
                                                                         index: startMatch,
-                                                                        length: ni - startMatch + 1
+                                                                        length: ni - startMatch
                                                                 })
+                                                        }
+
+                                                        // How well the query landed, coarsest signal first:
+                                                        //   0 = the whole query, contiguous, at the start of a word
+                                                        //   1 = the whole query, contiguous, mid-word
+                                                        //   2 = letters scattered across the name
+                                                        // A single letter says nothing about shape, so it stays in
+                                                        // tier 2 and is ranked purely by launch count.
+                                                        let tier = 2;
+                                                        if (stxt.length > 1 && matches.length == 1 && matches[0].length == stxt.length) {
+                                                                const before = matches[0].index == 0 ? " " : ntxt[matches[0].index - 1];
+                                                                tier = " -_.(/".indexOf(before) != -1 ? 0 : 1;
                                                         }
 
                                                         return {
                                                                 object: object,
-                                                                matches: matches
+                                                                matches: matches,
+                                                                tier: tier
                                                         }
 
                                                 }).filter(entry => entry != null).sort((a, b) => {
                             
                                                 const aScore = root.controller.historyManager.runHistory.runCounts[a.object.id] || 0;
                                                 const bScore = root.controller.historyManager.runHistory.runCounts[b.object.id] || 0;
+
+                                                // Match shape outranks launch count, otherwise a frequently used
+                                                // app wins on stray letters: "spo" hits What*s*a*p*p Deskt*o*p.
+                                                // Within a tier the most used app still comes first.
+                                                if (a.tier !== b.tier) {
+                                                        return a.tier - b.tier;
+                                                }
 
                                                 if (bScore !== aScore) {
                                                         return bScore - aScore;
