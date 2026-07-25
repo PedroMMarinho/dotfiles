@@ -28,8 +28,8 @@ PACKAGES=(
     "networkmanager" "network-manager-applet" "networkmanager-pptp" "pptpclient" "networkmanager-openvpn" "networkmanager-wireguard" "wireguard-tools"
     
     # Desktop Environment & Theming
-    "waybar" "quickshell" "rofi" "dunst" "nwg-look" "awww" "hyprpolkitagent" "papirus-icon-theme" "papirus-folders" "hyprcursor" "qt6ct"
-    "apple_cursor" "kvantum"
+    "waybar" "quickshell" "rofi" "dunst" "nwg-look" "awww" "hyprpolkitagent" "papirus-icon-theme" "papirus-folders" "hyprcursor" "qt6ct" "spicetify-cli"
+    "apple_cursor" "kvantum" "spicetify-marketplace-bin"
     # Input Method (Mandarin)
     "fcitx5" "fcitx5-chinese-addons" "fcitx5-configtool" "fcitx5-gtk" "fcitx5-qt"
     

@@ -4,16 +4,16 @@
 alias c='clear'
 
 # Better ls
-alias ls='eza --icons'
+alias ls='eza --icons=auto'
 
 # Detailed listing
-alias ll='eza -lh --icons --git'
+alias ll='eza -lh --icons=auto --git'
 
 # Detailed listing including hidden files
-alias la='eza -lah --icons --git'
+alias la='eza -lah --icons=auto --git'
 
 # Tree view
-alias tree='eza --tree --icons'
+alias tree='eza --tree --icons=auto'
 
 compdef eza=ls
 
