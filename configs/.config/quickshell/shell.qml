@@ -8,6 +8,8 @@ import "power" as Power
 import "lock" as Lock
 import "screenshot" as Screenshot
 import "wallpaper" as Wallpaper
+import "network" as Network
+import "battery" as Battery
 
 ShellRoot {
         Bar.Bar {}
@@ -17,5 +19,7 @@ ShellRoot {
                 Lock.Controller.init();
                 Screenshot.Controller.init();
                 Wallpaper.Controller.init();
+                Network.Controller.init();
+                Battery.Controller.init();
         }
 }

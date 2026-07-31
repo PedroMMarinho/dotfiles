@@ -1,28 +1,17 @@
 import QtQuick
 import Quickshell
-import Quickshell.Io
 import Quickshell.Widgets
 import Qt5Compat.GraphicalEffects
 import "../"
+import "root:/battery" as BatteryService
 
+// View only. Polling and notifications belong to the singleton, since this
+// block is instantiated once per screen.
 BarBlock {
   id: root
 
-  property int capacity: -1
-  property string status: ""
-
-  // WhiteSur (icon-theme) symbolic battery icon for the current charge/state.
-  function batteryIcon() {
-    if (capacity < 0)
-      return "battery-missing-symbolic";
-    const lvl = Math.max(0, Math.min(100, Math.round(capacity / 10) * 10));
-    // WhiteSur names the full+charging icon "-charged-", not "-charging-";
-    // requesting the nonexistent name would fall back to a junk icon.
-    if (status === "Charging")
-      return lvl >= 100 ? "battery-level-100-charged-symbolic"
-                        : "battery-level-" + lvl + "-charging-symbolic";
-    return "battery-level-" + lvl + "-symbolic";
-  }
+  readonly property int capacity: BatteryService.Controller.capacity
+  readonly property string status: BatteryService.Controller.status
 
   content: Row {
     spacing: 8
@@ -57,7 +46,7 @@ BarBlock {
       IconImage {
         id: iconImg
         anchors.fill: parent
-        source: Quickshell.iconPath(root.batteryIcon())
+        source: Quickshell.iconPath(BatteryService.Controller.icon)
         implicitSize: 20
         mipmap: true
       }
@@ -71,27 +60,5 @@ BarBlock {
         source: iconImg
       }
     }
-  }
-
-  Process {
-    id: batteryProc
-    command: ["sh", "-c", "cap=$(cat /sys/class/power_supply/BAT*/capacity 2>/dev/null | head -1); st=$(cat /sys/class/power_supply/BAT*/status 2>/dev/null | head -1); echo \"$cap|$st\""]
-    running: true
-
-    stdout: SplitParser {
-      onRead: data => {
-        const parts = data.split("|");
-        const c = parseInt(parts[0]);
-        root.capacity = isNaN(c) ? -1 : c;
-        root.status = (parts[1] || "").trim();
-      }
-    }
-  }
-
-  Timer {
-    interval: 1000
-    running: true
-    repeat: true
-    onTriggered: batteryProc.running = true
   }
 }
