@@ -26,12 +26,19 @@ Scope {
         Hyprland.refreshToplevels();
         Hyprland.refreshWorkspaces();
         Hyprland.refreshMonitors();
+        // The seed can already have landed if this overlay loaded late.
+        root.applySeed();
     }
 
     // Global pointer position in layout coordinates, shared across monitors
     // so highlights and fake cursors render on whichever screen they touch.
+    // Negative until a position is known: nothing draws a fake cursor before
+    // then, rather than parking one at the layout's edge.
     property real pointerX: -1
     property real pointerY: -1
+    // Set once a real motion event has arrived. Until then the hyprctl seed
+    // owns the position and may keep correcting itself.
+    property bool pointerReal: false
 
     // Content boxes of every selectable window, snapshotted the moment the
     // frame froze (matches what the master image shows), sorted topmost
@@ -50,18 +57,31 @@ Scope {
     property real dragX: 0
     property real dragY: 0
 
+    // The real cursor is hidden for the whole session, so the only truth about
+    // where it sits is `hyprctl cursorpos`. Wayland delivers no pointer enter
+    // when a surface maps under a stationary cursor, and the synthetic enter Qt
+    // fires instead reports the item's centre on an arbitrary monitor — so the
+    // seed, not an enter event, is what places the fake cursor. It arrives
+    // asynchronously and may land before or after this overlay exists; apply it
+    // from every path, and let real motion take over permanently once it comes.
+    function applySeed() {
+        if (root.pointerReal || root.controller.seedX < 0)
+            return;
+        root.pointerX = root.controller.seedX;
+        root.pointerY = root.controller.seedY;
+        if (root.controller.mode === "window" && root.controller.frozen)
+            root.updateHover();
+    }
+
     Connections {
         target: root.controller
+
+        function onSeedXChanged() { root.applySeed(); }
 
         function onFrozenChanged() {
             if (!root.controller.frozen)
                 return;
-            // The real cursor is hidden for the whole session; start the
-            // fake one where the pointer actually is instead of offscreen.
-            if (root.pointerX < 0 && root.controller.seedX >= 0) {
-                root.pointerX = root.controller.seedX;
-                root.pointerY = root.controller.seedY;
-            }
+            root.applySeed();
             if (root.controller.mode === "window")
                 root.snapshotWindows();
         }
@@ -138,10 +158,19 @@ Scope {
         root.selection = hit;
     }
 
+    // Mapping these surfaces makes Qt synthesise one motion event per session,
+    // reporting the item's centre on whichever monitor it last tracked rather
+    // than where the pointer is — that is the "cursor jumped to another screen"
+    // bug. It always lands at map time, before the grab freezes the frame, and
+    // nothing is drawn until then anyway, so pre-freeze motion is discarded
+    // wholesale and the hyprctl seed places the fake cursor unopposed.
     function pointerMoved(gx, gy) {
+        if (!root.controller.frozen)
+            return;
+        root.pointerReal = true;
         root.pointerX = gx;
         root.pointerY = gy;
-        if (root.controller.mode === "window" && root.controller.frozen)
+        if (root.controller.mode === "window")
             root.updateHover();
         else if (root.dragging)
             root.updateDrag(gx, gy);
@@ -322,7 +351,7 @@ Scope {
                 // Fake cursor: the real one is blanked, we draw our own.
                 // Camera glyph in window mode (macOS-style).
                 Image {
-                    visible: root.controller.mode === "window"
+                    visible: root.controller.mode === "window" && root.pointerX >= 0
                     source: "camera.svg"
                     // 2x the SVG's 22x17 intrinsic size, rasterized sharp.
                     sourceSize.width: 24
@@ -332,7 +361,7 @@ Scope {
 
                 // Crosshair fake cursor for crop mode: full-span hairlines.
                 Rectangle {
-                    visible: root.controller.mode === "crop"
+                    visible: root.controller.mode === "crop" && root.pointerX >= 0
                     x: root.pointerX - overlay.modelData.x
                     y: 0
                     width: 1
@@ -340,7 +369,7 @@ Scope {
                     color: "#CCFFFFFF"
                 }
                 Rectangle {
-                    visible: root.controller.mode === "crop"
+                    visible: root.controller.mode === "crop" && root.pointerY >= 0
                     x: 0
                     y: root.pointerY - overlay.modelData.y
                     width: parent.width
@@ -379,8 +408,10 @@ Scope {
                 cursorShape: Qt.BlankCursor
                 focus: true
 
-                onEntered: root.pointerMoved(
-                    overlay.modelData.x + mouseX, overlay.modelData.y + mouseY)
+                // No onEntered: Qt synthesises one at the item's centre on a
+                // monitor the pointer isn't on when these surfaces map, which
+                // would plant the fake cursor on the wrong screen until the
+                // first real motion. Only genuine motion updates the position.
                 onPositionChanged: mouse => root.pointerMoved(
                     overlay.modelData.x + mouse.x, overlay.modelData.y + mouse.y)
                 onPressed: mouse => {
