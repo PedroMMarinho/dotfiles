@@ -71,3 +71,12 @@ hl.layer_rule({
     blur         = true,
     ignore_alpha = 0.2,
 })
+
+-- Same treatment for the volume/brightness HUD: without blur the panel is just
+-- a dark tint and whatever is behind it reads straight through the glyph.
+hl.layer_rule({
+    name         = "osd-blur",
+    match        = { namespace = "^shell:osd$" },
+    blur         = true,
+    ignore_alpha = 0.2,
+})

@@ -10,6 +10,7 @@ import "screenshot" as Screenshot
 import "wallpaper" as Wallpaper
 import "network" as Network
 import "battery" as Battery
+import "osd" as Osd
 
 ShellRoot {
         Bar.Bar {}
@@ -21,5 +22,6 @@ ShellRoot {
                 Wallpaper.Controller.init();
                 Network.Controller.init();
                 Battery.Controller.init();
+                Osd.Controller.init();
         }
 }
