@@ -4,6 +4,8 @@ add_newline = false
 
 format = "$directory$os$git_branch$git_status$nodejs$rust$golang$php $character"
 
+scan_timeout = 100
+
 [os]
 disabled = false
 format = "[$symbol](bold blue) "
