@@ -215,7 +215,7 @@ Singleton {
     }
 
     function postProcess(f) {
-        Quickshell.execDetached(["sh", "-c", 'wl-copy < "$0"', f]);
+        Quickshell.execDetached(["sh", "-c", 'wl-copy -t image/png < "$0"', f]);
         if (root.usingSound)
             Quickshell.execDetached(["sh", "-c",
                 'command -v paplay >/dev/null && exec paplay "$0"; command -v pw-play >/dev/null && exec pw-play "$0"',
