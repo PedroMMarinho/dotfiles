@@ -57,6 +57,9 @@ source "$ZDOTFILES/bindings.zsh"
 # Plugins 
 source "$ZDOTFILES/plugins.zsh"
 
+# Syntax highlighting tweaks
+source "$ZDOTFILES/highlighting.zsh"
+
 # Prompt theme
 source "$ZDOTFILES/prompt.zsh"
 
